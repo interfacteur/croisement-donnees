@@ -113,8 +113,12 @@ table	{
 }
 th,
 td	{
-	border: 1px solid #999;
-	border-width: 1px 0 0 1px;
+	border-top: 1px solid #999;
+	border-left: 1px solid #EEE;
+}
+[colspan],
+th	{
+	border-left-color: #999;
 }
 table	{
 	text-align: right;
@@ -199,6 +203,15 @@ table.colonne::after	{
 	display: block;
 }
 .colonne th,
+.colonne td	{
+	border-top: 1px solid #EEE;
+	border-left: 1px solid #999;
+}
+.colonne [colspan],
+.colonne th	{
+	border-top-color: #999;
+}
+.colonne th,
 .colonne tr + tr td	{
 	height: 7.5em;
 	vertical-align: middle;
@@ -239,7 +252,7 @@ tr:nth-child(3) td::before	{
 }
 tr:nth-child(3) th,
 tr:nth-child(3) td:not(:empty)	{
-	box-shadow: 0 -.5em #FFF inset,  0 -1em #9A9 inset;
+	box-shadow: 0 -.5em #FFF inset, 0 -1em #9A9 inset;
 }
 
 tr:nth-child(4) td::before	{
@@ -247,7 +260,7 @@ tr:nth-child(4) td::before	{
 }
 tr:nth-child(4) th,
 tr:nth-child(4) td:not(:empty)	{
-	box-shadow: 0 -1em #FFF inset,  0 -1.5em #C63 inset;
+	box-shadow: 0 -1em #FFF inset, 0 -1.5em #C63 inset;
 }
 
 tr:nth-child(5) td::before	{
@@ -255,7 +268,7 @@ tr:nth-child(5) td::before	{
 }
 tr:nth-child(5) th,
 tr:nth-child(5) td:not(:empty)	{
-	box-shadow: 0 -1.5em #FFF inset,  0 -2em #66C inset;
+	box-shadow: 0 -1.5em #FFF inset, 0 -2em #66C inset;
 }
 
 tr:nth-child(6) td::before	{
@@ -263,7 +276,7 @@ tr:nth-child(6) td::before	{
 }
 tr:nth-child(6) th,
 tr:nth-child(6) td:not(:empty)	{
-	box-shadow: 0 -2em #FFF inset,  0 -2.5em #C90 inset;
+	box-shadow: 0 -2em #FFF inset, 0 -2.5em #C90 inset;
 }
 
 tr:nth-child(7) td::before	{
@@ -271,7 +284,7 @@ tr:nth-child(7) td::before	{
 }
 tr:nth-child(7) th,
 tr:nth-child(7) td:not(:empty)	{
-	box-shadow: 0 -2.5em #FFF inset,  0 -3em #693 inset;
+	box-shadow: 0 -2.5em #FFF inset, 0 -3em #693 inset;
 }
 </style>
 </head>
