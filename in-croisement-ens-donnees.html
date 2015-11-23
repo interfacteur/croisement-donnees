@@ -197,6 +197,16 @@ tr + tr td:not(:empty)::before	{
 /*.present span	{
 	opacity: .75;
 }*/
+
+.axe td	{
+	color: #C00;
+}
+
+.axe td:not(:empty)::before	{
+	background: #AAA;
+	color: #FFF;
+}
+
 .absent [type='radio'],
 .present [type='radio'],
 .axes tr + tr [type='radio'],
@@ -342,17 +352,20 @@ tr:nth-child(7) td:not(:empty)	{
 		<label for="pres2">Présentation du tableau par colonne</label>
 	</div>
 	<p>
-		Visualiser les données communes à une sélection de séries, et leur présence dans les autres séries.
-		<em>En tête de chaque série, la case à cocher permet de composer cette sélection.</em>
+		Visualiser les pistes d'un album et leur occurrence dans les autres albums.
+		<em>En tête de chaque album, la case à cocher permet de fixer un album de référence, et également plusieurs.</em>
 	</p>
 	<p>
-		Chaque série, présentée selon son ordre d'origine, peut être triée numériquement.
-		<em>Les deux boutons radio suivants permettent de choisir entre ordres d'origine (par défaut) et numérique.</em>
+		Avec plusieurs albums de référence : visualiser les pistes communes cette sélection et leur occurrence dans les autres albums.
 	</p>
-	<p>NB : les boutons situés en tête du tableau permettent de manipuler par type d'action tous ces cases et boutons.<br>
-		<em>Ils sont <b>exclusifs</b>&nbsp;: "ordre d'origine" par ex. <b>désectionne</b> toutes les séries sélectionnées</em>.</p>
 	<p>
-		<strong>Exemple avec des albums de sonates de D. Scarlatti référencées selon le catalogue <abbr title="Kirkpatrick">Kk</abbr>&nbsp;:</strong>
+		Chaque album, présenté selon l'ordre d'origine de ses pistes, peut être trié numériquement.
+		<em>Les deux boutons radio permettent de choisir entre ordres d'origine (par défaut) et numérique.</em>
+	</p>
+	<p>NB : les boutons situés au début du tableau permettent de manipuler par type d'action l'ensemble de ces cases et boutons.
+		<em>Ils sont <b>exclusifs</b>&nbsp;: "ordre d'origine" par ex. <b>désélectionne</b> toutes les albums sélectionnées</em>.</p>
+	<p>
+		<strong>Exemple avec des albums de sonates de D. Scarlatti, sonates référencées selon le catalogue <abbr title="Kirkpatrick">Kk</abbr>&nbsp;:</strong>
 	</p>
 </form>
 <script src="-scripts/jquery-1.11.0.min.js"></script>
@@ -782,6 +795,6 @@ var Staier =	{
 
 </script>
 <p>Pour Firefox et Chrome, IE 10+ possible : tout navigateur standard supportant "box-shadow", "table-layout", les sélecteurs avancés, 'forEach()'<br>
-	Interfacteur, août 2014 - skin novembre 2015 - <a href="https://github.com/interfacteur/croisement-donnees">archive sur Github</a></p>
+	Interfacteur, août 2014 - skin novembre 2015, avec la participation de W. A. - <a href="https://github.com/interfacteur/croisement-donnees">archive sur Github</a></p>
 </body>
 </html>
