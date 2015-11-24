@@ -1,7 +1,6 @@
 Croiser des ensembles de données
 ==================
 
-* in-croisement-ens-donnees.html :
 
 //code procédural…
 	- to do: reprendre en orientation prototypale, ou orienté objet ES6
