@@ -1,4 +1,4 @@
-Croisement de données
+Croiser des ensembles de données
 ==================
 
 * in-croisement-ens-donnees.html :
