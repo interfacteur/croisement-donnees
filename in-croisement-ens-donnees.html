@@ -58,6 +58,7 @@ input	{
 	vertical-align: middle;
 }
 span,
+label,
 a	{
 	vertical-align: baseline;
 }
@@ -146,7 +147,8 @@ th	{
 	text-align: left;
 	width: 12em;
 }
-th span	{
+th label	{
+	background: #FFF;
 	border-radius: .2em;
 	display: inline-block;
 	font-size: .85em;
@@ -186,26 +188,26 @@ tr + tr td:not(:empty)::before	{
 	padding-bottom: .1em;
 	width: 2.66em;
 }
-
+.axe td:not(:empty)::before	{
+	color: #FFF;
+}
+tr.present td:not(:empty)::before	{
+	border-width: 2px;
+}
 
 .secondaire	{
 	color: #CCC;
 }
-.absent span	{
+.absent label	{
 	opacity: .25;
 }
-/*.present span	{
-	opacity: .75;
-}*/
 
+.axe th,
 .axe td	{
 	color: #C00;
 }
 
-.axe td:not(:empty)::before	{
-	background: #AAA;
-	color: #FFF;
-}
+
 
 .absent [type='radio'],
 .present [type='radio'],
@@ -258,86 +260,82 @@ table.colonne::after	{
 	width: 4.66em;
 }
 
-table tr.axe th	{
-	box-shadow: none;
-}
-table tr.axe th span	{
-	box-shadow: 10em 10em #FFF inset;
-}
 
 
 
 
 
-tr:nth-child(2) span	{
+
+
+tr.axe:nth-child(2) td:not(:empty)::before,
+tr:nth-child(2) th	{
 	background: #C96;
 }
 tr:nth-child(2) td::before	{
 	border-color: #C96;
 }
-tr:nth-child(2) th,
 tr:nth-child(2) td:not(:empty)	{
 	box-shadow: 0 -2.5em #FFF inset, 0 -3em #C96 inset;
 }
 
 
-tr:nth-child(3) span	{
-	background: #CDC;
+tr.axe:nth-child(3) td:not(:empty)::before,
+tr:nth-child(3) th	{
+	background: #BCB;
 }
 tr:nth-child(3) td::before	{
-	border-color: #CDC;
+	border-color: #BCB;
 }
-tr:nth-child(3) th,
 tr:nth-child(3) td:not(:empty)	{
-	box-shadow: 0 -2em #FFF inset, 0 -2.5em #CDC inset;
+	box-shadow: 0 -2em #FFF inset, 0 -2.5em #BCB inset;
 }
 
 
-tr:nth-child(4) span	{
+tr.axe:nth-child(4) td:not(:empty)::before,
+tr:nth-child(4) th	{
 	background: #E96;
 }
 tr:nth-child(4) td::before	{
 	border-color: #E96;
 }
-tr:nth-child(4) th,
 tr:nth-child(4) td:not(:empty)	{
 	box-shadow: 0 -1.5em #FFF inset, 0 -2em #E96 inset;
 }
 
 
-tr:nth-child(5) span	{
+tr.axe:nth-child(5) td:not(:empty)::before,
+tr:nth-child(5) th	{
 	background: #BBE;
 }
 tr:nth-child(5) td::before	{
 	border-color: #BBE;
 }
-tr:nth-child(5) th,
 tr:nth-child(5) td:not(:empty)	{
 	box-shadow: 0 -1em #FFF inset, 0 -1.5em #BBE inset;
 }
 
 
-tr:nth-child(6) span	{
+tr.axe:nth-child(6) td:not(:empty)::before,
+tr:nth-child(6) th	{
 	background: #ED5;
 }
 tr:nth-child(6) td::before	{
 	border-color: #ED5;
 }
-tr:nth-child(6) th,
 tr:nth-child(6) td:not(:empty)	{
 	box-shadow: 0 -.5em #FFF inset, 0 -1em #ED5 inset;
 }
 
 
-tr:nth-child(7) span	{
-	background: #BE8;
+tr.axe:nth-child(7) td:not(:empty)::before,
+tr:nth-child(7) th	{
+	background: #AD7;
 }
 tr:nth-child(7) td::before	{
-	border-color: #BE8;
+	border-color: #AD7;
 }
-tr:nth-child(7) th,
 tr:nth-child(7) td:not(:empty)	{
-	box-shadow: 0 -.5em #BE8 inset;
+	box-shadow: 0 -.5em #AD7 inset;
 }
 </style>
 </head>
@@ -352,20 +350,20 @@ tr:nth-child(7) td:not(:empty)	{
 		<label for="pres2">Présentation du tableau par colonne</label>
 	</div>
 	<p>
-		Visualiser les pistes d'un album et leur occurrence dans les autres albums.
-		<em>En tête de chaque album, la case à cocher permet de fixer un album de référence, et également plusieurs.</em>
+		Pour tout album, visualiser les occurrences de ses pistes dans les autres albums.
+		<em>En tête de chaque album, la case à cocher <input type="checkbox"> permet ainsi de sélectionner un album de référence.</em>
 	</p>
 	<p>
-		Avec plusieurs albums de référence : visualiser les pistes communes cette sélection et leur occurrence dans les autres albums.
+		Plusieurs albums sélectionnés donnent à visualiser leurs pistes communes, et les occurrences dans les autres albums.
 	</p>
 	<p>
-		Chaque album, présenté selon l'ordre d'origine de ses pistes, peut être trié numériquement.
-		<em>Les deux boutons radio permettent de choisir entre ordres d'origine (par défaut) et numérique.</em>
+		Hors mode de visualisation, l'ordre des pistes est l'ordre d'origine des albums, mais peut aussi être trié numériquement.
+		<em>Les deux boutons radio <input type="radio"> donnent le choix entre les ordres d'origine (par défaut) et numérique.</em>
 	</p>
-	<p>NB : les boutons situés au début du tableau permettent de manipuler par type d'action l'ensemble de ces cases et boutons.
+	<p>Les boutons radio <input type="radio"> en tête de tableau permettent de manipuler directement l'ensemble des cases et boutons.
 		<em>Ils sont <b>exclusifs</b>&nbsp;: "ordre d'origine" par ex. <b>désélectionne</b> toutes les albums sélectionnées</em>.</p>
 	<p>
-		<strong>Exemple avec des albums de sonates de D. Scarlatti, sonates référencées selon le catalogue <abbr title="Kirkpatrick">Kk</abbr>&nbsp;:</strong>
+		<strong>Avec 6 albums de sonates de D. Scarlatti, sonates numérotées selon le catalogue <abbr title="Kirkpatrick">Kk</abbr>, à partir de données JSON&nbsp;:</strong>
 	</p>
 </form>
 <script src="-scripts/jquery-1.11.0.min.js"></script>
@@ -505,6 +503,8 @@ var Staier =	{
 	"use strict";
 
 /* code août 2014, procédural
+	révision skin en 2015
+
 	to do: reprendre en orientation prototypale, ou orienté objet ES6 */
 
 
@@ -512,11 +512,11 @@ var Staier =	{
 		return;
 
 	var auteurs = $("#json").text()
-	.replace(/"use strict";/g,"")
-	.replace(/[\t\n\r\u2028\u2029]/g,"")
-	.replace(/var /g,"")
-	.replace(/ =[^\}]+}/g,",")
-	.split(","),
+		.replace(/"use strict";/g,"")
+		.replace(/[\t\n\r\u2028\u2029]/g,"")
+		.replace(/var /g,"")
+		.replace(/ =[^\}]+}/g,",")
+		.split(","),
 		listes = [],
 		longueur = 0,
 		code = [],
@@ -527,14 +527,16 @@ var Staier =	{
 			'">',
 			'<input type="checkbox" name="commun" id="commun',
 			'<label for="liste',
-			'</label>'
+			'</label>',
+			'commun'
 
 
 		],
 		ordres = ["Ordre d'origine :", "Ordre numérique :", "Tout sélectionner :", "|| Tout désélectionner :"];
+
 	auteurs.pop();
-	var l = auteurs.length;
-	for (var i=0;i<l;++i) {
+
+	for (var i=0,l=auteurs.length;i<l;++i) {
 		listes.push($.map(window[auteurs[i]],function(zel) { return zel; }));
 		listes[i].unshift(listes[i].pop());
 		longueur = listes[i].length > longueur ? listes[i].length : longueur;
@@ -544,7 +546,7 @@ var Staier =	{
 			+ manu[0] + i + manu[1] + i + 0 + manu[2]
 			+ manu[0] + i + manu[1] + i + 1 + manu[3]
 			+ manu[4] + i + 2 + manu[3]
-			+ "<br><span>" + listes[i][0] + "</span>");
+			+ '<br><label for="' + manu[7] + i + 2 + '">' + listes[i][0] + "</label>");
 		for (var i2=1;i2<longueur;++i2){
 			code.push('<td data-item="' + i2 + '" data-oeuvre="' + (listes[i][i2] || 100000000000) + '">' + (listes[i][i2] || "") + "</td>");
 		}
@@ -563,7 +565,7 @@ var Staier =	{
 	$("<table>", { data : { width : [12 + longueur * 4,l * 7] }, html : code.join("")}).appendTo($("form"));
 
 
-
+console.log(window[auteurs[2]]);
 
 
 	var $ta = $("table"),
@@ -666,7 +668,7 @@ var Staier =	{
 
 	function retablir(axe) {
 		$(".axes, .secondaire, .absent, .visible").removeClass("axes secondaire absent visible");
-		axe && $(".axe").removeClass("axe").find("th").css("background", "none");
+		axe && $(".axe").removeClass("axe");
 
 		$(".present, .axe").each(function() {
 			var $t = $(this),
@@ -723,11 +725,9 @@ var Staier =	{
 			$g.prop("checked",false);
 			retablir();
 			if ($t.is(":checked"))
-				$p.addClass("axe")
-				.find("th").css("background", $p.find("span").css("background-color"));
+				$p.addClass("axe");
 			else
-				$p.removeClass("axe")
-				.find("th").css("background", "none");
+				$p.removeClass("axe");
 			var configuration = $(".axe").length;
 			for (var i = configuration == 0 ? 0 : 2;i<3;i++) {
 				if ($i.filter("[id$='" + i + "']:checked").length == l) {
@@ -774,8 +774,7 @@ var Staier =	{
 			$i2.prop("checked",true);
 			$("tr + tr").each(function() {
 				var $t = $(this);
-				$t.addClass("axe")
-				.find("th").css("background", $(this).find("th span").css("background-color"));
+				$t.addClass("axe");
 			});
 			$i2.eq(0).trigger("change");
 	}	});
@@ -784,8 +783,7 @@ var Staier =	{
 			$i2.prop("checked",false);
 			$("tr + tr").each(function() {
 				var $t = $(this);
-				$t.removeClass("axe")
-				.find("th").css("background", "none");
+				$t.removeClass("axe");
 			});
 			$i2.eq(0).trigger("change");
 	} 	});
