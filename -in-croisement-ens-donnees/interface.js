@@ -1,4 +1,4 @@
-;(function() {
+;var interfacter = (function interfacter () {
 	"use strict";
 
 /* code août 2014, procédural
@@ -10,7 +10,7 @@
 	if (! Array.prototype.forEach)
 		return;
 
-	var collection = Object.keys(datas),
+	var collection = cles, //cf. analyse-donnees.js
 		listes = [],
 		longueur = 0,
 		code = [],
@@ -26,6 +26,9 @@
 		],
 		ordres = ["Ordre d'origine :", "Ordre numérique :", "Tout sélectionner :", "|| Tout désélectionner :"];
 
+
+	$("#titre").html(titre);
+	$("table").remove();
 
 
 	for (var i=0,l=collection.length;i<l;++i) {
@@ -92,7 +95,7 @@
 			var $t = $(this);
 			$t.css("box-shadow",$t.data(choix));
 	});	}
-	redeployer.call(":checked:eq(0)");
+	redeployer.call("[type='radio']:checked:eq(0)");
 	$("form > div > input").on({
 		change: redeployer
 	});
@@ -279,17 +282,5 @@
 			$i2.eq(0).trigger("change");
 	} 	});
 
-
-
-
-
-
-
-/* aide - 01/2016 */
-	var $aide = $("#aide");
-	$("#lire-mode-d-emploi").on("click", function (e) {
-		e.preventDefault();
-		$aide.toggleClass("sans");
-	});
-
+	return interfacter;
 })();

@@ -1,3 +1,4 @@
+var titre = 'Avec 6 albums de sonates de D. Scarlatti numérotées selon le catalogue <abbr title="Kirkpatrick">Kk</abbr>';
 var datas = {
 	"XiaoMei":	{
 		"titre" : "Xiao-Mei",

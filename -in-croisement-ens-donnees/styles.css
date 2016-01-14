@@ -85,9 +85,89 @@ form	{
 	font-family: Arial;
 	margin: 0 1em 1em 1em;
 }
+form label	{
+	background: #FFF;
+}
+.masquage	{
+	float: left;
+	font-size: .85em;
+	margin-right: -14em;
+	text-align: left;
+	width: 14em;
+}
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+	.masquage	{
+		position: absolute;
+		left: -4444em;
+	}
+}
 form > div	{
 	padding: 1em 0;
 	text-align: center;
+}
+form > div > div	{
+	float: right;
+	font-size: .75em;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	display: none;
+
+}
+#modification	{
+	cursor: pointer;
 }
 form section	{
 	position: relative;
@@ -110,6 +190,7 @@ form section div	{
 	padding-bottom: .6em;
 	position: relative;
 	white-space: nowrap;
+	z-index: 12;
 }
 #aide.sans	{
 	box-shadow: none;
@@ -177,17 +258,19 @@ form section div	{
 #meta p + p	{
 	font-style: italic;
 }
-#meta a	{
+#meta label	{
+	cursor: pointer;
+	text-decoration: underline;
 	position: relative;
 	z-index: 10;
 }
-#meta a:before	{
+#meta label:before	{
 	content: "< Masquer";
 }
-#meta.sans a:before	{
+#meta.sans label:before	{
 	content: "> Afficher";
 }
-#meta.sans a:after	{
+#meta.sans label:after	{
 	content: " des intersections";
 }
 

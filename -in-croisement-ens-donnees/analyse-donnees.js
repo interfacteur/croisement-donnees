@@ -1,4 +1,7 @@
-;(function() {
+;var $meta = $("#meta"),
+	cles = Object.keys(datas);
+
+;var analyser = (function analyser () {
 	"use strict";
 
 /* méta-informations - 01/2016 */
@@ -23,9 +26,7 @@
 
 
 
-	var $meta = $("#meta"),
-		cles = Object.keys(datas),
-		nombreTableaux = cles.length,
+	var nombreTableaux = cles.length,
 		tableaux = [],
 		titres = [],
 		titresIndex = [],
@@ -195,15 +196,10 @@
 
 
 
-
-
-
-	code.push('<a href="#"> les analyses</a>');
+	code.push('<label for="masquage"> les analyses</label>');
 	$meta.html(code.join(""));
-	$meta.find("a").on("click", function (e) {
-		e.preventDefault();
-		$meta.toggleClass("sans");
-	});
 
+
+	return analyser;
 
 })();

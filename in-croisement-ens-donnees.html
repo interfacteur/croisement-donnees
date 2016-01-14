@@ -14,11 +14,18 @@
 <h1>Croiser des ensembles de données</h1>
 <form action="#">
 	<div>
-		Tableau :
+		<span class="masquage">
+			<input type="checkbox" id="masquage">
+			<label for="masquage">Analyses masquées</label>
+		</span>
+		<label for="pres1">Tableau :</label>
 		<input type="radio" name="presentation" id="pres1" checked>
 		<label for="pres1">affichage par ligne</label>
 		<input type="radio" name="presentation" id="pres2">
 		<label for="pres2">affichage par colonne</label>
+		<div>
+			<input type="button" value="Modifier données" id="modification">
+		</div>
 	</div>
 	<section>
 		<div id="aide" class="sans">
@@ -43,13 +50,14 @@
 		<div id="meta"></div>
 	</section>
 	<p>
-		<strong>Avec 6 albums de sonates de D. Scarlatti, sonates numérotées selon le catalogue <abbr title="Kirkpatrick">Kk</abbr>, à partir de données de forme JSON&nbsp;(<a href="http://www.equatorium.net/e1/-in-croisement-ens-donnees/donnees.js">*</a>)&nbsp;:</strong>
+		<strong id="titre"></strong>, à partir de données de forme JSON&nbsp;(<a href="http://www.equatorium.net/e1/-in-croisement-ens-donnees/donnees.js">*</a>)&nbsp;:
 	</p>
 </form>
 <script src="-in-croisement-ens-donnees/jquery-1.11.0.min.js"></script>
 <script src="-in-croisement-ens-donnees/donnees.js"></script>
 <script src="-in-croisement-ens-donnees/analyse-donnees.js"></script>
 <script src="-in-croisement-ens-donnees/interface.js"></script>
+<script src="-in-croisement-ens-donnees/evenements.js"></script>
 <p>Pour Firefox et Chrome, IE 10+ possible : tout navigateur standard supportant "box-shadow", "table-layout", les sélecteurs avancés, 'forEach()'<br>
 	Interfacteur, août 2014 - skin novembre 2015, avec la participation de w. a. - <a href="https://github.com/interfacteur/croisement-donnees">archive sur Github</a></p>
 </body>
