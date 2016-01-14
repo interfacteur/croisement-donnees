@@ -1,5 +1,5 @@
 var datas = {
-	XiaoMei:	{
+	"XiaoMei":	{
 		"titre" : "Xiao-Mei",
 		"0" : 113,
 		"1" : 39,
@@ -19,7 +19,7 @@ var datas = {
 		"15" : 98,
 		"16" : 531
 	},
-	RossBelles: {
+	"RossBelles": {
 		"titre" : "Scott Ross, les + belles",
 		"0" : 1,
 		"1" : 9,
@@ -41,7 +41,7 @@ var datas = {
 		"17" : 492,
 		"18" : 555
 	},
-	Ross561: {
+	"Ross561": {
 		"titre" : "Scott Ross, antho. 1",
 		"0" : 33,
 		"1" : 34,
@@ -64,7 +64,7 @@ var datas = {
 		"18" : 144,
 		"19" : 145
 	},
-	Ross562: {
+	"Ross562": {
 		"titre" : "Scott Ross, antho. 2",
 		"0" : 146,
 		"1" : 178,
@@ -84,7 +84,7 @@ var datas = {
 		"15" : 259,
 		"16" : 260
 	},
-	Ross563: {
+	"Ross563": {
 		"titre" : "Scott Ross, antho. 3",
 		"0" : 241,
 		"1" : 261,
@@ -106,7 +106,7 @@ var datas = {
 		"17" : 544,
 		"18" : 545
 	},
-	Staier:	{
+	"Staier":	{
 		"titre" : "Staier",
 		"0" : 427,
 		"1" : 426,
