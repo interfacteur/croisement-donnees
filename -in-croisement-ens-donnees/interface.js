@@ -27,8 +27,9 @@
 		ordres = ["Ordre d'origine :", "Ordre numérique :", "Tout sélectionner :", "|| Tout désélectionner :"];
 
 
-	$("#titre").html(titre);
+	$("#titre").html(informations.titre);
 	$("table").remove();
+	$("form > div > input").off();
 
 
 	for (var i=0,l=collection.length;i<l;++i) {
@@ -60,6 +61,12 @@
 	$("<table>", { data : { width : [12 + longueur * 4,l * 7] }, html : code.join("")}).appendTo($("form"));
 
 
+/*
+	fin analyse-donnees.js :
+		$meta.html(code.join(""));
+		$(".typeTab1").text(typeTab[0]); etc.
+
+*/
 
 
 	var $ta = $("table"),
