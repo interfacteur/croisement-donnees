@@ -8,7 +8,7 @@ var informations = {
 
 var datas = {
 	"bordelais":	{
-		"titre" : "le Bordelais",
+		"titre" : "Le Bordelais",
 		"0" : 1928,
 		"1" : 1929,
 		"2" : 1945,
