@@ -11,54 +11,57 @@
 </head>
 
 <body>
-<h1>Croiser des ensembles de données</h1>
+<h1><span>Croiser des ensembles de données</span></h1>
 <form action="#">
 	<div>
 		<span class="masquage">
-			<input type="checkbox" id="masquage">
 			<label for="masquage">Analyses masquées</label>
+			<input type="checkbox" id="masquage">
 		</span>
-		<label for="pres1">Tableau :</label>
+		<label for="pres1">Affichage du tableau :</label>
 		<input type="radio" name="presentation" id="pres1" checked>
-		<label for="pres1">affichage par ligne</label>
+		<label for="pres1">par ligne</label>
 		<input type="radio" name="presentation" id="pres2">
-		<label for="pres2">affichage par colonne</label>
+		<label for="pres2">par colonne</label>
 		<div>
-			<input type="button" value="Modifier données" id="modification">
+			<label for="modification">
+				Charger de nouvelles données -
+				<a href="http://www.equatorium.net/e1/-in-croisement-ens-donnees/donnees2.js" title="exemple">ex.</a>  :
+			</label>
+			<input type="file" title="Nouvelles données" id="modification">
+			<a href="#" id="big" title="Sélectionner sur l'ordinateur un fichier .txt ou .js reprenant la forme donnée en exemple… L'on peut enregistrer cet exemple-là (ou celui des millésimes) pour le modifier et l'adapter… Jusqu'à 6 tableaux (&#x22;régions&#x22;, &#x22;albums&#x22; etc.) sont possibles… NB : conserver les variables et clés sauf dans 'datas'… Tout retour d'expérience est attendu et bienvenu : http://emploi.alsacreations.com/demande-20022-Developpeur-front-end.html."><big>?</big></a>
 		</div>
 	</div>
 	<section>
 		<div id="aide" class="sans">
 			<p>
-				<strong>Pour tout album, visualiser les occurrences de ses pistes dans les autres albums.</strong>
-				<em>En tête de chaque album, la case à cocher <input type="checkbox"> permet de sélectionner ainsi un album de référence.</em>
+				<strong>Pour tout<span class="genreTab"></span> <span class="typeTab1"></span>, visualiser les occurrences de ses <span class="typeEle2"></span> dans les autres <span class="typeTab2"></span>.</strong>
+				<em>En tête de chaque <span class="typeTab1"></span>, la case à cocher <input type="checkbox"> permet de sélectionner ainsi un<span class="genreTab"></span> <span class="typeTab1"></span> de référence.</em>
 			</p>
 			<p class="lire-mode-d-emploi">
-				<a href="#" id="lire-mode-d-emploi">Mode d'emploi &gt; suite</a>
+				<a href="#" id="lire-mode-d-emploi">Mode d'emploi suite &gt;</a>
 			</p>
 			<p>
-				Plusieurs albums sélectionnés visualisent à la fois les pistes communes,<br>et les occurrences de ces pistes dans les autres albums.
+				Plusieurs <span class="typeTab2"></span> sélectionné<span class="genreTab"></span>s visualisent à la fois les <span class="typeEle2"></span> commun<span class="genreEle"></span>s, et<br>les occurrences de ces <span class="typeEle2"></span> dans les autres <span class="typeTab2"></span>.
 			</p>
 			<p>
-				Hors visualisation, l'ordre des pistes est l'ordre d'origine des albums, il peut être trié numériquement.<br>
+				Hors visualisation, l'ordre des données est d'origine, pas toujours croissant, et peut donc être trié numériquement.<br>
 				<em>Les deux boutons radio <input type="radio"> donnent le choix entre les ordres d'origine (par défaut) et numérique.</em>
 			</p>
 			<p>Les 3/4 boutons radio <input type="radio"> en tête de tableau permettent de manipuler directement l'ensemble des cases<br>et boutons.
-				<em>Ils sont <b>exclusifs</b>&nbsp;: "ordre d'origine" par ex. <b>désélectionne</b> toutes les albums sélectionnées</em>.
+				<em>Ils sont <b>exclusifs</b>&nbsp;: "ordre d'origine" par ex. <b>désélectionne</b> toutes les <span class="typeTab2"></span> sélectionnées</em>.
 			</p>
+			<p>Pour introduire et visualiser de nouvelles données, <a href="#big">la façon de procéder est détaillée plus haut</a>.</p>
 		</div>
 		<div id="meta"></div>
 	</section>
-	<p>
-		<strong id="titre"></strong>, à partir de données de forme JSON&nbsp;(<a href="http://www.equatorium.net/e1/-in-croisement-ens-donnees/donnees.js">*</a>)&nbsp;:
-	</p>
+	<h2><span id="titre"></span>, à partir de données de forme JSON&nbsp;(<a href="#big" title="Introduire et visualiser de nouvelles données">?</a>)&nbsp;:</h2>
 </form>
+<div>Pour Firefox et Chrome, IE 10+ possible : tout navigateur standard supportant "box-shadow", "table-layout", les sélecteurs avancés, 'forEach()', et l'API FileReader pour la modification de données - <address>Août 2014 - skin novembre 2015 - analyse et personnalisation janvier 2016</address> - <a href="https://github.com/interfacteur/croisement-donnees">archive sur Github</a></div>
 <script src="-in-croisement-ens-donnees/jquery-1.11.0.min.js"></script>
 <script src="-in-croisement-ens-donnees/donnees.js"></script>
 <script src="-in-croisement-ens-donnees/analyse-donnees.js"></script>
 <script src="-in-croisement-ens-donnees/interface.js"></script>
 <script src="-in-croisement-ens-donnees/evenements.js"></script>
-<p>Pour Firefox et Chrome, IE 10+ possible : tout navigateur standard supportant "box-shadow", "table-layout", les sélecteurs avancés, 'forEach()'<br>
-	Interfacteur, août 2014 - skin novembre 2015, avec la participation de w. a. - <a href="https://github.com/interfacteur/croisement-donnees">archive sur Github</a></p>
 </body>
 </html>
