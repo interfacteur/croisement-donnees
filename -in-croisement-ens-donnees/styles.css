@@ -1,3 +1,4 @@
+/* bases */
 *	{
 	-webkit-box-sizing: border-box;
 	-moz-box-sizing: border-box;
@@ -28,6 +29,8 @@ body::after	{
 }
 
 
+
+/* generique */
 html, body, h1, h2, p, form, input,
 table, caption, tbody, tfoot, thead, tr, th, td	{
 	margin: 0;
@@ -55,18 +58,32 @@ span,
 a	{
 	vertical-align: baseline;
 }
+
+
+
+/* communs */
 a	{
 	background: transparent;
 	color: #000;
+	text-decoration: underline;
 }
 a:focus	{
 	outline: thin dotted;
+	text-decoration: none;
 }
-a:active, a:hover	{
+a:active,
+a:hover	{
 	outline: 0;
+	text-decoration: none;
 }
-
-
+h1,
+p,
+form + div	{
+	line-height: 1.6;
+}
+p em	{
+	display: inline-block;
+}
 h1	{
 	background: #F5F5F5;
 	font-family: Courier;
@@ -80,24 +97,29 @@ h1 span	{
 	z-index: 22;
 }
 h2	{
-	font-size: 1em;
-	font-weight: normal;
+	border-top: 1px solid #445;
+	color: #445;
+	font-size: 1.1em;
+	padding-top: .5em;
 	text-align: center;
 }
 h2 span	{
 	font-weight: bold;
 }
 
-h1,
-p,
-form + div	{
-	line-height: 1.6;
+header	{
+	border-bottom: 3px solid #F5F5F5;
 }
-p em	{
-	display: inline-block;
+header p,
+header p a	{
+	color: rgba(68, 68, 85, .5);
+	text-align: center;
 }
-
-
+header p:hover,
+header p:hover a,
+header p a:focus	{
+	color: #000;
+}
 form	{
 	font-family: Arial;
 	margin: 0 1em 1em 1em;
@@ -105,26 +127,30 @@ form	{
 form > div > label	{
 	background: #FFF;
 }
-.masquage	{
-	float: left;
+footer	{
 	font-size: .85em;
-	margin-right: -14em;
-	text-align: left;
-	width: 14em;
+	padding: 1em 2em;
 }
-@media screen and (-webkit-min-device-pixel-ratio:0) {
-	.masquage	{
-		position: absolute;
-		left: -4444em;
-	}
-}
-form > div	{
+
+
+/* structure */
+.interaction	{
+	box-shadow: -.5em 0 #FFF, -1em 0 #BBB, .5em 0 #FFF, 1em 0 #BBB;
 	padding: 1em 0;
 	text-align: right;
 }
-form > div > div	{
+.analyse	{
+	float: left;
+	margin-right: -14em;
+	text-align: left;
+	width: 24em;
+}
+.analyse input	{
+	margin-right: 2em;
+}
+.modifier	{
 	border-left: 1px solid #445;
-	font-size: .75em;
+	font-size: .85em;
 	padding-left: 1em;
 	position: absolute;
 	right: 0;
@@ -132,16 +158,23 @@ form > div > div	{
 	white-space: nowrap;
 	z-index: 21;
 }
-#big	{
+#modifier	{
+	cursor: pointer;
+}
+#aidePersonnalisation	{
 	cursor: help;
 	padding-right: .25em;
 }
+
+
+
+/* aide sur la contribution */
 .contribuer	{
 	background: #FFF;
 	border-radius: 1em;
-	box-shadow: -.05em 0 .05em #445, -4em 0 4em rgba(68, 68, 85, .05);
+	box-shadow: -.05em 0 .05em #406, -4em 0 4em rgba(68, 0, 102, .1);
 	cursor: zoom-out;
-	font-size: 1.3em;
+	font-size: 1.15em;
 	line-height: 1.8;
 	padding: 1em;
 	position: absolute;
@@ -152,8 +185,14 @@ form > div > div	{
 	white-space: normal;
 	z-index: 24;
 }
+.modifier .contribuer:before	{
+	background: transparent;
+	position: absolute;
+	right: 0;
+	top: -.3em;
+}
 .contribuer:before,
-#lire-mode-d-emploi:before	{
+#mdemploi:before	{
 	background: #FFF;
 	content: "X";
 	color: #000;
@@ -161,134 +200,108 @@ form > div > div	{
 	font-size: 14px;
 	padding: .2em .4em;
 }
-.contribuer:before	{
-	background: transparent;
-	position: absolute;
-	right: 0;
-	top: -.3em;
-}
 
-#modification	{
-	cursor: pointer;
-}
-form section	{
+
+
+/* zones informatives */
+.info	{
 	position: relative;
 }
-form section:after	{
+.info:after	{
 	content: " ";
 	display: table;
 	clear: both;
 }
-form section div	{
+.info div	{
 	font-size: .9em;
 }
 
-#aide	{
+
+/* mode d'emploi */
+#aideUtilisation	{
 	background: #FFF;
 	border-radius: 5px;
-	box-shadow: -.05em 0 .05em #445, -4em 0 4em rgba(68, 68, 85, .05);
+	box-shadow: -.05em 0 .05em #406, -4em 0 4em rgba(68, 0, 102, .1);
 	float: right;
 	margin-bottom: 1.8em;
-	padding-bottom: .6em;
+	margin-top: -5.4em;
+	padding: 1em 0;
 	position: relative;
 	white-space: nowrap;
 	z-index: 12;
 }
-#aide.sans	{
+#aideUtilisation.nulle	{
+	display: none;
+}
+#aideUtilisation.sans	{
+	background: #F5F5F5;
+	border-radius: 0;
 	box-shadow: -.15em 0 #445;
-	text-align: right;
-}
-.lire-mode-d-emploi	{
-	position: absolute;
-	right: 0;
-	top: 0;
-}
-.sans .lire-mode-d-emploi	{
-	position: inherit;
-}
-
-#aide p:first-child	{
-	padding: 0 .3em;
-}
-#aide p:first-child strong	{
-	color: #445;
-	display: block;
+	font-size: .85em;
+	margin-top: 0;
+	opacity: .66;
 	text-align: center;
 }
-.sans p:first-child strong	{
-	color: #000;
-	display: inherit;
-	font-weight: normal;
-	text-align: right;
+#aideUtilisation.sans:hover,
+#aideUtilisation.sans:focus	{
+	background: #FFF;
+	opacity: 1;
 }
-.sans em	{
-	display: none;
+#aideUtilisation p:first-child	{
+	padding: 0 .3em;
 }
-
-#lire-mode-d-emploi	{
-	color: #FFF;
-	font-size: 0;
-}
-.sans #lire-mode-d-emploi	{
-	color: #000;
-	font-size: .9em;
-}
-.sans #lire-mode-d-emploi:before	{
-	content: "";
-}
-
-#meta	{
-	box-shadow: -.8em 0 #FFF, -.9em 0 .1em #445;
-	float: left;
-	font-size: .8em;
-	margin-bottom: 1.8em;
-	white-space: pre;
-	width: .2em;
-}
-#meta strong	{
+#aideUtilisation p:first-child strong	{
 	color: #445;
 }
-#meta p:first-child	{
-	height: 1.6em;
+#aideUtilisation.sans p:first-child strong	{
+	color: #000;
+	font-weight: normal;
 }
-#meta label	{
-	cursor: pointer;
-	text-decoration: underline;
-	position: relative;
-	z-index: 10;
+#mdemploi	{
+	color: #FFF;
+	font-size: 0;
+	position: absolute;
+	right: 0;
+	top: -5em;
 }
-#meta label:before	{
-	content: "< Masquer";
+.sans #mdemploi	{
+	color: #000;
+	font-size: 1em;
+	position: inherit;
 }
-/*#meta.sans label:before	{
-	content: "Afficher";
+.sans #mdemploi:before	{
+	background: transparent;
+	content: "";
 }
-#meta.sans label:after	{
-	content: " des croisements >";
-}*/
-#meta.sans label	{
+#aideUtilisation p:first-child em	{
+	display: block;
+}
+#aideUtilisation.sans p:first-child em	{
 	display: none;
 }
+.info #aideUtilisation p + p:last-child	{
+	height: 1.7em;
+}
 
 
 
-
-
-.lire-mode-d-emploi ~ p,
-#meta p	{
-	opacity: 1;
-	height: 3.4em;
-	padding: .5em .3em 0 .3em;
+/* animation contextuelle */
+#aideUtilisation,
+#aideUtilisation p + p,
+body:not(.init) #meta p	{
 	-webkit-transition: .5s;
 	-moz-transition: .5s;
 	-ms-transition: .5s;
 	-o-transition: .5s;
 	transition: .5s;
 }
-.lire-mode-d-emploi ~ p:last-child	{
-	height: 1.7em;
+#aideUtilisation p + p,
+#meta p	{
+	opacity: 1;
+	height: 4.5em;
+	padding: .5em .3em 0 .66em;
 }
-.sans .lire-mode-d-emploi ~ p,
+.info #aideUtilisation.sans p + p,
 #meta.sans p	{
 	opacity: 0;
 	height: 0;
@@ -296,17 +309,104 @@ form section div	{
 	padding-top: 0;
 	width: 0;
 }
+
+
+
+/* analyse */
+#meta	{
+	box-shadow: 0 0 0 .5em #FFF, -.5em 0 .15em #445;
+	float: left;
+	font-size: .8em;
+	margin-bottom: 1.8em;
+	white-space: pre;
+	width: .2em;
+}
+#meta.sans	{
+	box-shadow: none;
+}
 #meta p	{
 	height: 3.1em;
 	margin-bottom: .33em;
 	padding: 0;
+}
+#meta p:first-child	{
+	height: 1.6em;
 }
 #meta .limite	{
 	height: 4.4em;
 	overflow-x: auto;
 	width: 30em;
 }
+#meta strong	{
+	color: #445;
+}
+#meta label	{
+	background: rgba(68, 0, 102, .125);
+	border-radius: 0 0 10em 0;
+	cursor: pointer;
+	display: block;
+	line-height: 1.3;
+	opacity: .6;
+	padding-bottom: .2em;
+	text-align: center;
+	position: relative;
+	width: 30em;
+	z-index: 10;
+}
+#meta label:hover,
+#meta label:focus	{
+	opacity: .85;
+}
+#meta.sans label	{
+	display: none;
+}
 
+
+
+/* popin et éléments contextuels */
+.message	{
+	background: #445;
+	border-radius: 1em;
+	box-shadow: 0 0 0 100em rgba(68, 68, 85, .5);
+	color: #FFF;
+	cursor: zoom-out;
+	left: 50%;
+	margin-left: -22vw;
+	padding: 3em;
+	position: absolute;
+	text-align: center;
+	top: 10em;
+	width: 44vw;
+	z-index: 50000;
+}
+.message em	{
+	display: block;
+	font-size: .9em;
+	margin-top: 1.4em;
+}
+.message:focus	{
+	outline: 0;
+}
+
+.fermeture	{
+	bottom: 0;
+	left: -4444em;
+	position: absolute;
+}
+.fermeture:focus	{
+	left: auto;
+	right: .2em;
+}
+
+.message .fermeture:focus	{
+	color: #FFF;
+	outline: 0;
+	right: 1em;
+}
+
+
+
+/* "interface" */
 div input	{
 	margin: .3em .4em;
 }

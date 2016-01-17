@@ -1,10 +1,16 @@
-;var interfacter = (function interfacter () {
+;var $f = $("form"),
+
+	interfacter = (function interfacter () {
 	"use strict";
 
 /* code août 2014, procédural
 	révision skin en 2015
 
-	to do: reprendre en orientation prototypale, ou orienté objet ES6 */
+	to do : ARIA
+
+	to do : reprendre en orientation prototypale, ou orienté objet ES6 ?
+
+*/
 
 
 	if (! Array.prototype.forEach)
@@ -29,7 +35,7 @@
 
 	$("#titre").html(informations.titre);
 	$("table").remove();
-	$("form > div > input").off();
+	$(".interaction > input").off();
 
 
 	for (var i=0,l=collection.length;i<l;++i) {
@@ -58,11 +64,12 @@
 		+ manu[5] + 93 + manu[3] + ordres[3] + manu[6]
 		+ manu[0] + 9 + manu[1] + 93 + manu[3]
 		+ "</td></tr>");
-	$("<table>", { data : { width : [12 + longueur * 4,l * 7] }, html : code.join("")}).appendTo($("form"));
+	$("<table>", { data : { width : [12 + longueur * 4,l * 7] }, html : code.join("")})
+	.appendTo($f.addClass("settled"));
 
 
 /*
-	fin analyse-donnees.js :
+	à la fin de analyse-donnees.js :
 		$meta.html(code.join(""));
 		$(".typeTab1").text(typeTab[0]); etc.
 
@@ -103,7 +110,7 @@
 			$t.css("box-shadow",$t.data(choix));
 	});	}
 	redeployer.call("[type='radio']:checked:eq(0)");
-	$("form > div > input").on({
+	$(".interaction > input").on({
 		change: redeployer
 	});
 

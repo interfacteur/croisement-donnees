@@ -11,6 +11,7 @@
 //to do : sur MSIE ?
 
 
+
 	cles = Object.keys(datas);
 
 	var nombreTableaux = cles.length,
@@ -32,14 +33,23 @@
 		largeurMinTableaux,
 		profondeurMaxTableaux,
 		occurrenceElements,
-		code = ["<p><strong>Analyse des croisements :</strong></p>"],
+		code = ["<p><strong>L'analyse des croisements :</strong></p>"],
 		typeTab = informations.typeTableaux,
 		genreTab = informations.genreTableaux,
 		typeEle = informations.typeElements,
 		genreEle = informations.genreElements,
 		article = { "f": "une", "m": "un" },
 		adjectif = { "f": "répandues, présentes", "m": "répandus, présents" },
-		i, l;
+		i, l,
+		interz = {
+			etendue: "Intersection la plus étendue, avec ",
+			large: {
+				moins: "Intersection la moins large, avec ",
+				plus: "Intersection la plus large, avec "
+			},
+			profonde: "Intersection la plus profonde, avec "
+		},
+		masquer = '<label for="analyse">Masquer l\'analyse</label>';
 
 
 	cles.forEach(function (val) {
@@ -115,7 +125,7 @@
 		return [surfaceTableaux[val], titres[val]];
 	})
 	.sort(function (a, b) { return b[0] - a[0]; });
-	code.push("<p>Intersection la plus étendue, avec " + surfaces[0][0] + " " + typeEle[1] + " :<br>&nbsp;&nbsp;&nbsp;&nbsp;");
+	code.push("<p>" + interz.etendue + surfaces[0][0] + " " + typeEle[1] + " :<br>&nbsp;&nbsp;&nbsp;&nbsp;");
 	code.push([surfaces[0][1]]);
 	i = 0;
 	l = code.length - 1;
@@ -133,7 +143,7 @@
 		return [largeurTableaux[val], titres[val]];
 	})
 	.sort(function (a, b) { return b[0] - a[0]; });
-	code.push("<p>Intersection la moins large, avec " + largeurs.slice(-1)[0][0] + " " + typeEle[1] + " :<br>&nbsp;&nbsp;&nbsp;&nbsp;");
+	code.push("<p>" + interz.large.moins + largeurs.slice(-1)[0][0] + " " + typeEle[1] + " :<br>&nbsp;&nbsp;&nbsp;&nbsp;");
 	code.push([largeurs.slice(-1)[0][1]]);
 	i = nombreTableaux - 1;
 	l = code.length - 1;
@@ -141,7 +151,7 @@
 		code[l].push(largeurs[i][1]);
 	code[l].sort(function (a, b) { return titresIndex.lastIndexOf(a) -  titresIndex.lastIndexOf(b); });
 	code[l] = code[l].join(" ; ") + "</p>";
-	code.push("<p>Intersection la plus large, avec " + largeurs[0][0] + " " + typeEle[1] + " :<br>&nbsp;&nbsp;&nbsp;&nbsp;");
+	code.push("<p>"  + interz.large.plus + largeurs[0][0] + " " + typeEle[1] + " :<br>&nbsp;&nbsp;&nbsp;&nbsp;");
 	code.push([largeurs[0][1]]);
 	i = 0;
 	l = code.length - 1;
@@ -153,7 +163,7 @@
 
 
 //Tableau(x) ayant la profondeur d'intersection supérieure, et élements les plus représentés
-	code.push("<p>Intersection la plus profonde, avec " + article[genreEle] + " " + typeEle[0] + " sur " + decompteElements[0][1] + " " + typeTab[1] + " :<br>&nbsp;&nbsp;&nbsp;&nbsp;");
+	code.push("<p>" + interz.profonde + article[genreEle] + " " + typeEle[0] + " sur " + decompteElements[0][1] + " " + typeTab[1] + " :<br>&nbsp;&nbsp;&nbsp;&nbsp;");
 	code.push(decompteElements[0][3]);
 	code.push("<p>" + typeEle[1].charAt(0).toUpperCase() + typeEle[1].slice(1) + " les plus " + adjectif[genreEle] + " sur " + decompteElements[0][1] + " " + typeTab[1] + ":<br>&nbsp;&nbsp;&nbsp;&nbsp;");
 	code.push([decompteElements[0][0]]);
@@ -189,7 +199,7 @@
 
 
 
-	code.push('<label for="masquage"> les analyses</label>');
+	code.push(masquer);
 	$meta.html(code.join(""));
 
 	$(".typeTab1").text(typeTab[0]);
