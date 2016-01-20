@@ -1,10 +1,16 @@
-;var $f = $("form"),
+;var $f = $("form");
 
-	interfacter = (function interfacter () {
+;var interfacter = (function interfacter () {
 	"use strict";
 
 /* code août 2014, procédural
 	révision skin en 2015
+
+	to do : analyse des croisements les plus riches
+
+	to do : effets de transition
+
+	to do : avec d'autres données que numériques
 
 	to do : ARIA
 
@@ -13,8 +19,9 @@
 */
 
 
-	if (! Array.prototype.forEach)
+	if (! conditions) //cf. analyse-donnees.js
 		return;
+
 
 	var collection = cles, //cf. analyse-donnees.js
 		listes = [],
@@ -30,10 +37,12 @@
 			'</label>',
 			'commun'
 		],
-		ordres = ["Ordre d'origine :", "Ordre numérique :", "Tout sélectionner :", "|| Tout désélectionner :"];
+		ordres = ["Ordre d'origine :", "Ordre numérique :", "Tout sélectionner :", "|| Tout désélectionner :"],
+		charge = [$("table")];
 
 
 	$("#titre").html(informations.titre);
+	charge[charge[0].length] = charge[0].hasClass("colonne"); //au chargement : length == 0 ; nouvelles données : length == 1
 	$("table").remove();
 	$(".interaction > input").off();
 
@@ -64,7 +73,12 @@
 		+ manu[5] + 93 + manu[3] + ordres[3] + manu[6]
 		+ manu[0] + 9 + manu[1] + 93 + manu[3]
 		+ "</td></tr>");
-	$("<table>", { data : { width : [12 + longueur * 4,l * 7] }, html : code.join("")})
+
+	$("<table>", {
+		data: { width : [12 + longueur * 4,l * 7] },
+		class: charge.slice(-1)[0] == true ? "colonne" : "",
+		html: code.join("")}
+	)
 	.appendTo($f.addClass("settled"));
 
 
@@ -84,7 +98,9 @@
 		$i1 = $i.filter("[id$='1']"),
 		$i2 = $i.filter("[id$='2']"),
 		bordures = ["3.3em 0 #FFF inset, ","5.95em 0 #FFF inset, "],
-		bordures = ["",""];
+		bordures = ["",""],
+		choix = "pres" + charge.slice(-1)[0] == true ? 2 : 1;
+
 	$td.each(function(i) {
 		var $t = $(this);
 		if ($t.data("pres1"))
@@ -99,8 +115,9 @@
 			$(this).data("pres1",bordures[0] + styles).data("pres2",bordures[1] + styles);
 	});	});
 
-	function redeployer() {
-		var choix = $(this).attr("id");
+	function redeployer(e) {
+		var choix = $(this).attr("id"),
+			$ta = $("table"); //(?)
 		if (choix == "pres1")
 			$ta.removeClass("colonne").css("width",$ta.data("width")[0] + "em");
 		else
@@ -109,10 +126,9 @@
 			var $t = $(this);
 			$t.css("box-shadow",$t.data(choix));
 	});	}
-	redeployer.call("[type='radio']:checked:eq(0)");
-	$(".interaction > input").on({
-		change: redeployer
-	});
+	if (charge.length == 2 || typeof localStorage == "undefined" || ! "pres1" in localStorage)
+		redeployer.call("[type='radio']:checked:eq(0)");
+	$(".presentation input").on({ "change": redeployer });
 
 
 

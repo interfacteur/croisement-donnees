@@ -14,28 +14,30 @@
 <body class="init">
 <header>
 	<h1><span>Croiser des ensembles de données</span></h1>
-	<p>à partir de données <a href="#aidePersonnalisation" title="Introduire et visualiser de nouvelles données">personnalisables</a></p>
+	<p>à partir de <span id="fichier">données <a href="#aidePersonnalisation" title="Introduire et visualiser de nouvelles données">personnalisables</a></span></p>
 </header>
 <form action="#">
-	<section class="interaction">
-		<span class="analyse">
-			<label for="analyse">Analyse affichée</label>
+	<section class="interaction floor">
+		<p class="analyse">
+			<label for="analyse">Analyses affichées</label>
 			<input type="checkbox" id="analyse" checked>
-			<label for="mde">Mode d'emploi</label>
+			<label for="mde">Avec mode d'emploi</label>
 			<input type="checkbox" id="mde" checked>
-		</span>
-		<label for="pres1">Présentation du tableau :</label>
-		<input type="radio" name="presentation" id="pres1" checked>
-		<label for="pres1">par ligne</label>
-		<input type="radio" name="presentation" id="pres2">
-		<label for="pres2">par colonne</label>
+		</p>
+		<p class="presentation">
+			<label for="pres1">Présentation du tableau :</label>
+			<input type="radio" name="presentation" id="pres1" checked>
+			<label for="pres1">par ligne</label>
+			<input type="radio" name="presentation" id="pres2">
+			<label for="pres2">par colonne</label>
+		</p>
 		<section class="modifier">
 			<label for="modifier">
 				Charger des données -
-				<a href="http://www.equatorium.net/e1/-in-croisement-ens-donnees/donnees2.js" id="exemple" title="exemple">ex.</a>  :
+				<a href="http://www.equatorium.net/e1/-in-croisement-ens-donnees/donnees-fleuves.js" id="exemple" title="exemple">ex.</a>  :
 			</label>
 			<input type="file" title="Nouvelles données" id="modifier">
-			<a href="#" id="aidePersonnalisation" title="Sélectionner sur l'ordinateur un fichier .txt ou .js reprenant la forme donnée en exemple… Il est possible d'enregistrer cet exemple-là (ou celui des millésimes) pour le modifier et l'adapter… Jusqu'à 6 séries (&#x22;régions&#x22;, &#x22;albums&#x22; etc.) sont visualisables; au-delà les styles sont manquants… Conserver les variables, et les clés dans 'informations'… Dans 'datas', conserver les 'titre' et le principe de numérotation. Il vaut mieux éviter les doublons… Tout retour est attendu et bienvenu : http://emploi.alsacreations.com/demande-20022-Developpeur-front-end.html."><big>?</big></a>
+			<a href="#" id="aidePersonnalisation" title="Sélectionner sur l'ordinateur un fichier .txt ou .js reprenant la forme donnée en exemple. Ou le dropper sur la page… Il est possible d'enregistrer le premier exemple (ou celui des millésimes) pour le modifier et l'adapter… Jusqu'à 6 séries (&#x22;régions&#x22;, &#x22;albums&#x22; etc.) sont visualisables; au-delà les styles sont manquants… Conserver les variables, et les clés dans 'informations'… Dans 'datas', conserver les 'titre' et le principe de numérotation. Il vaut mieux éviter les doublons… Tout retour est attendu et bienvenu : http://emploi.alsacreations.com/demande-20022-Developpeur-front-end.html."><big>?</big></a>
 		</section>
 	</section>
 	<section class="info">
@@ -60,11 +62,19 @@
 		</div>
 		<div id="meta"></div>
 	</section>
+	<p class="visu-datas">
+		<label for="datas">Données visualisées : </label>
+		<select id="datas">
+			<option value="-in-croisement-ens-donnees/donnees-vins.js" selected id="ex">grands millésimes</option>
+			<option value="-in-croisement-ens-donnees/donnees-fleuves.js">bassins versants</option>
+			<option value="-in-croisement-ens-donnees/donnees-sonates.js">sonates de Scarlatti</option>
+		</select>
+	</p>
 	<h2 id="titre"></h2>
 </form>
-<footer>Pour Firefox et Chrome, IE 10+ possible : tout navigateur standard supportant "box-shadow", "table-layout", les sélecteurs avancés, 'forEach()', et l'API FileReader pour la modification de données - <address>Août 2014 - skin novembre 2015 - analyse et personnalisation janvier 2016 - <a href="https://github.com/interfacteur/croisement-donnees">Code sur Github</a> - <a href="http://www.langhade.net/gaetan/">Gaëtan Langhade, Interfacteur</a></address></footer>
+<footer>Pour Firefox et Chrome, IE 10+ possible mais non testé : tout navigateur standard supportant "box-shadow", "table-layout", les sélecteurs avancés, 'forEach()', et l'API FileReader pour la modification de données - <address>Août 2014 - skin novembre 2015 - analyse et personnalisation janvier 2016 - <a href="https://github.com/interfacteur/croisement-donnees">Code sur Github</a> - <a href="http://www.langhade.net/gaetan/">Gaëtan Langhade, Interfacteur</a></address></footer>
 <script src="-in-croisement-ens-donnees/jquery-1.11.0.min.js"></script>
-<script src="-in-croisement-ens-donnees/donnees.js"></script>
+<script src="-in-croisement-ens-donnees/donnees-vins.js"></script>
 <script src="-in-croisement-ens-donnees/analyse-donnees.js"></script>
 <script src="-in-croisement-ens-donnees/interface.js"></script>
 <script src="-in-croisement-ens-donnees/evenements.js"></script>

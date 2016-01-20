@@ -1,15 +1,20 @@
-;var $meta = $("#meta"),
+;var conditions = Array.prototype.forEach,
+	$meta = $("#meta"),
 	cles;
 
 ;var analyser = (function analyser () {
 	"use strict";
 
-/* méta-informations - 01/2016 */
+/* méta-informations - 01/2016
 
-//to do : fenêtre étroite sur Chrome
+	to do : fenêtre étroite sur Chrome
 
-//to do : sur MSIE ?
+	to do : sur MSIE ?
+*/
 
+
+	if (! conditions)
+		return;
 
 
 	cles = Object.keys(datas);
@@ -33,7 +38,7 @@
 		largeurMinTableaux,
 		profondeurMaxTableaux,
 		occurrenceElements,
-		code = ["<p><strong>L'analyse des croisements :</strong></p>"],
+		code = [],
 		typeTab = informations.typeTableaux,
 		genreTab = informations.genreTableaux,
 		typeEle = informations.typeElements,
@@ -49,7 +54,10 @@
 			},
 			profonde: "Intersection la plus profonde, avec "
 		},
-		masquer = '<label for="analyse">Masquer l\'analyse</label>';
+		masquer = '<label for="analyse">Masquer</label>';
+
+
+	code.push("<p><strong>L'analyse des " + typeTab[1] + " et des " + typeEle[1] + ' partagé<span class="genreEle"></span>s :</strong></p>');
 
 
 	cles.forEach(function (val) {
