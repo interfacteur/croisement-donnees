@@ -1,4 +1,4 @@
-/* aide - 01/2016 */
+/* Aide, affichages, changer de données - 01/2016 */
 
 ;(function () {
 	"use strict";

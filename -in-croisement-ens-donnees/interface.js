@@ -10,6 +10,8 @@
 
 	to do : effets de transition
 
+	to do : test sur MSIE
+
 	to do : avec d'autres données que numériques
 
 	to do : ARIA

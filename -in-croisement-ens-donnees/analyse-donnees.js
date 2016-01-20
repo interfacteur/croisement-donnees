@@ -5,12 +5,7 @@
 ;var analyser = (function analyser () {
 	"use strict";
 
-/* méta-informations - 01/2016
-
-	to do : fenêtre étroite sur Chrome
-
-	to do : sur MSIE ?
-*/
+/* méta-informations - 01/2016 */
 
 
 	if (! conditions)
