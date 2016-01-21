@@ -20,7 +20,7 @@ Une note de présentation : http://interfacteur.blogspot.fr/2016/01/croiser-donn
 * Pistes les moins répandues
 
 
-to do :
+To do :
 * analyse des croisements les plus riches
 * effets de transition
 * test sur MSIE
