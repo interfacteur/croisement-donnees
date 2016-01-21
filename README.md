@@ -1,9 +1,9 @@
-Croiser des ensembles de données
+Croiser des séries de données
 ==================
 
 
 Code procédural 2014…
-	- to do: reprendre en orientation prototypale, ou orienté objet ES6
+	(reprendre en orientation prototypale, ou orienté objet ES6 ?)
 
 L'interface : http://www.equatorium.net/e1/in-croisement-ens-donnees.html
 
@@ -18,3 +18,12 @@ Une note de présentation : http://interfacteur.blogspot.fr/2016/01/croiser-donn
 * Intersection la plus profonde
 * Pistes les plus répandues
 * Pistes les moins répandues
+
+
+to do :
+* analyse des croisements les plus riches
+* effets de transition
+* test sur MSIE
+* avec d'autres données que numériques
+* ARIA
+* reprendre en orientation prototypale, ou orienté objet ES6 ?
