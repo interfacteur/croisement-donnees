@@ -11,7 +11,7 @@ Une note de présentation : http://interfacteur.blogspot.fr/2016/01/croiser-donn
 
  Pour navigateurs standards, croisement d'ensembles de données présentées dans un tableau horizontal ou vertical, avec paramétrage du nombre d'ensembles référents - jusqu'à 6
 
- Analyse des intersections entre tableaux ("régions", "albums" etc.):
+ Analyse des intersections entre tableaux ("régions", "albums" etc.) :
 * Intersection la plus étendue
 * Intersection la moins large
 * Intersection la plus large
