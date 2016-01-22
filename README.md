@@ -20,6 +20,6 @@ To do :
 * analyse des croisements les plus riches
 * effets de transition
 * test sur MSIE
-* avec d'autres données que numériques
+* avec données autres que numériques
 * ARIA
 * reprendre en orientation prototypale, ou orienté objet ES6 ?
