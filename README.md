@@ -2,6 +2,8 @@ Croiser des séries de données
 ==================
 
 
+Croiser der séries de données numériques pour en visualiser les intersections possibles, personnalisation des données, pour navigateurs standards (une partie du code est de 2014, à reprendre en OO ?)
+
 L'interface : http://www.equatorium.net/e1/in-croisement-ens-donnees.html
 
 Une note de présentation : http://interfacteur.blogspot.fr/2016/01/croiser-donnees.html
@@ -13,10 +15,6 @@ Une note de présentation : http://interfacteur.blogspot.fr/2016/01/croiser-donn
 * Intersection la plus profonde
 * Pistes les plus répandues
 * Pistes les moins répandues
-
-Pour navigateurs standards, croisement d'ensembles de données présentées dans un tableau horizontal ou vertical, avec paramétrage du nombre d'ensembles référents - jusqu'à 6
-
-Une partie du code est de 2014, à reprendre en OO ?
 
 To do :
 * analyse des croisements les plus riches
