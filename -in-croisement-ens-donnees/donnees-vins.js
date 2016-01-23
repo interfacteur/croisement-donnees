@@ -1,5 +1,5 @@
 var informations = {
-	"titre": 'Dans 3 régions vinicoles, millésimes marquants par leur qualité extraordinaire',
+	"titre": 'Dans 3 régions vinicoles, millésimes marquants par leur qualité',
 	"typeTableaux": ["région", "régions", "région(s)"],
 	"genreTableaux": "f",
 	"typeElements": ["millésime", "millésimes"],
