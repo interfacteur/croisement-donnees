@@ -19,7 +19,7 @@
 <form action="#">
 	<section class="interaction floor">
 		<p class="analyse">
-			<label for="analyse">Analyses affichées</label>
+			<label for="analyse">Les analyses détaillées</label>
 			<input type="checkbox" id="analyse" checked>
 			<label for="mde">Le mode d'emploi</label>
 			<input type="checkbox" id="mde" checked>
@@ -60,16 +60,16 @@
 				<a class="fermeture" href="#mdemploi" title="Fermer l'aide contextuelle">X</a>
 			</p>
 		</div>
-		<div id="meta"></div>
+		<section id="meta"></section>
 	</section>
 	<p class="visu-datas">
-		<label for="datas">Données visualisées : </label>
-		<select id="datas">
-			<option value="-in-croisement-ens-donnees/donnees-vins.js" selected id="ex">grands millésimes</option>
-			<option value="-in-croisement-ens-donnees/donnees-fleuves.js">bassins versants</option>
+		<label for="datas">Données visualisées : </label><select id="datas">
+			<option value="-in-croisement-ens-donnees/donnees-vins.js" selected id="ex">millésimes marquants</option>
+			<option value="-in-croisement-ens-donnees/donnees-fleuves.js">bassins fluviaux</option>
 			<option value="-in-croisement-ens-donnees/donnees-sonates.js">sonates de Scarlatti</option>
 		</select>
 	</p>
+
 	<h2 id="titre"></h2>
 </form>
 <footer>Pour Firefox et Chrome, IE 10+ possible mais non testé : tout navigateur standard supportant "box-shadow", "table-layout", les sélecteurs avancés, 'forEach()', et l'API FileReader pour la modification de données<br>

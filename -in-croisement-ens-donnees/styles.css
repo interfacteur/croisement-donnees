@@ -84,14 +84,14 @@ form + div	{
 p em	{
 	display: inline-block;
 }
-h1	{
+body > header > h1	{
 	background: #F5F5F5;
 	font-family: Courier;
 	font-size: 1.2em;
 	font-weight: normal;
 	padding-left: 1em;
 }
-h1 span	{
+body > header > h1 span	{
 	background: #F5F5F5;
 	position: relative;
 	z-index: 22;
@@ -125,9 +125,10 @@ header p a:focus	{
 form	{
 	font-family: Arial;
 	margin: 0 1em 1em 1em;
+	position: relative;
 }
-form > div > label	{
-	background: #FFF;
+select	{
+	font-size: .85em;
 }
 footer	{
 	font-size: .85em;
@@ -139,6 +140,7 @@ footer	{
 .interaction	{
 	box-shadow: -.5em 0 #FFF, -1em 0 #AAB, .5em 0 #FFF, 1em 0 #AAB;
 	min-height: 3em;
+	margin-right: 1em;
 	padding: .6em 0;
 }
 .interaction > p	{
@@ -157,7 +159,7 @@ footer	{
 	padding-left: 1em;
 	position: absolute;
 	right: 0;
-	top: 0;
+	top: -4em;
 	white-space: nowrap;
 	z-index: 21;
 }
@@ -174,7 +176,8 @@ footer	{
 	position: relative;
 	z-index: 30;
 }
-.visu-datas label	{
+.visu-datas label,
+.intersections	{
 	background: #778;
 	color: #FFF;
 	padding: 0 .33em;
@@ -187,7 +190,6 @@ footer	{
 	background: #FFF;
 	border-radius: 1em;
 	box-shadow: -.05em 0 .05em #406, -4em 0 4em rgba(68, 0, 102, .1);
-	cursor: zoom-out;
 	font-size: 1.15em;
 	line-height: 2;
 	padding: 1em;
@@ -201,6 +203,7 @@ footer	{
 }
 .modifier .contribuer:before	{
 	background: transparent;
+	cursor: pointer;
 	position: absolute;
 	right: 0;
 	top: -.3em;
@@ -320,12 +323,14 @@ body:not(.init) #meta p	{
 	}
 }
 #aideUtilisation p + p,
+#meta h1,
 #meta p	{
 	opacity: 1;
 	height: 4.5em;
 	padding: .5em .3em 0 .66em;
 }
 .info #aideUtilisation.sans p + p,
+#meta.sans h1,
 #meta.sans p	{
 	opacity: 0;
 	height: 0;
@@ -347,21 +352,63 @@ body:not(.init) #meta p	{
 #meta.sans	{
 	box-shadow: none;
 }
+#meta h1,
 #meta p	{
 	height: 3.1em;
 	margin-bottom: .33em;
 	padding: 0;
 }
-#meta p:first-child	{
+#meta h1	{
+	color: #445;
+	font-size: 1em;
 	height: 1.6em;
+}
+#meta a	{
+	padding: 2px 6px;
+	text-decoration: none;
+}
+#meta a:focus	{
+	text-decoration: underline;
+}
+#meta a:hover	{
+	background: #BBC;
+	color: #FFF;
+}
+#meta a.stable	{
+	background: #99A;
+	color: #FFF;
+}
+#meta button	{
+	background: transparent;
+	border: 0;
+	border-radius: 1em;
+	color: #445;
+	cursor: pointer;
+	font-size: 1em;
+	font-weight: bold;
+	padding: 0;
+}
+#meta button span,
+#meta button span	{
+	border-radius: 1em;
+	display: inline-block;
+	padding: 0 .25em;
+}
+#meta button:focus span,
+#meta button:hover span	{
+	background: #778;
+	color: #FFF;
+}
+#meta article	{
+	display: none;
+}
+#meta article.visu	{
+	display: block;
 }
 #meta .limite	{
 	height: 4.4em;
 	overflow-x: auto;
 	width: 30em;
-}
-#meta strong	{
-	color: #445;
 }
 #meta label	{
 	/*background: rgba(68, 0, 102, .125);*/
@@ -387,13 +434,21 @@ body:not(.init) #meta p	{
 
 
 
+
+
+
+
 /* popin et éléments contextuels */
+body.popin > form,
+body.popin > footer	{
+	pointer-events: none;
+}
 .message	{
 	background: #445;
 	border-radius: 1em;
 	box-shadow: 0 0 0 100em rgba(68, 68, 85, .5);
 	color: #FFF;
-	cursor: zoom-out;
+	cursor: pointer;
 	left: 50%;
 	margin-left: -22vw;
 	padding: 3em;
@@ -427,6 +482,30 @@ body:not(.init) #meta p	{
 	outline: 0;
 	right: 1em;
 }
+
+
+
+
+/* boîte de sélection d'analyse */
+#intersections	{
+	margin-right: 3.6em;
+}
+.colonne .intersections	{
+	/*display: run-in;*/
+	float: left;
+	padding: .1em .33em;
+}
+.colonne #intersections	{
+	display: block;
+	margin: 0 0 1.4em 0;
+}
+
+
+
+
+
+
+
 
 
 
@@ -490,8 +569,7 @@ th label	{
 	width: 100%;
 }
 tr + tr td	{
-	font-family: Courier;
-	font-weight: bold;
+	font-family: Georgia;
 	padding: 1.6em .25em 0 0;
 	width: 4em;
 }
@@ -507,10 +585,11 @@ tr + tr td:not(:empty)::before	{
 	-webkit-box-sizing: border-box;
 	-moz-box-sizing: border-box;
 	box-sizing: border-box;
+	background: #FFF;
 	border-style: solid;
 	border-width: 1px;
 	border-radius: .5em;
-	color: #000;
+	color: #000!important;
 	content: attr(data-item);
 	float: left;
 	font-family: Arial;
@@ -518,6 +597,7 @@ tr + tr td:not(:empty)::before	{
 	font-weight: normal;
 	margin-top: -2.13em;
 	text-align: center;
+	text-shadow: none!important;
 	padding-bottom: .1em;
 	width: 2.66em;
 }
@@ -600,6 +680,7 @@ tr:nth-child(2) th	{
 }
 tr:nth-child(2) td::before	{
 	border-color: #C96;
+	box-shadow: 1.4em 0 #C96;
 }
 tr:nth-child(2) td:not(:empty)	{
 	box-shadow: 0 -2.5em #FFF inset, 0 -3em #C96 inset;
@@ -612,6 +693,7 @@ tr:nth-child(3) th	{
 }
 tr:nth-child(3) td::before	{
 	border-color: #BCB;
+	box-shadow: 1.4em 0 #BCB;
 }
 tr:nth-child(3) td:not(:empty)	{
 	box-shadow: 0 -2em #FFF inset, 0 -2.5em #BCB inset;
@@ -624,6 +706,7 @@ tr:nth-child(4) th	{
 }
 tr:nth-child(4) td::before	{
 	border-color: #E96;
+	box-shadow: 1.4em 0 #E96;
 }
 tr:nth-child(4) td:not(:empty)	{
 	box-shadow: 0 -1.5em #FFF inset, 0 -2em #E96 inset;
@@ -636,6 +719,7 @@ tr:nth-child(5) th	{
 }
 tr:nth-child(5) td::before	{
 	border-color: #BBE;
+	box-shadow: 1.4em 0 #BBE;
 }
 tr:nth-child(5) td:not(:empty)	{
 	box-shadow: 0 -1em #FFF inset, 0 -1.5em #BBE inset;
@@ -648,6 +732,7 @@ tr:nth-child(6) th	{
 }
 tr:nth-child(6) td::before	{
 	border-color: #ED5;
+	box-shadow: 1.4em 0 #ED5;
 }
 tr:nth-child(6) td:not(:empty)	{
 	box-shadow: 0 -.5em #FFF inset, 0 -1em #ED5 inset;
@@ -660,7 +745,76 @@ tr:nth-child(7) th	{
 }
 tr:nth-child(7) td::before	{
 	border-color: #AD7;
+	box-shadow: 1.4em 0 #AD7;
 }
 tr:nth-child(7) td:not(:empty)	{
 	box-shadow: 0 -.5em #AD7 inset;
+}
+
+
+
+
+
+/* analyse des intersections */
+tr.intersect,
+tr.intersectCt.intersectLg	{
+	box-shadow: 0 .5em .6em .4em #DDE inset;
+}
+tr.intersect td,
+tr.intersectLg td	{
+	text-shadow: 0 0 1px #99A;
+}
+tr.intersect th label,
+tr.intersectLg th label,
+tr.intersectCt.intersectLg th label	{
+	box-shadow: -3em 0 #DDE, .8em 0 #DDE;
+	position: relative;
+}
+tr.intersect th label:after,
+tr.intersectLg th label:after,
+tr.intersectCt.intersectLg th label:after	{
+	color: #FFF;
+	content: attr(data-hover);
+	font-weight: normal;
+	left: 0;
+	position: absolute;
+	text-align: center;
+	top: 3.6em;
+	width: 100%;
+}
+
+
+tr.intersectLg	{
+	box-shadow: 0 .5em .6em .4em #99A inset;
+}
+tr.intersectLg th label	{
+	box-shadow: -3em 0 #99A, .8em 0 #99A;
+}
+tr.intersectLg th label:after	{
+	content: attr(data-click);
+	font-weight: bold;
+}
+
+
+.colonne tr.intersect,
+.colonne tr.intersectCt.intersectLg	{
+	box-shadow: .5em 0 .6em .4em #DDE inset;
+}
+.colonne tr.intersectLg	{
+	box-shadow: .5em 0 .6em .4em #99A inset;
+}
+.colonne tr.intersect th label,
+.colonne tr.intersectLg th label,
+.colonne tr.intersectCt.intersectLg th label	{
+	box-shadow: -.8em 0 #DDE, .8em 0 #DDE;
+	position: relative;
+}
+.colonne tr.intersectLg th label	{
+	box-shadow: -.8em 0 #99A, .8em 0 #99A;
+}
+
+
+#intersections,
+.intersections	{
+	display: none;
 }

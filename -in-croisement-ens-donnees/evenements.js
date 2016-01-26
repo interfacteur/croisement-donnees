@@ -16,6 +16,8 @@
 		$aideP = $("#aidePersonnalisation"),
 		$modifier = $("#modifier"),
 		$fichier = $("#fichier"),
+		$millesimes = $("#millesimes"),
+		$span = $("#m span"),
 
 
 		parametres = [
@@ -40,23 +42,124 @@
 				.replace(/\/\*([^\*]|\*(?!\/))*\*\//g, "") //sans les commentaires sur plusieurs lignes
 				.replace(/^\s*/, "") //sans les espacements initiaux (dont retours)
 				.replace(/[\t\v]/g, " ") //remplacer les tabulations horizontales et verticales par un espacement
-				.replace(/\x20{2,}/g, " ") //remplacer les espacements multiples par un espacement
-				.replace(/[\f\n\r\u2028\u2029]/g, ""); //sans les retours à la page, à la ligne et charriot
+				.replace(/[\f\n\r\u2028\u2029]/g, "") //sans les retours à la page, à la ligne et charriot
+				.replace(/\x20{2,}/g, " "); //remplacer les espacements multiples par un espacement
 		},
 
 
 		re = {
-			informations: /var informations ?= ?{(?=.*"titre" ?: ?(?:(?:"(?:[^"]|\\")*[^\\]")|(?:'(?:[^']|\\')*[^\\]')))(?=.*"typeTableaux" ?: ?\[ ?(?:(?:(?:"(?:[^"]|\\")*[^\\]")|(?:'(?:[^']|\\')*[^\\]'))(?:(?: ?, ?(?=["']))|(?: ?))){3} ?\])(?=.*"genreTableaux" ?: ?(["'])[mf]\1)(?=.*"typeElements" ?: ?\[ ?(?:(?:(?:"(?:[^"]|\\")*[^\\]")|(?:'(?:[^']|\\')*[^\\]'))(?:(?: ?, ?(?=["']))|(?: ?))){2} ?\])(?=.*"genreElements" ?: ?(["'])[mf]\2)/,
-			datas: /var datas ?= ?\{ ?(?: ?"[^"]+" ?: ?\{ ?"titre" ?: ?(?:(?:"(?:[^"]|\\")*[^\\]")|(?:'(?:[^']|\\')*[^\\]')) ?, ?(?:"\d+" ?: ?\d+ ?(?:(?:, ?(?=(?:"\d)|\}))|(?=\}))){1,} ?\} ?(?:(?:, ?(?=["}]))|(?=\}))){2,7}\}/
-		};
+			informations: /var informations ?= ?{(?=.*"titre" ?: ?(?:(?:"(?:[^"]|\\")*[^\\]")|(?:'(?:[^']|\\')*[^\\]')))(?=.*"typeTableaux" ?: ?\[ ?(?:(?:(?:"(?:[^"]|\\")*[^\\]")|(?:'(?:[^']|\\')*[^\\]'))(?:(?: ?, ?(?=["']))|(?: ?))){3} ?\])(?=.*"genreTableaux" ?: ?(["'])[mf]\1)(?=.*"typeElements" ?: ?\[ ?(?:(?:(?:"(?:[^"]|\\")*[^\\]")|(?:'(?:[^']|\\')*[^\\]'))(?:(?: ?, ?(?=["']))|(?: ?))){2} ?\])(?=.*"genreElements" ?: ?(["'])[mf]\2)/g,
+			datas: /var datas ?= ?\{ ?(?: ?"[^"]+" ?: ?\{ ?"titre" ?: ?(?:(?:"(?:[^"]|\\")*[^\\]")|(?:'(?:[^']|\\')*[^\\]')) ?, ?(?:"\d+" ?: ?\d+ ?(?:(?:, ?(?=(?:"\d)|\}))|(?=\}))){1,} ?\} ?(?:(?:, ?(?=["}]))|(?=\}))){2,7}\}/g
+		},
+
+		visualiser = (function visualiser () {
+			$("#intersections").append(
+				intersectionsQuali.map(function (val, ind) {
+					return '<optgroup label="' + val + '">'
+						+ intersections[ind].map(function (val) {
+							return '<option val="' + val[0] + '">' + val[1] + '</option>';
+						})
+						.join("")
+						+ '</optgroup>';
+				})
+				.join("")
+			);
+
+			cles.forEach(function (val) {
+				$("#meta [href='#" + val + "']").css("box-shadow", "2px 1px 0 2px " + $("#" + val + " th").css("background-color") + " inset");
+			});
+
+
+console.log(
+				intersectionsQuali.map(function (val, ind) {
+					return '<optgroup label="' + val + '">'
+						+ intersections[ind].map(function (val) {
+							return '<option val="' + val[0] + '">' + val[1] + '</option>';
+						})
+						.join("")
+						+ '</optgroup>';
+				})
+				.join("")
+
+
+)
+
+			$("#meta a").on("mouseover focus", function () {
+				var $ti = $(this),
+					$ta = $("#" + $ti.attr("href").split("#")[1]),
+					$la = $ta.find("label");
+				if ($la.attr("data-click").length > 0 && $la.attr("data-click") != $ti.data("inters"))
+					$ta.addClass("intersectCt");
+				else
+					$ta.addClass("intersect");
+				$ta.find("label").attr("data-hover", $ti.data("inters"));
+			})
+			.on("mouseout blur", function () {
+				$("#" + $(this).attr("href").split("#")[1]).removeClass("intersect intersectCt")
+				.find("label").attr("data-hover", "");
+			})
+			.on("click", function (e) {
+				e.preventDefault();
+				var $ti = $(this),
+					$ta = $("#" + $ti.attr("href").split("#")[1]),
+					$ex = $(".stable");
+				$ti.toggleClass("stable");
+
+// console.log($ta.find("th").html());
+// console.log($ta.find("label").attr("data-click"));
+// try {
+// 	console.log($ta.find("label").data("click"));
+// } catch(e) { console.log(e); }
+// console.log($ti.data("inters"))
+
+				if ($ta.find("label").attr("data-click").length == 0) {
+					$(".intersectLg").removeClass("intersectLg")
+					.find("label").attr("data-click", "");
+					$ex.removeClass("stable");
+					$ta.addClass("intersectLg")
+					.find("label").attr("data-click", $ti.data("inters"));;
+				}
+				else if ($ta.find("label").attr("data-click") == $ti.data("inters")) {
+					$ta.removeClass("intersectLg")
+					.find("label").attr("data-click", "");;
+				}
+				else {
+					$ex.removeClass("stable");
+					$ta.removeClass("intersectCt")
+					.addClass("intersect")
+					.find("label").attr("data-click", $ti.data("inters"));;
+				}
+
+				// $ta.toggleClass("intersectLg");
+				// $(".intersectLg label").attr("data-click", $ti.data("inters"));
+			});
+
+
+
+			return visualiser;
+		})();
 
 
 
 
-//Replier et déplier l'analyse des croisements
+
+
+
+
+
+
+//Replier et déplier les analyses détaillées
 	$analyse.on("change", function (e) {
 		$meta.attr("class", $analyse.is(":checked") ? "" : "sans");
 	});
+
+
+//Replier et déplier les analyses détaillées des millésimes
+	$("#m").on("click", function (e) {
+		e.preventDefault();
+		$millesimes.toggleClass("visu");
+		$span.text($span.text() == "+" ? "-" : "+");
+	})
 
 
 //Déplier le mode d'emploi
@@ -110,6 +213,7 @@
 				"load": function () {
 					analyser();
 					interfacter();
+					visualiser();
 		}	}	})
 		.appendTo($b);
 		$s.attr("src", $(this).val());
@@ -148,6 +252,7 @@
 		charge.onload = function() {
 			var verification = eclaircir(this.result),
 				erreur = [];
+
 			try {
 
 		//test 1
@@ -169,6 +274,7 @@
 
 				analyser();
 				interfacter();
+				visualiser();
 /*
 	accents ne passent pas sur Chrome :
 				$s.attr("src", "data:text/javascript;base64," + btoa(unescape(encodeURIComponent(this.result)))); //https://developer.mozilla.org/fr/docs/Décoder_encoder_en_base64
@@ -178,14 +284,16 @@
 
 			}
 			catch(e) {
-				$b.append($("<p>", {
+				$b.addClass("popin")
+				.append($("<p>", {
 					class: "message",
 					tabindex: 0,
 					html: message + "<em>" + e + "</em>" + fermeture
 				}))
 				.on("click.message", function (e) {
 					e.preventDefault();
-					$b.off("click.message");
+					$b.off("click.message")
+					.removeClass("popin");
 					$(".message").remove();
 					$modifier.focus();
 				});

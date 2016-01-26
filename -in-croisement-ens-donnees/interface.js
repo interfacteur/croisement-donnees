@@ -55,17 +55,19 @@
 		longueur = listes[i].length > longueur ? listes[i].length : longueur;
 	}
 	for (var i=0;i<l;++i) {
-		code.push('<tr><th scope="row">'
+		code.push('<tr id="' + collection[i] + '"><th scope="row">'
 			+ manu[0] + i + manu[1] + i + 0 + manu[2]
 			+ manu[0] + i + manu[1] + i + 1 + manu[3]
 			+ manu[4] + i + 2 + manu[3]
-			+ '<br><label for="' + manu[7] + i + 2 + '">' + listes[i][0] + "</label>");
+			+ '<br><label for="' + manu[7] + i + 2 + '" data-click="">' + listes[i][0] + "</label>");
 		for (var i2=1;i2<longueur;++i2){
 			code.push('<td data-item="' + i2 + '" data-oeuvre="' + (listes[i][i2] || 100000000000) + '">' + (listes[i][i2] || "") + "</td>");
 		}
 		code.push("</tr>");
 	}
 	code.unshift('<tr><td colspan="' + longueur + '"> '
+		+ '<label for="intersections" class="intersections">Souligner </label>'
+		+ '<select id="intersections"><option value="0">l\'intersection :</option></select>'
 		+ manu[5] + 90 + manu[3] + ordres[0] + manu[6]
 		+ manu[0] + 9 + manu[1] + 90 + manu[2]
 		+ manu[5] + 91 + manu[3] + ordres[1] + manu[6]
@@ -77,11 +79,13 @@
 		+ "</td></tr>");
 
 	$("<table>", {
-		data: { width : [12 + longueur * 4,l * 7] },
+		data: { width : [12 + longueur * 4, l * 7] },
 		class: charge.slice(-1)[0] == true ? "colonne" : "",
 		html: code.join("")}
 	)
 	.appendTo($f.addClass("settled"));
+
+	$("header, form").css("width", 12 + longueur * 4 > 65 ? (12 + longueur * 4 < 80 ? 12 + longueur * 4 + "em" : "80em") : "65em");
 
 
 /*
