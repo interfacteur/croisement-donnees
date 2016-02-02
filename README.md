@@ -19,19 +19,15 @@ L'interface : http://www.equatorium.net/e1/in-croisement-ens-donnees.html
 
 To do :
 * FONCTIONNALITES
-analyse des croisements les plus riches entre deux tableaux
-	comme un bouton cliquable plus que comme une analyse
-analyse du croisement minimal entre tous les tableaux
-	comme un bouton cliquable plus que comme une analyse
-avec d'autres données que numériques
+- analyse des croisements les plus riches entre deux tableaux (comme un bouton cliquable plus que comme une analyse)
+- analyse du croisement minimal entre tous les tableaux (comme un bouton cliquable plus que comme une analyse)
+- avec d'autres données que numériques
 * ACCESSIBILITÉ
-couche ARIA ?
-tester Voice Over ou NVDA : .on("keyup",
-	cf. this.$lien.on("mouseover keyup", Visu.passer);
+- couche ARIA ?
+- tester Voice Over ou NVDA : .on("keyup", (cf. this.$lien.on("mouseover keyup", Visu.passer);)
 * COMPATIBILITÉ
-tests sur MSIE
+- tests sur MSIE
 * DÉVELOPPEMENT
-reprendre en orientation prototypale, ou orienté objet ES6 ?
-	- evenements.js OK
+- reprendre en orientation prototypale, ou orienté objet ES6 ? (- evenements.js OK)
 * PRESENTATION
-effets de transition (notamment sur Chrome ?)
+- effets de transition (notamment sur Chrome ?)
