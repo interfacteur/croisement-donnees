@@ -7,75 +7,112 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <meta name="author" content="Gaëtan Langhade, interfacteur">
+<link rel="stylesheet" href="-in-croisement-ens-donnees/regularize.css">
 <link rel="stylesheet" href="-in-croisement-ens-donnees/styles.css">
 <link rel="stylesheet" href="-in-croisement-ens-donnees/loader.css">
+<script src="-in-croisement-ens-donnees/modernizr-custom.js"></script>
 </head>
 
-<body class="init">
+<body class="init" id="crutch">
 <header>
-	<h1><span>Croiser des séries de données</span></h1>
-	<p>à partir de <span id="fichier">données <a href="#aidePersonnalisation" title="Introduire et visualiser de nouvelles données">personnalisables</a></span></p>
+	<h1>Croiser des séries de données</h1>
+	<p>à partir de <span id="fichier"><a href="#aidePersonnalisation" title="Introduire et visualiser de nouvelles données">données personnalisables</a></span></p>
 </header>
-<form action="#">
-	<section class="interaction floor">
-		<p class="analyse">
-			<label for="analyse">Les analyses détaillées</label>
-			<input type="checkbox" id="analyse" checked>
-			<label for="mde">Le mode d'emploi</label>
-			<input type="checkbox" id="mde" checked>
-		</p>
-		<p class="presentation">
-			<label for="pres1">Présentation du tableau :</label>
-			<input type="radio" name="presentation" id="pres1" checked>
-			<label for="pres1">par ligne</label>
-			<input type="radio" name="presentation" id="pres2">
-			<label for="pres2">par colonne</label>
-		</p>
-		<section class="modifier">
-			<label for="modifier">
-				Charger des données -
-				<a href="http://www.equatorium.net/e1/-in-croisement-ens-donnees/donnees-fleuves.js" id="exemple" title="exemple">ex.</a>  :
-			</label>
-			<input type="file" title="Nouvelles données" id="modifier">
-			<a href="#" id="aidePersonnalisation" title="Sélectionner sur l'ordinateur un fichier .txt ou .js reprenant la forme donnée en exemple. Ou le dropper sur la page… Il est possible d'enregistrer le premier exemple (ou celui des millésimes) pour le modifier et l'adapter… Jusqu'à 6 séries (&#x22;régions&#x22;, &#x22;albums&#x22; etc.) sont visualisables; au-delà les styles sont manquants… Conserver les variables, et les clés dans 'informations'… Dans 'datas', conserver les 'titre' et le principe de numérotation. Il vaut mieux éviter les doublons… Tout retour est attendu et bienvenu : http://emploi.alsacreations.com/demande-20022-Developpeur-front-end.html."><big>?</big></a>
+<form action="#" class="crutch">
+	<div class="interaction floor">
+
+		<section class="essence">
+			<p class="tdbord">
+				<label for="analyse">Analyse des amplitudes</label>
+				<input type="checkbox" id="analyse" checked>
+				<label for="mde">Le mode d'emploi</label>
+				<input type="checkbox" id="mde" checked>
+			</p>
+			<section id="meta"></section>
 		</section>
+
+		<section class="presentations">
+			<ul id="aideUtilisation" class="sans">
+				<li>
+					<p class="outcipit pseudo-item"><strong>&#x25CF; PERSONNALISATION</strong> : la manière de charger et de visualiser <strong>ses propres données</strong> <a href="#aidePersonnalisation">est détaillée plus haut</a>.
+					</p>
+				</li>
+				<li>
+					<p class="incipit pseudo-item">
+						<strong>&#x25CF; VISUALISER L'EXTENSION des <span class="typeEle2"></span> d'un<span class="genreTab"></span> <span class="typeTab1"></span>, dans tou<span class="tout"></span> les <span class="typeTab2"></span>.</strong> <a href="#" id="mdemploi">→ mode d'emploi suite</a><br>
+						<em>En tête de chaque <span class="typeTab1"></span>, la case à cocher <input type="checkbox" tabindex="-1"> sélectionne un<span class="genreTab"></span> <span class="typeTab1"></span> de référence - les autres <span class="typeTab2"></span> s'alignent dessus.</em>
+					</p>
+					<p>
+						Plusieurs <span class="typeTab2"></span> sélectionné<span class="genreTab"></span>s visualisent leurs <span class="typeEle2"></span> commun<span class="genreEle"></span>s,<br>ainsi que l'extension, les occurrences de ces <span class="typeEle2"></span> dans les autres <span class="typeTab2"></span>.
+					</p>
+					<p>
+						Hors sélection multiple, l'ordre des données est d'origine, qui n'est pas toujours croissant, et peut donc être trié.<br>
+						<em>Les deux boutons radio <input type="radio" tabindex="-1"> donnent le choix entre les ordres d'origine (par défaut) et numérique.</em>
+					</p>
+					<p>Les 3/4 boutons radio <input type="radio" tabindex="-1"> situés en tête du tableau permettent de manipuler directement l'ensemble des cases<br>et boutons.
+						<em>Ils sont <b>exclusifs</b>&nbsp;: "ordre d'origine" par ex. <b>désélectionne</b> toutes les <span class="typeTab2"></span> sélectionnées</em>.
+					</p>
+				</li>
+				<li>
+					<p class="pseudo-item"><strong> &#x25CF; ANALYSE DES AMPLITUDES</strong> : autre type de manipulation qui propose de visualiser - au survol,
+						au clic pour y revenir -<br>
+						les intersections minimales et maximales, comme la boîte de sélection située en tête du tableau.</p>
+					<p><strong>Conseils :</strong> dégager la vue en sélectionnant tou<span class="tout"></span> les <span class="typeTab2"></span> (bouton radio en tête de tableau) et visualiser les amplitudes.<br>
+						 Repérer les sélections correspondant aux  intersections les moins et plus étendues.
+					</p>
+				</li>
+				<li>
+					<p class="pseudo-item"><strong>&#x25CF; AFFICHAGE</strong> : aussi bien le mode d'emploi que l'analyse des amplitudes sont rétractables - via les 2 cases à cocher en haut<br>
+						sur la gauche. La visualisation des amplitudes reste toujours manipulable via la boîte de sélection en tête du tableau.
+					</p>
+					<p>L'affichage des éléments contextuels (entrée dans ce mode d'emploi, liste des amplitudes), du résultat des manipulations<br>
+						(sélection et ordre des données, intersections), et de la personnalisation des données, est mémorisé durant un mois.<br>
+						Un bouton permet de rétablir l'affichage par défaut.
+						<a class="fermeture" href="#mdemploi" title="Fermer l'aide contextuelle">X</a>
+					</p>
+				</li>
+			</ul>
+			<p class="presentation">
+				<label for="pres1">Présentation du tableau :</label>
+				<input type="radio" name="presentation" id="pres1" checked>
+				<label for="pres1">par ligne</label>
+				<input type="radio" name="presentation" id="pres2">
+				<label for="pres2">par colonne</label>
+			</p>
+		</section>
+
+	</div>
+
+	<section class="modifier">
+		<label for="modifier">
+			Nouvelles données -
+			<a href="http://www.equatorium.net/e1/-in-croisement-ens-donnees/donnees-fleuves.js" id="exemple" title="exemple">ex.</a>  :
+		</label>
+		<input type="file" title="Nouvelles données" id="modifier">
+		<a href="#" id="aidePersonnalisation" title="PERSONNALISER LES DONNÉES… Sélectionner sur l'ordinateur un fichier .txt ou .js reprenant la forme donnée en exemple. Ou le dropper sur la page… Il est possible d'enregistrer ce premier exemple (ou celui des millésimes) pour le modifier et l'adapter… Conserver les variables, et les clés dans 'informations'… Dans 'datas', conserver les 'titre' et le principe de numérotation. Il vaut mieux éviter les doublons… Jusqu'à 6 séries (&#x22;régions&#x22;, &#x22;albums&#x22; etc.) sont visualisables; au-delà les styles sont manquants… Tout retour et toute remarque sont attendus et bienvenus : http://emploi.alsacreations.com/demande-20022-Developpeur-front-end.html."><strong>?</strong></a>
 	</section>
-	<section class="info">
-		<div id="aideUtilisation" class="sans">
-			<p>
-				<strong>Un<span class="genreTab"></span> <span class="typeTab1"></span> : visualiser les occurrences de ses <span class="typeEle2"></span> dans les autres <span class="typeTab2"></span>.</strong> <a href="#" id="mdemploi">→ mode d'emploi suite</a>
-				<em>En tête de chaque <span class="typeTab1"></span>, la case à cocher <input type="checkbox" tabindex="-1"> permet de sélectionner un<span class="genreTab"></span> <span class="typeTab1"></span> de référence.</em>
-			</p>
-			<p>
-				Plusieurs <span class="typeTab2"></span> sélectionné<span class="genreTab"></span>s visualisent à la fois les <span class="typeEle2"></span> commun<span class="genreEle"></span>s, et<br>les occurrences de ces <span class="typeEle2"></span> dans les autres <span class="typeTab2"></span>.
-			</p>
-			<p>
-				Hors visualisation, l'ordre des données est d'origine, pas toujours croissant : et peut donc être trié numériquement.<br>
-				<em>Les deux boutons radio <input type="radio" tabindex="-1"> donnent le choix entre les ordres d'origine (par défaut) et numérique.</em>
-			</p>
-			<p>Les 3/4 boutons radio <input type="radio" tabindex="-1"> en tête de tableau permettent de manipuler directement l'ensemble des cases<br>et boutons.
-				<em>Ils sont <b>exclusifs</b>&nbsp;: "ordre d'origine" par ex. <b>désélectionne</b> toutes les <span class="typeTab2"></span> sélectionnées</em>.
-			</p>
-			<p>Pour charger et visualiser de nouvelles données, <a href="#aidePersonnalisation">la façon de faire est détaillée plus haut</a>.
-				<a class="fermeture" href="#mdemploi" title="Fermer l'aide contextuelle">X</a>
-			</p>
-		</div>
-		<section id="meta"></section>
-	</section>
+
 	<p class="visu-datas">
 		<label for="datas">Données visualisées : </label><select id="datas">
 			<option value="-in-croisement-ens-donnees/donnees-vins.js" selected id="ex">millésimes marquants</option>
 			<option value="-in-croisement-ens-donnees/donnees-fleuves.js">bassins fluviaux</option>
 			<option value="-in-croisement-ens-donnees/donnees-sonates.js">sonates de Scarlatti</option>
 		</select>
+		<input type="reset" id="defaut" value="Affichage par défaut" class="reset">
 	</p>
 
 	<h2 id="titre"></h2>
 </form>
-<footer>Pour Firefox et Chrome, IE 10+ possible mais non testé : tout navigateur standard supportant "box-shadow", "table-layout", les sélecteurs avancés, 'forEach()', et l'API FileReader pour la modification de données<br>
+<footer>Pour Firefox et Chrome, IE 10+ possible mais non testé : tout navigateur standard supportant "box-shadow", "table-layout", "gradient", les sélecteurs avancés, 'forEach()', 'Object.keys()', l'API FileReader pour la modification de données, 'localStorage' pour la mémorisation de l'affichage.<br>
 	<address>Août 2014 - skin novembre 2015 - analyse et personnalisation janvier 2016 - <a href="http://www.langhade.net/gaetan/">Gaëtan Langhade, Interfacteur</a></address><br><br>
-	<a href="http://interfacteur.blogspot.fr/2016/01/croiser-donnees.html">Note de présentation</a> - <a href="https://github.com/interfacteur/croisement-donnees">Code sur Github</a></footer>
+	<!-- <a href="http://interfacteur.blogspot.fr/2016/01/croiser-donnees.html">Note de présentation</a> - -->
+	<a href="https://github.com/interfacteur/croisement-donnees">Code sur Github</a></footer>
 <script src="-in-croisement-ens-donnees/jquery-1.11.0.min.js"></script>
+<script id="plug">
+"use strict";
+! Modernizr.promises
+&& $("<script>", { "src" : "-media/es6-promise.min.js" }).insertAfter($("#plug"));
+</script>
 <script src="-in-croisement-ens-donnees/donnees-vins.js"></script>
 <script src="-in-croisement-ens-donnees/analyse-donnees.js"></script>
 <script src="-in-croisement-ens-donnees/interface.js"></script>

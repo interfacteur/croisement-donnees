@@ -1,22 +1,39 @@
-;var $f = $("form");
-
 ;var interfacter = (function interfacter () {
 	"use strict";
 
 /* code août 2014, procédural
-	révision skin en 2015
+	révision skin en 2015f
+	analyse des données 2015-2016
 
-	to do : analyse des croisements les plus riches
+	FONCTIONNALITES
 
-	to do : effets de transition
+	to do : analyse des croisements les plus riches entre deux tableaux
+		comme un bouton cliquable plus que comme une analyse
 
-	to do : test sur MSIE
+	to do : analyse du croisement minimal entre tous les tableaux
+		comme un bouton cliquable plus que comme une analyse
 
 	to do : avec d'autres données que numériques
 
-	to do : ARIA
+	ACCESSIBILITÉ
+
+	to do : couche ARIA ?
+
+	to do : tester Voice Over ou NVDA : .on("keyup",
+		cf. this.$lien.on("mouseover keyup", Visu.passer);
+
+	COMPATIBILITÉ
+
+	to do : tests sur MSIE
+
+	DÉVELOPPEMENT
 
 	to do : reprendre en orientation prototypale, ou orienté objet ES6 ?
+		- evenements.js OK
+
+	PRESENTATION
+
+	to do : effets de transition (notamment sur Chrome ?)
 
 */
 
@@ -28,7 +45,7 @@
 	var collection = cles, //cf. analyse-donnees.js
 		listes = [],
 		longueur = 0,
-		code = [],
+		code = ["<tbody>"],
 		manu = [
 			'<input type="radio" name="liste',
 			'" id="liste',
@@ -37,7 +54,8 @@
 			'<input type="checkbox" name="commun" id="commun',
 			'<label for="liste',
 			'</label>',
-			'commun'
+			'commun',
+			'" value="'
 		],
 		ordres = ["Ordre d'origine :", "Ordre numérique :", "Tout sélectionner :", "|| Tout désélectionner :"],
 		charge = [$("table")];
@@ -56,27 +74,28 @@
 	}
 	for (var i=0;i<l;++i) {
 		code.push('<tr id="' + collection[i] + '"><th scope="row">'
-			+ manu[0] + i + manu[1] + i + 0 + manu[2]
-			+ manu[0] + i + manu[1] + i + 1 + manu[3]
+			+ manu[0] + i + manu[1] + i + 0 + manu[8] + 0 + manu[2]
+			+ manu[0] + i + manu[1] + i + 1 + manu[8] + 1 + manu[3]
 			+ manu[4] + i + 2 + manu[3]
-			+ '<br><label for="' + manu[7] + i + 2 + '" data-click="">' + listes[i][0] + "</label>");
+			+ '<br><label for="' + manu[7] + i + 2 + '">' + listes[i][0] + "</label>");
 		for (var i2=1;i2<longueur;++i2){
-			code.push('<td data-item="' + i2 + '" data-oeuvre="' + (listes[i][i2] || 100000000000) + '">' + (listes[i][i2] || "") + "</td>");
+			code.push('<td data-item="' + i2 + '" data-nombre="' + (listes[i][i2] || 100000000000) + '">' + (listes[i][i2] || "") + "</td>");
 		}
 		code.push("</tr>");
 	}
-	code.unshift('<tr><td colspan="' + longueur + '"> '
-		+ '<label for="intersections" class="intersections">Souligner </label>'
-		+ '<select id="intersections"><option value="0">l\'intersection :</option></select>'
+	code.push("</tbody>");
+	code.unshift('<thead><tr><td colspan="' + longueur + '"> '
+		+ '<label for="croiser" class="croiser">Amplitude des intersections : </label>'
+		+ '<select id="croiser"><option value="-1">… … … …</option></select>'
 		+ manu[5] + 90 + manu[3] + ordres[0] + manu[6]
-		+ manu[0] + 9 + manu[1] + 90 + manu[2]
+		+ manu[0] + 9 + manu[1] + 90 + manu[8] + 0 + manu[2]
 		+ manu[5] + 91 + manu[3] + ordres[1] + manu[6]
-		+ manu[0] + 9 + manu[1] + 91 + manu[3]
+		+ manu[0] + 9 + manu[1] + 91 + manu[8] + 1 +  manu[3]
 		+ manu[5] + 92 + manu[3] + ordres[2] + manu[6]
-		+ manu[0] + 9 + manu[1] + 92 + manu[3]
+		+ manu[0] + 9 + manu[1] + 92 + manu[8] + 2 +  manu[3]
 		+ manu[5] + 93 + manu[3] + ordres[3] + manu[6]
-		+ manu[0] + 9 + manu[1] + 93 + manu[3]
-		+ "</td></tr>");
+		+ manu[0] + 9 + manu[1] + 93 + manu[8] + 3 +  manu[3]
+		+ "</td></tr></thead>");
 
 	$("<table>", {
 		data: { width : [12 + longueur * 4, l * 7] },
@@ -97,9 +116,10 @@
 
 
 	var $ta = $("table"),
-		$td = $("tr + tr td:not(:empty)"),
+		$tb = $("tbody"),
+		$td = $("tbody td:not(:empty)"),
 		$g = $("[colspan] input"),
-		$i = $("tr + tr input"),
+		$i = $("tbody input"),
 		$i0 = $i.filter("[id$='0']"),
 		$i1 = $i.filter("[id$='1']"),
 		$i2 = $i.filter("[id$='2']"),
@@ -111,14 +131,20 @@
 		var $t = $(this);
 		if ($t.data("pres1"))
 			return;
-		var cellules = $($("[data-oeuvre='" + $t.data("oeuvre") + "']").get().reverse()),
-			styles = "";
+		var cellules = $($("[data-nombre='" + $t.data("nombre") + "']").get().reverse()),
+			styles = "",
+			extension = {}; //ajouté le 160127
 		cellules.each(function() {
 			styles += $(this).css("box-shadow") + ", ";
+			extension[$(this).parent().attr("id")] = true;
 		});
+		extension = Object.keys(extension).join(" ");
 		styles = styles.slice(0,-2);
 		cellules.each(function() {
-			$(this).data("pres1",bordures[0] + styles).data("pres2",bordures[1] + styles);
+			$(this).data("pres1",bordures[0] + styles)
+			.data("pres2",bordures[1] + styles)
+			.addClass(extension + (cellules.length > 1 ? " multi" : ""))
+			.attr("data-xection", cellules.length);
 	});	});
 
 	function redeployer(e) {
@@ -150,7 +176,7 @@
 		c.forEach(function(cel) {
 			$(cel).appendTo($p);
 		});
-		$td = $("tr + tr td:not(:empty)");
+		$td = $("tbody td:not(:empty)");
 	}
 	function lotir(crible) {
 		retablir(true);
@@ -164,7 +190,7 @@
 	}	});
 	$g.eq(1).on({
 		change: function() {
-			lotir.call($i1,"oeuvre");
+			lotir.call($i1,"nombre");
 	}	});
 
 
@@ -188,7 +214,7 @@
 	}	});
 	$i1.on({
 		change: function() {
-			viser.call(this,"oeuvre",1);
+			viser.call(this,"nombre",1);
 	}	});
 
 
@@ -198,12 +224,13 @@
 
 	function retablir(axe) {
 		$(".axes, .secondaire, .absent, .visible").removeClass("axes secondaire absent visible");
+		$tb.attr("class", "");
 		axe && $(".axe").removeClass("axe");
 
 		$(".present, .axe").each(function() {
 			var $t = $(this),
 				$ti = $t.find(":checked");
-			trier.call($ti,$ti.attr("id").match(/0$/) ? "item" : "oeuvre");
+			trier.call($ti,$ti.attr("id").match(/0$/) ? "item" : "nombre");
 			$t.removeClass("present");
 	});	}
 	function aligner(n) {
@@ -211,15 +238,15 @@
 			opus = [];
 		$ta.addClass("axes");
 		$(".axe td:not(:empty)").addClass("secondaire");
-		$("tr + tr:not(.axe)").addClass("absent");
+		$("tbody tr:not(.axe)").addClass("absent");
 		$(".axe:eq(0) .secondaire").each(function() {
 			var $t = $(this),
-				o = $t.data("oeuvre");
-			var classe = $(".secondaire[data-oeuvre='" + o + "']");
+				o = $t.data("nombre");
+			var classe = $(".secondaire[data-nombre='" + o + "']");
 			if (n == classe.length) {
 				opus.push(o);
 				classe.removeClass("secondaire");
-				var reclasse = $(".absent [data-oeuvre='" + o + "']");
+				var reclasse = $(".absent [data-nombre='" + o + "']");
 				reclasse.length > 0
 					&& reclasse.addClass("visible")
 					&& (classe = classe.add(reclasse));
@@ -238,7 +265,7 @@
 		$(".absent:has(.visible)").removeClass("absent").addClass("present");
 		$(".peremption").remove();
 		opus.forEach(function(zo,zi) {
-			$extension.filter("[data-oeuvre='" + zo + "']").each(function() {
+			$extension.filter("[data-nombre='" + zo + "']").each(function() {
 				var $t = $(this);
 				if (0 == zi)
 					$t.insertAfter($("th",$t.data("alignement")));
@@ -246,7 +273,7 @@
 					$t.insertAfter($t.data("alignement").find("td").eq(zi - 1));
 				$t.removeData("alignement");
 		});	});
-		$td = $("tr + tr td:not(:empty)");
+		$td = $("tbody td:not(:empty)");
 	}
 	$i2.on({
 		change: function() {
@@ -271,9 +298,12 @@
 					var $p = $(".axe"),
 						$selection = $("td:not(:empty)",$p),
 						$extension = $();
+
+					$tb.addClass("axe" + ($p.index() + 1));
+
 					$selection.each(function(zi) {
 						var $t = $(this),
-							classe = $("[data-oeuvre='" + $t.data("oeuvre") + "']").not($t);
+							classe = $("[data-nombre='" + $t.data("nombre") + "']").not($t);
 						classe.addClass("visible");
 						0 == classe.length && $t.addClass("secondaire");
 						classe.each(function() {
@@ -292,8 +322,8 @@
 							$t.insertAfter($t.data("alignement")[1].find("td").eq(item));
 						$t.removeData("alignement");
 					});
-					$td = $("tr + tr td:not(:empty)");
-					$("tr + tr:not(:has(td.visible))").not($p).addClass("absent");
+					$td = $("tbody td:not(:empty)");
+					$("tbody tr:not(:has(td.visible))").not($p).addClass("absent");
 					$("tr:has(.visible)").addClass("present");
 					break;
 				default:
@@ -302,7 +332,7 @@
 	$g.eq(2).on({
 		change: function() {
 			$i2.prop("checked",true);
-			$("tr + tr").each(function() {
+			$("tbody tr").each(function() {
 				var $t = $(this);
 				$t.addClass("axe");
 			});
@@ -311,7 +341,7 @@
 	$g.eq(3).on({
 		change: function() {
 			$i2.prop("checked",false);
-			$("tr + tr").each(function() {
+			$("tbody tr").each(function() {
 				var $t = $(this);
 				$t.removeClass("axe");
 			});
