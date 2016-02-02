@@ -19,7 +19,7 @@ L'interface : http://www.equatorium.net/e1/in-croisement-ens-donnees.html
 
 To do :
 * FONCTIONNALITES
-- analyse des croisements les plus riches entre deux tableaux (comme un bouton cliquable plus que comme une analyse)
+	- analyse des croisements les plus riches entre deux tableaux (comme un bouton cliquable plus que comme une analyse)
 - analyse du croisement minimal entre tous les tableaux (comme un bouton cliquable plus que comme une analyse)
 - avec d'autres données que numériques
 * ACCESSIBILITÉ
