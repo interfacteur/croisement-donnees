@@ -1,14 +1,15 @@
-body.init footer,
-body.init header *,
-body.init form *,
-body.init form .interaction *	{
+/* apparence au chargement */
+body.prinit footer,
+body.prinit header *,
+body.prinit form *,
+body.prinit form .interaction *	{
 	visibility: hidden;
 }
-body.init header h1,
-body.init header h1 span,
-body.init form .interaction,
-body.init form .interaction .essence,
-body.init form .interaction .essence *	{
+body.prinit header h1,
+body.prinit header h1 span,
+body.prinit form .interaction,
+body.prinit form .interaction .essence,
+body.prinit form .interaction .essence *	{
 	visibility: visible;
 }
 
@@ -44,12 +45,15 @@ body > header > h1	{
 	padding-left: 1em;
 }
 h2	{
-	border-top: 1px solid #445;
+	background: #889;
+	border-top: 2px solid #445;
 	color: #445;
+	color: #FFF;
 	font-family: "Trebuchet MS", Helvetica, sans-serif;
 	font-size: 1.1em;
 	font-weight: normal;
-	padding-top: .5em;
+	margin: 0 -1em;
+	padding: .33em;
 	text-align: center;
 }
 h2 span	{
@@ -57,7 +61,10 @@ h2 span	{
 }
 
 header	{
-	border-bottom: 2px solid #F1F1F1;
+	background: #FFF;
+	border-bottom: 2px solid #F0F0F0;
+	position: relative;
+	z-index: 2;
 }
 header p,
 header p a	{
@@ -67,18 +74,23 @@ header p a	{
 }
 header p:hover,
 header p:hover a,
-header p a:focus	{
+header p a:focus,
+#fichier.perso	{
 	color: #000;
 	font-style: normal;
 }
 form	{
+	box-shadow: 0 -1em 1em #99A;
 	font-family: Arial;
-	margin: 0 1em 1em 1em;
+	padding: 0 1em;
 	position: relative;
 }
-
+label	{
+	cursor: pointer;
+}
 footer	{
 	font-size: .85em;
+	margin-top: 1em;
 	padding: 1em 2em;
 }
 
@@ -164,7 +176,6 @@ body:not(.init) #meta p	{
 	opacity: 1;
 	height: 4.3em;
 	padding: .5em .3em 0 .66em;
-	position: relative;
 }
 #aideUtilisation.sans p:not(.incipit),
 #meta.sans h1,
@@ -173,8 +184,8 @@ body:not(.init) #meta p	{
 	margin: 0;
 	opacity: 0;
 	padding-top: 0;
+	pointer-events: none;
 	width: 0;
-	z-index: -1;
 }
 
 
@@ -184,8 +195,6 @@ body:not(.init) #meta p	{
 /* structure */
 .interaction	{
 	min-height: 3em;
-	margin-right: 1em;
-	padding: .6em 0;
 }
 .essence	{
 	float: left;
@@ -195,22 +204,34 @@ body:not(.init) #meta p	{
 	float: left;
 	width: 66%;
 }
+.tdbord,
+.presentation	{
+	height: 2.9em;
+	padding-top: .9em;
+}
 
 
 /* structure : "essence" */
 .tdbord	{
 	box-shadow: -.5em 0 #FFF, -1em 0 #99A;
-	height: 2.3em;
-	padding-top: .3em;
 }
+
 .tdbord input	{
 	margin-right: 2em;
 }
 /* structure : "essence" : analyse */
 #meta	{
-	box-shadow: 0 0 0 .5em #FFF, -.5em 0 .15em #445, .5em 0 .15em #BBC;
+	box-shadow: 0 0 0 .5em #FFF, -.5em 0 .15em #445;
+	background: -webkit-repeating-linear-gradient(0deg, #F8F8F8, #F8F8F8 2px, #FFF 2px, #FFF 7px);
+	background: -moz-repeating-linear-gradient(0deg, #F8F8F8, #F8F8F8 2px, #FFF 2px, #FFF 7px);
+	background: -o-repeating-linear-gradient(0deg, #F8F8F8, #F8F8F8 2px, #FFF 2px, #FFF 7px);
+	background: repeating-linear-gradient(0deg, #F8F8F8, #F8F8F8 2px, #FFF 2px, #FFF 7px);
 	font-size: .85em;
 	white-space: pre;
+}
+#meta,
+#meta label	{
+	border-radius: 0 0 2em 0;
 }
 #meta.sans	{
 	box-shadow: none;
@@ -235,7 +256,8 @@ body:not(.init) #meta p	{
 #meta a:nth-of-type(n+4)	{
 	position: relative;
 }
-#meta a:nth-of-type(n+4)::before	{
+/* débordement */
+/* #meta a:nth-of-type(n+4)::before	{
 	box-shadow: 0 -1.2em #FFF, 0 1.2em #FFF;
 	content: " ";
 	height: 1.3em;
@@ -244,7 +266,7 @@ body:not(.init) #meta p	{
 	top: 0;
 	width: 100%;
 	z-index: 0;
-}
+}*/
 #meta a:focus	{
 	text-decoration: underline;
 }
@@ -260,6 +282,20 @@ body:not(.init) #meta p	{
 	background: #99A;
 	color: #FFF;
 }
+.consigne::before	{
+	color: #000;
+	content: "\25CB"; /* ○ */
+	font-size: 1.3em;
+	font-weight: bold;
+	left: -.24em;
+	position: absolute;
+	top: .46em;
+}
+.visiteur.consigne::before	{
+	color: #CCB;
+	content: "\25CF"; /* ● */
+}
+
 #meta button	{
 	background: transparent;
 	border: 0;
@@ -295,8 +331,7 @@ body:not(.init) #meta p	{
 }
 #meta label	{
 	background: #F0F0FF;
-	border-radius: 0 0 10em 0;
-	cursor: pointer;
+	border-bottom: 1px solid #99A;
 	display: block;
 	line-height: 1.3;
 	opacity: .6;
@@ -317,18 +352,20 @@ body:not(.init) #meta p	{
 /* structure : "presentations" */
 .presentation	{
 	box-shadow: .5em 0 #FFF, 1em 0 #99A;
-	height: 2.3em;
-	padding-top: .3em;
 	text-align: right;
 }
 /* structure : "presentations" : mode d'emploi */
-#aideUtilisation	{
+#aideUtilisation,
+.contribuer	{
 	background: #445;
-	border-radius: 5px;
-	box-shadow: -.05em 0 .05em #406, -4em 0 4em rgba(68, 0, 102, .1);
+	box-shadow: -.05em 0 .05em #406, -4em 0 4em rgba(68, 0, 102, .15);
 	color: #FFF;
+}
+#aideUtilisation	{
+	border-radius: 5px;
 	font-size: .9em;
 	margin: 0;
+	opacity: 1;
 	padding: 1em 1em 3em 1em;
 	position: relative;
 	white-space: nowrap;
@@ -350,20 +387,19 @@ body:not(.init) #meta p	{
 	display: none;
 }
 #aideUtilisation.sans	{
-	background: #FFF;
-	border-radius: 0;
-	box-shadow: 0 0 0 1px #99A;
+	background: #F0F0FF;
+	border-bottom: 1px solid #99A;
+	border-radius: 0 0 0 10em;
+	box-shadow: none;
 	font-size: .85em;
 	margin: 0 0 1em 15%;
-	opacity: .75;
-	padding: .3em 0 .6em 0;
+	opacity: .6;
+	padding: .2em 0 .4em 0;
 	text-align: center;
 	width: 85%;
-	z-index: 1;
 }
 #aideUtilisation.sans:hover,
 #aideUtilisation.sans:focus	{
-	background: #F0F0FF;
 	opacity: 1;
 }
 #aideUtilisation p:first-child	{
@@ -384,6 +420,10 @@ body:not(.init) #meta p	{
 	color: #000;
 	font-size: 1em;
 	position: inherit;
+}
+#mdemploi:before	{
+	background: #FFF;
+	color: #445;
 }
 .sans #mdemploi:before	{
 	background: transparent;
@@ -424,10 +464,7 @@ body:not(.init) #meta p	{
 }
 /* aide sur la personnalisation */
 .contribuer	{
-	background: #445;
 	border-radius: 1em;
-	box-shadow: -.05em 0 .05em #406, -4em 0 4em rgba(68, 0, 102, .1);
-	color: #FFF;
 	font-size: 1.15em;
 	line-height: 2;
 	padding: 1em;
@@ -441,8 +478,8 @@ body:not(.init) #meta p	{
 .contribuer a	{
 	color: #FFF;
 }
-.modifier .contribuer:before	{
-	background: transparent;
+.contribuer:before	{
+	color: #FFF;
 	cursor: pointer;
 	position: absolute;
 	right: 0;
@@ -450,45 +487,57 @@ body:not(.init) #meta p	{
 }
 .contribuer:before,
 #mdemploi:before	{
-	background: #445;
 	content: "X";
-	color: #FFF;
-	display: inline-block;
 	font-size: 14px;
 	padding: .2em .4em;
 }
 
 
 
-
 /* structure : données visualisées */
 .visu-datas	{
-	margin-bottom: 1em;
+	margin: 1em 0;
 	position: relative;
 	text-align: center;
 }
 .visu-datas label,
 .croiser	{
-	background: #778;
-	color: #FFF;
-	padding: 0 .33em;
-}
-.reset	{
-	background: #F5F7F5;
 	border: 1px solid #99A;
+	border-right-width: 0;
+	border-radius: .25em;
+	color: #445;
+	font-size: .9em;
+	font-weight: bold;
+	padding: .05em .33em 0 .5em;
+}
+.reset,
+.effacement	{
+	background: #FFF;
+	border: 2px solid #99A;
+	border-radius: .5em;
 	cursor: pointer;
 	font-size: .85em;
 	padding: .2em .4em;
 	position: absolute;
-	right: 0;
-	top: .5em;
+	top: .15em;
 }
-
-
-
-
-
-
+.reset	{
+	left: 0;
+}
+.effacement	{
+	display: none;
+	right: 0;
+}
+.reset:hover,
+.reset:focus,
+.effacement:hover,
+.effacement:focus	{
+	background: #445;
+	color: #E7E7FF;
+}
+.effacement.in	{
+	display: inherit;
+}
 
 
 
@@ -500,26 +549,30 @@ body:not(.init) #meta p	{
 div input	{
 	margin: .3em .4em;
 }
-[colspan] input	{
+thead input	{
 	margin: .3em 2em .3em .4em;
 }
 th input	{
 	margin: 0 .4em .3em .4em;
 }
-table:not(.axes) [colspan] [for="liste93"],
-table:not(.axes) [colspan] #liste93,
+table:not(.axes) thead [for="liste93"],
+table:not(.axes) thead #liste93,
 .axes.colonne [for="liste92"]	{
 	display: none;
 }
-[name="commun"]	{
+[name="commun"],
+.nb	{
 	float: right;
 }
+
+
 
 /* "interface" : boîte de sélection d'analyse */
 #croiser	{
 	margin-right: 3.6em;
 }
 .colonne .croiser	{
+	border-right-width: 1px;
 	/*display: run-in;*/
 	float: left;
 	padding: .1em .33em;
@@ -529,39 +582,62 @@ table:not(.axes) [colspan] #liste93,
 	margin: 0 0 1.4em 0;
 }
 
+
+
+
 /* "interface" : tableau */
 table	{
 	-webkit-box-sizing: content-box;
 	-moz-box-sizing: content-box;
 	box-sizing: content-box;
+	background: #FFF;
 	border-collapse: separate;
 	border-spacing: 0;
-	box-shadow: 1px 2px #D9D9D9;
-	margin-top: .5em;
+	box-shadow: 0 -.33em .33em #BBC;
+	margin: 1.2em auto 0 auto;
 	table-layout: auto;
 	text-align: right;
 }
 th,
 td	{
-	border: 1px solid #D9D9D9;
-	border-width: 1px 0 0 1px;
-	height: 6.2em;
-	padding: .66em;
 	vertical-align: top;
 }
-table:not(.colonne) th,
-table:not(.colonne) tbody td	{
-	border-top: 3px solid #667;
+
+thead	{
+	background: #889;
+}
+thead td	{
+	background: #F5F5F5;
+	border-bottom: 2px solid #667;
+	border-radius: .75em .75em 0 0;
+	box-shadow: 0 0 0 1px #667;
+	padding: .75em .66em;
+	text-align: left;
+}
+
+tbody	{
+	box-shadow: 1px 2px #D9D9D9;
+}
+tbody tr	{
+	outline: 1px solid #667;
 }
 th	{
-	padding-top: .2em;
+	padding: .33em .66em .66em .66em;
 	text-align: left;
 	width: 12em;
 }
-th label	{
+.nb	{
+	background: #FFF;
+	border-radius: 2em;
+	font-size: .8em;
+	font-weight: normal;
+	padding: .2em;
+	text-align: center;
+	width: 2em;
+}
+.label	{
 	background: #FFF;
 	border-radius: .2em;
-	cursor: pointer;
 	display: inline-block;
 	font-size: .85em;
 	line-height: 1.2;
@@ -570,20 +646,19 @@ th label	{
 	text-align: right;
 	width: 100%;
 }
-.axe th label	{
+.axe .label,
+table:not(.axes) .axe .nb	{
 	background: #B00;
 	color: #FFF;
 }
 tbody td	{
+	border: 1px solid #D9D9D9;
+	border-width: 1px 0 0 1px;
 	font-family: Georgia;
-	padding: 1.6em .25em 0 0;
+	height: 5.636em;
+	font-size: 1.1em;
+	padding: 1.45em .227em 0 0;
 	width: 4em;
-}
-td[colspan]	{
-	background: #F5F5F5;
-	height: auto;
-	text-align: left;
-	width: auto;
 }
 
 
@@ -599,16 +674,16 @@ tbody td:not(:empty)::before	{
 	content: attr(data-item);
 	float: left;
 	font-family: Arial;
-	font-size: .75em;
+	font-size: .6em;
 	font-weight: normal;
-	margin-top: -2.13em;
+	margin-top: -2.4em;
 	text-align: center;
 	text-shadow: none!important;
 	padding-bottom: .1em;
 	width: 2.66em;
 }
 
-.absent:not(.intersection) label	{
+.absent:not(.intersection) .label	{
 	opacity: .25;
 }
 
@@ -627,30 +702,19 @@ table.colonne::after	{
 	content: " ";
 	display: block;
 }
-
-
-.colonne tbody tr + tr th,
-.colonne tbody tr + tr td	{
-	border-left: 3px solid #99A;
+.colonne tbody tr	{
+	float: left;
 }
 .colonne th,
 .colonne tbody td	{
+	display: block;
 	height: 7.5em;
 	vertical-align: middle;
 	width: 7em;
 }
 .colonne tbody td	{
 	height: 5.6em;
-}
-.colonne tbody tr	{
-	float: left;
-}
-.colonne tbody th,
-.colonne tbody td	{
-	display: block;
-}
-.colonne tbody td	{
-	padding: 1.2em .66em 0 0;
+	padding: 1.2em 2em 0 0;
 }
 .colonne tbody td:not(:empty)::before	{
 	margin-top: -1.59em;
@@ -670,19 +734,21 @@ table.colonne::after	{
 
 
 
-tbody tr:nth-child(1) th	{
+tr:nth-child(1) th	{
 	background: #C96;
 }
 tbody tr:nth-child(1) td::before	{
 	border-color: #C96;
 	box-shadow: .8em 0 #C96;
 }
-tbody tr.axe:nth-child(1) td::before	{
-	box-shadow: 2.1em 0 #C96;
+.axes tr:nth-child(1) .visible::before	{
+	box-shadow: .8em 0 #C96, 1.2em 0 #B00;
 }
-tbody.axe1 td.visible::before,
-tbody tr.axe:nth-child(1) td:not(.secondaire)::before	{
+.axe1 td.visible::before,
+.axe:nth-child(1) td:not(.secondaire)::before	{
 	background: #C96;
+	border-color: #C96;
+	box-shadow: .8em 0 #C96, 1.2em 0 #B00;
 }
 tbody tr:nth-child(1) td:not(:empty)	{
 	box-shadow: 0 -2.5em #FFF inset, 0 -3em #C96 inset;
@@ -696,12 +762,14 @@ tr:nth-child(2) td::before	{
 	border-color: #BCB;
 	box-shadow: .8em 0 #BCB;
 }
-tr.axe:nth-child(2) td::before	{
-	box-shadow: 2.1em 0 #BCB;
+.axes tr:nth-child(2) .visible::before	{
+	box-shadow: .8em 0 #BCB, 1.2em 0 #B00;
 }
 .axe2 td.visible::before,
-tr.axe:nth-child(2) td:not(.secondaire)::before	{
+.axe:nth-child(2) td:not(.secondaire)::before	{
 	background: #BCB;
+	border-color: #BCB;
+	box-shadow: .8em 0 #BCB, 1.2em 0 #B00;
 }
 tr:nth-child(2) td:not(:empty)	{
 	box-shadow: 0 -2em #FFF inset, 0 -2.5em #BCB inset;
@@ -715,12 +783,14 @@ tr:nth-child(3) td::before	{
 	border-color: #E96;
 	box-shadow: .8em 0 #E96;
 }
-tr.axe:nth-child(3) td::before	{
-	box-shadow: 2.1em 0 #E96;
+.axes tr:nth-child(3) .visible::before	{
+	box-shadow: .8em 0 #B00, 1.2em 0 #B00;
 }
 .axe3 td.visible::before,
-tr.axe:nth-child(3) td:not(.secondaire)::before	{
+.axe:nth-child(3) td:not(.secondaire)::before	{
 	background: #E96;
+	border-color: #E96;
+	box-shadow: .8em 0 #E96, 1.2em 0 #B00;
 }
 tr:nth-child(3) td:not(:empty)	{
 	box-shadow: 0 -1.5em #FFF inset, 0 -2em #E96 inset;
@@ -734,12 +804,14 @@ tr:nth-child(4) td::before	{
 	border-color: #BBE;
 	box-shadow: .8em 0 #BBE;
 }
-tr.axe:nth-child(4) td::before	{
-	box-shadow: 2.1em 0 #BBE;
+.axes tr:nth-child(4) .visible::before	{
+	box-shadow: .8em 0 #B00, 1.2em 0 #B00;
 }
 .axe4 td.visible::before,
-tr.axe:nth-child(4) td:not(.secondaire)::before	{
+.axe:nth-child(4) td:not(.secondaire)::before	{
 	background: #BBE;
+	border-color: #BBE;
+	box-shadow: .8em 0 #BBE, 1.2em 0 #B00;
 }
 tr:nth-child(4) td:not(:empty)	{
 	box-shadow: 0 -1em #FFF inset, 0 -1.5em #BBE inset;
@@ -753,12 +825,14 @@ tr:nth-child(5) td::before	{
 	border-color: #ED5;
 	box-shadow: .8em 0 #ED5;
 }
-tr.axe:nth-child(5) td::before	{
-	box-shadow: 2.1em 0 #ED5;
+.axes tr:nth-child(5) .visible::before	{
+	box-shadow: .8em 0 #B00, 1.2em 0 #B00;
 }
 .axe5 td.visible::before,
-tr.axe:nth-child(5) td:not(.secondaire)::before	{
+.axe:nth-child(5) td:not(.secondaire)::before	{
 	background: #ED5;
+	border-color: #ED5;
+	box-shadow: .8em 0 #ED5, 1.2em 0 #B00;
 }
 tr:nth-child(5) td:not(:empty)	{
 	box-shadow: 0 -.5em #FFF inset, 0 -1em #ED5 inset;
@@ -772,12 +846,14 @@ tr:nth-child(6) td::before	{
 	border-color: #AD7;
 	box-shadow: .8em 0 #AD7;
 }
-tr.axe:nth-child(6) td::before	{
-	box-shadow: 2.1em 0 #AD7;
+.axes tr:nth-child(6) .visible::before	{
+	box-shadow: .8em 0 #AD7, 1.2em 0 #B00;
 }
 .axe6 td.visible::before,
-tr.axe:nth-child(6) td:not(.secondaire)::before	{
+.axe:nth-child(6) td:not(.secondaire)::before	{
 	background: #AD7;
+	border-color: #AD7;
+	box-shadow: .8em 0 #AD7, 1.2em 0 #B00;
 }
 tr:nth-child(6) td:not(:empty)	{
 	box-shadow: 0 -.5em #AD7 inset;
@@ -790,7 +866,7 @@ tr:nth-child(6) td:not(:empty)	{
 
 
 
-/* visualisation des analyses */
+/* visualisation des analyses au niveau des <th */
 
 .passage	{
 	box-shadow: 0 .5em .6em .4em #CBB inset;
@@ -798,57 +874,44 @@ tr:nth-child(6) td:not(:empty)	{
 .visite	{
 	box-shadow: 0 .5em .5em .5em #DDE inset;
 }
-.consigne::before	{
-	color: #000;
-	content: "\25CB"; /* ○ */
-	font-size: 1.3em;
-	font-weight: bold;
-	left: -.24em;
-	position: absolute;
-	top: .46em;
-}
-.visiteur.consigne::before	{
-	color: #CCB;
-	content: "\25CF"; /* ● */
-}
 
-
-
-.intersection label	{
-	box-shadow: -3em 0 #DDE, .8em 0 #DDE;
-}
-.visite label	{
+.passage .label	{
 	box-shadow: -3em 0 #99A, .8em 0 #99A;
 }
 
-.colonne .intersection label	{
+.colonne .intersection .label	{
 	box-shadow: -.8em 0 #DDE, .8em 0 #DDE;
 }
-.colonne .visite label	{
+.colonne .visite .label	{
 	box-shadow: -.8em 0 #99A, .8em 0 #99A;
 }
 
-.intersection label::after	{
+.intersection .label::after	{
 	background: #FFF;
 	border: 1px solid #99A;
 	border-radius: 4px;
 	color: #000!important;
 	content: attr(data-intersection);
 	font-weight: normal;
-	left: 0;
-	padding: .2em 0;
+	left: -.3em;
+	padding: .2em;
 	position: absolute;
 	text-align: center;
 	top: 3em;
 	width: 100%;
 }
-.visite label:after	{
+.visite .label:after	{
 	background: #99A;
 	border: 1px solid #BBC;
 	color: #FFF!important;
 	font-weight: bold;
 }
 
+
+
+
+
+/* visualisation des analyses au niveau des <td */
 
 /*
 #C96;
@@ -861,109 +924,102 @@ tr:nth-child(6) td:not(:empty)	{
 
 .intersectionD2:nth-child(1) .multi,
 .intersectionD3:nth-child(1) .diasection	{
-	background: linear-gradient(#99A, #99A .9em, #C96 .9em, #C96 2.8em, transparent 2.8em);
+	background: linear-gradient(#99A, #99A 1em, #C96 1em, #C96 100%);
 }
 .intersectionD2:nth-child(2) .multi,
 .intersectionD3:nth-child(2) .diasection	{
-	background: linear-gradient(#99A, #99A .9em, #BCB .9em, #BCB 2.8em, transparent 2.8em);
+	background: linear-gradient(#99A, #99A 1em, #BCB 1em, #BCB 100%);
 }
 .intersectionD2:nth-child(3) .multi,
 .intersectionD3:nth-child(3) .diasection	{
-	background: linear-gradient(#99A, #99A .9em, #E96 .9em, #E96 2.8em, transparent 2.8em);
+	background: linear-gradient(#99A, #99A 1em, #E96 1em, #E96 100%);
 }
 .intersectionD2:nth-child(4) .multi,
 .intersectionD3:nth-child(4) .diasection	{
-	background: linear-gradient(#99A, #99A .9em, #BBE .9em, #BBE 2.8em, transparent 2.8em);
+	background: linear-gradient(#99A, #99A 1em, #BBE 1em, #BBE 100%);
 }
 .intersectionD2:nth-child(5) .multi,
 .intersectionD3:nth-child(5) .diasection	{
-	background: linear-gradient(#99A, #99A .9em, #ED5 .9em, #ED5 2.8em, transparent 2.8em);
+	background: linear-gradient(#99A, #99A 1em, #ED5 1em, #ED5 100%);
 }
 .intersectionD2:nth-child(6) .multi,
 .intersectionD3:nth-child(6) .diasection	{
-	background: linear-gradient(#99A, #99A .9em, #AD7 .9em, #AD7 2.8em, transparent 2.8em);
+	background: linear-gradient(#99A, #99A 1em, #AD7 1em, #AD7 100%);
 }
 
 
 .intersexion1	{
-	background: linear-gradient(#C96, #C96 2.8em, transparent 2.8em);
+	background: linear-gradient(#C96, #C96 100%);
 }
 .intersexion2	{
-	background: linear-gradient(#BCB, #BCB 2.8em, transparent 2.8em);
+	background: linear-gradient(#BCB, #BCB 100%);
 }
 .intersexion3	{
-	background: linear-gradient(#E96, #E96 2.8em, transparent 2.8em);
+	background: linear-gradient(#E96, #E96 100%);
 }
 .intersexion4	{
-	background: linear-gradient(#BBE, #BBE 2.8em, transparent 2.8em);
+	background: linear-gradient(#BBE, #BBE 100%);
 }
 .intersexion5	{
-	background: linear-gradient(#ED5, #ED5 2.8em, transparent 2.8em);
+	background: linear-gradient(#ED5, #ED5 100%);
 }
 .intersexion6	{
-	background: linear-gradient(#AD7, #AD7 2.8em, transparent 2.8em);
+	background: linear-gradient(#AD7, #AD7 100%);
 }
 
 
 
-.axe th,
-.axe td,
-.axes .axe.intersection td	{
+
+
+
+
+
+
+/* extension et analyse */
+
+	/* intersection : */
+.axe td:not(:last-child)	{
 	border-right: 1px solid #FAA;
 	color: #D00;
 }
-table:not(.axes) .axe .secondaire	{
-	background: #CBB;
-	color: #FFF;
+.axe .secondaire,
+.axe td:empty{
+	opacity: .5;
 }
-
-
-.intersection td	{
-	text-shadow: 0 0 1px #99A;
-}
-.axe.intersection td,
-.axes .intersection td.secondaire	{
-	text-shadow: 0 0 1px #D00;
-}
-table:not(.axes) .axe.intersection .secondaire,
-#crutch .intersectionD2 td.multi,
-#crutch .intersection td.diasection,
-#crutch .intersection td.intersexion	{
-	text-shadow: 0 0 1px #FFF;
-}
-
-
-
-.absent td,
 .present td:not(.visible),
-.axes td.secondaire	{
-	box-shadow: none!important;
+.absent td	{
+	opacity: .25;
 }
-.absent td,
-.present td:not(.visible),
-.axes td.secondaire,
+#crutch .axe td:not(.secondaire)::before,
+table:not(.axes) .visible::before	{
+	color: #FFF!important;
+}
+/*.crutch td.visible::before	{
+	border-color: #F00;
+	box-shadow: .8em 0 #B00;
+}
+*/
+	/* analyse : */
+#crutch .intersection td:not(:empty),
+#crutch .diasection,
+#crutch .intersexion	{
+	opacity: 1;
+}
 #crutch .intersectionD2 .multi,
 #crutch .diasection,
 #crutch .intersexion	{
 	color: #FFF;
 }
-#crutch tbody[class^="axe"] .present .visible::before,
-#crutch tr.axe td:not(.secondaire)::before	{
-	color: #FFF!important;
+
+.intersection td	{
+	text-shadow: 0 0 1px #000;
 }
-.intersectionD2:not(.axe) td:not(.multi),
-.crutch .intersectionD3:not(.axe) td	{
-	color: #000;
+.intersection.axe td	{
+	text-shadow: 0 0 1px #D00;
+}
+#crutch .intersectionD2 .multi,
+#crutch .intersection .diasection	{
+	text-shadow: 0 0 1px #FFF;
 }
 
 
-.absent td::before,
-.present td:not(.visible)::before,
-.axes td.secondaire::before	{
-	display: none;
-}
-.crutch td.diasection::before,
-.crutch td.intersexion::before,
-.intersectionD2 td.multi::before	{
-	display: block;
-}

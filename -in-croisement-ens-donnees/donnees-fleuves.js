@@ -63,7 +63,7 @@ var datas = {
 		"31" : 89
 	},
 	"rhone": {
-		"titre" : "Le Rhône", //attention périmètre administratif du bv
+		"titre" : "le Rhône", //attention périmètre administratif du bv
 		"0" : 1,
 		"1" : 4,
 		"2" : 5,

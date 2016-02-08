@@ -13,12 +13,13 @@
 	cles,
 	intersectionsQuali = [],
 	intersections,
+	extensions,
 
 	ordre = {
-		ml: 0,
-		me: 1,
-		pl: 2,
-		pe: 3,
+		pl: 0,
+		pe: 1,
+		ml: 2,
+		me: 3,
 		pp: 4 //À LAISSER EN 4
 	};
 
@@ -42,8 +43,8 @@
 
 	intersectionsQuali[ordre["ml"]] = "la moins large";
 	intersectionsQuali[ordre["pl"]] = "la plus large";
-	intersectionsQuali[ordre["me"]] = "la moins étendue";
-	intersectionsQuali[ordre["pe"]] = "la plus étendue";
+	intersectionsQuali[ordre["me"]] = "la moins vaste";
+	intersectionsQuali[ordre["pe"]] = "la plus vaste";
 	intersectionsQuali[ordre["pp"]] = "la plus profonde";
 
 	resume[ordre["ml"]] = ["largeur minimale", "d2"];
@@ -63,10 +64,11 @@
 	interz.profonde = intersectionsQuali[ordre["pp"]] + ", "
 
 
-	return (function analyser () {
+	return (function analysant () {
 
 		cles = Object.keys(datas);
-		intersections = [];
+		intersections = [],
+		extensions = [];
 
 		var nombreTableaux = cles.length,
 			tableaux = [],
@@ -119,7 +121,7 @@
 			];
 
 
-		code.push("<h1>L'intersection…</h1>");
+		code.push("<h1>L'extension :</h1>");
 
 
 		cles.forEach(function (val) {
@@ -256,7 +258,7 @@
 		code.push("<p>" + interz.profonde + "1 " + typeEle[0] + " sur " + decompteElements[0][1] + " " + typeTab[1] + " :<br>&nbsp;&nbsp;&nbsp;&nbsp;");
 		code.push(decompteElements[0][3]);
 
-		code.push('<h1><button id="m">Les ' + typeEle[1] + '… <span>→</span></button></h1><article id="millesimes">');
+		code.push('<h1><button id="m">Présence des ' + typeEle[1] + '… <span>→</span></button></h1><article id="profondeur">');
 
 		code.push("<p>les plus " + adjectif[genreEle] + " sur " + decompteElements[0][1] + " " + typeTab[1] + ":<br>&nbsp;&nbsp;&nbsp;&nbsp;");
 		code.push([decompteElements[0][0]]);
@@ -305,6 +307,13 @@
 
 
 
+	//Surface d'extension de chaque élément (objet global)
+		surfaces.forEach(function (val) {
+			extensions[cles[titresIndex.indexOf(val[1])]] = val[0];
+		});
+
+
+
 
 		code.push(masquer);
 		$meta.html(code.join(""));
@@ -317,9 +326,11 @@
 		$(".genreEle").text(genreEle == "f" ? "e" : "");
 		$(".tout").text(genreTab == "f" ? "tes" : "s");
 
-		return analyser;
+		return analysant;
+
+
+
 
 	})();
-
 
 })();

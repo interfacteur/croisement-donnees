@@ -31,6 +31,8 @@
 	to do : reprendre en orientation prototypale, ou orienté objet ES6 ?
 		- evenements.js OK
 
+	to do : $c.remove(); //to do: detach() pour tous cas semblables ?
+
 	PRESENTATION
 
 	to do : effets de transition (notamment sur Chrome ?)
@@ -38,11 +40,11 @@
 */
 
 
-	if (! conditions) //cf. analyse-donnees.js
+	if (! conditions) //cf. 1-analyse-donnees.js
 		return;
 
 
-	var collection = cles, //cf. analyse-donnees.js
+	var collection = cles, //cf. 1-analyse-donnees.js
 		listes = [],
 		longueur = 0,
 		code = ["<tbody>"],
@@ -57,14 +59,23 @@
 			'commun',
 			'" value="'
 		],
-		ordres = ["Ordre d'origine :", "Ordre numérique :", "Tout sélectionner :", "|| Tout désélectionner :"],
-		charge = [$("table")];
+		ordres = ["Ordre d'origine&nbsp;:", "Ordre numérique&nbsp;:", "Tout sélectionner&nbsp;:", "|| Tout désélectionner&nbsp;:"],
+		charge = [$("table")]; //n'existe pas au chargement donc n'a pas de .length
+
+
+	! charge[0].length //au chargement
+	&& $f.get(0).reset();
+
+
+
+	//placer en-têtes les séries aux surfaces d'extension les plus riches
+	collection.sort(function (a, b) { return extensions[b] - extensions[a]; });
 
 
 	$("#titre").html(informations.titre);
 	charge[charge[0].length] = charge[0].hasClass("colonne"); //au chargement : length == 0 ; nouvelles données : length == 1
 	$("table").remove();
-	$(".interaction > input").off();
+	$(".presentation input").off(); //cf. commentaire début de evenements.js
 
 
 	for (var i=0,l=collection.length;i<l;++i) {
@@ -77,7 +88,8 @@
 			+ manu[0] + i + manu[1] + i + 0 + manu[8] + 0 + manu[2]
 			+ manu[0] + i + manu[1] + i + 1 + manu[8] + 1 + manu[3]
 			+ manu[4] + i + 2 + manu[3]
-			+ '<br><label for="' + manu[7] + i + 2 + '">' + listes[i][0] + "</label>");
+			+ '<label for="' + manu[7] + i + 2 + '" class="nb" title="' + extensions[collection[i]] + ' valeurs partagées pour ' + listes[i][0] + '">' + extensions[collection[i]] + "</label>"
+			+ '<br><label class="label" for="' + manu[7] + i + 2 + '">' + listes[i][0] + "</label>");
 		for (var i2=1;i2<longueur;++i2){
 			code.push('<td data-item="' + i2 + '" data-nombre="' + (listes[i][i2] || 100000000000) + '">' + (listes[i][i2] || "") + "</td>");
 		}
@@ -85,7 +97,7 @@
 	}
 	code.push("</tbody>");
 	code.unshift('<thead><tr><td colspan="' + longueur + '"> '
-		+ '<label for="croiser" class="croiser">Amplitude des intersections : </label>'
+		+ '<label for="croiser" class="croiser">Amplitudes extrêmes : </label>'
 		+ '<select id="croiser"><option value="-1">… … … …</option></select>'
 		+ manu[5] + 90 + manu[3] + ordres[0] + manu[6]
 		+ manu[0] + 9 + manu[1] + 90 + manu[8] + 0 + manu[2]
@@ -97,18 +109,19 @@
 		+ manu[0] + 9 + manu[1] + 93 + manu[8] + 3 +  manu[3]
 		+ "</td></tr></thead>");
 
-	$("<table>", {
-		data: { width : [12 + longueur * 4, l * 7] },
+	$ta = $("<table>", {
+		data: { width : [12 + longueur * 4, l * 7], state: Date.now() },
 		class: charge.slice(-1)[0] == true ? "colonne" : "",
 		html: code.join("")}
 	)
 	.appendTo($f.addClass("settled"));
 
 	$("header, form").css("width", 12 + longueur * 4 > 65 ? (12 + longueur * 4 < 80 ? 12 + longueur * 4 + "em" : "80em") : "65em");
+	$b.removeClass("prinit");
 
 
 /*
-	à la fin de analyse-donnees.js :
+	à la fin de 1-analyse-donnees.js :
 		$meta.html(code.join(""));
 		$(".typeTab1").text(typeTab[0]); etc.
 
@@ -158,7 +171,7 @@
 			var $t = $(this);
 			$t.css("box-shadow",$t.data(choix));
 	});	}
-	if (charge.length == 2 || typeof localStorage == "undefined" || ! "pres1" in localStorage)
+	if (charge.length == 2 || localStorage.length == 0 || localStorage.getItem("presentation") === null || localStorage.getItem("presentation") == "0")
 		redeployer.call("[type='radio']:checked:eq(0)");
 	$(".presentation input").on({ "change": redeployer });
 
@@ -172,11 +185,12 @@
 		c.sort(function(a,b) {
 			return parseInt($(a).data(crible)) - parseInt($(b).data(crible));
 		});
-		$c.remove();
+		$c.remove(); //to do: detach() pour tous cas semblables ?
 		c.forEach(function(cel) {
 			$(cel).appendTo($p);
 		});
 		$td = $("tbody td:not(:empty)");
+		$ta.data("state", Date.now());
 	}
 	function lotir(crible) {
 		retablir(true);
@@ -274,6 +288,7 @@
 				$t.removeData("alignement");
 		});	});
 		$td = $("tbody td:not(:empty)");
+		$ta.data("state", Date.now());
 	}
 	$i2.on({
 		change: function() {
@@ -323,6 +338,7 @@
 						$t.removeData("alignement");
 					});
 					$td = $("tbody td:not(:empty)");
+					$ta.data("state", Date.now());
 					$("tbody tr:not(:has(td.visible))").not($p).addClass("absent");
 					$("tr:has(.visible)").addClass("present");
 					break;
