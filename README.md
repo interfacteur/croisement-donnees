@@ -9,13 +9,13 @@ Croiser der séries de données numériques pour en visualiser les intersections
 <!-- Une note de présentation : http://interfacteur.blogspot.fr/2016/01/croiser-donnees.html -->
 
  Analyse des amplitudes des intersections entre tableaux ("régions", "albums" etc.) :
-* la moins large
-* la moins étendue
 * la plus large
-* la plus étendue
+* la plus vaste
+* la moins large
+* la moins vaste
 * la plus profonde
-* données les plus répandues
-* données les moins répandues
+* données les plus présentes
+* données les moins présentes
 
 To do :
 * FONCTIONNALITES
@@ -29,5 +29,6 @@ To do :
 	- tests sur MSIE
 * DÉVELOPPEMENT
 	- reprendre en orientation prototypale, ou orienté objet ES6 ? (- evenements.js OK)
+	- $c.remove(); //to do: detach() pour tous cas semblables ?
 * PRESENTATION
 	- effets de transition (notamment sur Chrome ?)
