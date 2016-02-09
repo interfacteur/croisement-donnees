@@ -55,6 +55,9 @@ optgroup	{
 	font: inherit;
 	font-size: 100%;
 }
+optgroup	{
+	font-weight: bold;
+}
 label,
 input	{
 	vertical-align: middle;
@@ -66,7 +69,6 @@ input[type="radio"]	{
 }
 button	{
 	overflow: visible;
-	margin: 0 !important;
 }
 button, select	{
 	text-transform: none;

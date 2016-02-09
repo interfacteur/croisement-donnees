@@ -47,7 +47,6 @@ body > header > h1	{
 h2	{
 	background: #889;
 	border-top: 2px solid #445;
-	color: #445;
 	color: #FFF;
 	font-family: "Trebuchet MS", Helvetica, sans-serif;
 	font-size: 1.1em;
@@ -383,7 +382,8 @@ body:not(.init) #meta p	{
 #aideUtilisation input	{
 	box-shadow: 0 0 .1em .3em #FFF;
 }
-#aideUtilisation.nulle	{
+#aideUtilisation.nulle,
+.sans .discret	{
 	display: none;
 }
 #aideUtilisation.sans	{
@@ -478,15 +478,19 @@ body:not(.init) #meta p	{
 .contribuer a	{
 	color: #FFF;
 }
-.contribuer:before	{
+.contribuer .fermeture	{
+	background: #FFF;
+	color: #000;
+}
+.contribuer::before	{
 	color: #FFF;
 	cursor: pointer;
 	position: absolute;
 	right: 0;
 	top: -.3em;
 }
-.contribuer:before,
-#mdemploi:before	{
+.contribuer::before,
+#mdemploi::before	{
 	content: "X";
 	font-size: 14px;
 	padding: .2em .4em;
@@ -496,7 +500,7 @@ body:not(.init) #meta p	{
 
 /* structure : données visualisées */
 .visu-datas	{
-	margin: 1em 0;
+	margin: .5em 0 1em 0;
 	position: relative;
 	text-align: center;
 }
@@ -542,6 +546,17 @@ body:not(.init) #meta p	{
 .effacement.in	{
 	display: inherit;
 }
+#synthese	{
+	color: #BBC;
+	font-size: .85em;
+	font-weight: bold;
+	margin-top: .66em;
+	padding: .33em;
+	text-align: center;
+}
+#synthese a	{
+	color: #BBC;
+}
 
 
 
@@ -554,22 +569,32 @@ div input	{
 	margin: .3em .4em;
 }
 thead input	{
-	margin: .3em 2em .3em .4em;
+	margin: .3em .75em .3em .4em;
+}
+#liste91	{
+	margin-right: 2em;
 }
 th input	{
 	margin: 0 .4em .3em .4em;
 }
 table:not(.axes) thead [for="liste93"],
-table:not(.axes) thead #liste93,
-.axes.colonne [for="liste92"]	{
+table:not(.axes) thead #liste93	{
 	display: none;
 }
-[name="commun"],
-.nb	{
+[name="commun"]	{
 	float: right;
 }
-
-
+#intersection	{
+	background: transparent;
+	border: 1px solid #445;
+	margin: 0 0 -.5em 2em;
+	padding-left: .8em;
+}
+#intersection option	{
+}
+.colonne #intersection	{
+	margin: .5em 0;
+}
 
 /* "interface" : boîte de sélection d'analyse */
 #croiser	{
@@ -578,15 +603,12 @@ table:not(.axes) thead #liste93,
 .colonne .croiser	{
 	border-right-width: 1px;
 	/*display: run-in;*/
-	float: left;
 	padding: .1em .33em;
 }
 .colonne #croiser	{
-	clear: left;
 	display: block;
-	margin: 0 0 1.4em 0;
+	margin: .75em auto;
 }
-
 
 
 
@@ -599,7 +621,7 @@ table	{
 	border-collapse: separate;
 	border-spacing: 0;
 	box-shadow: 0 -.33em .33em #BBC;
-	margin: 1.2em auto 0 auto;
+	margin: 1.6em auto 0 auto;
 	table-layout: auto;
 	text-align: right;
 }
@@ -612,13 +634,284 @@ thead	{
 	background: #889;
 }
 thead td	{
-	background: #F5F5F5;
-	border-bottom: 2px solid #667;
-	border-radius: .75em .75em 0 0;
 	box-shadow: 0 0 0 1px #667;
 	padding: .75em .66em;
 	text-align: left;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+thead tr:first-child td	{
+	background: #F5F5F5;
+	border-bottom: 1px solid #667;
+	border-radius: .75em .75em 0 0;
+}
+.colonne thead td	{
+	text-align: center;
+}
+thead tr:nth-child(2) td	{
+	background: #FFF;
+	border-bottom: 2px solid #667;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 tbody	{
 	box-shadow: 1px 2px #D9D9D9;
@@ -631,20 +924,48 @@ th	{
 	text-align: left;
 	width: 12em;
 }
-.nb	{
-	background: #FFF;
-	border-radius: 2em;
+.nb1,
+.nb2	{
+	float: right;
 	font-size: .8em;
-	font-weight: normal;
-	padding: .2em;
 	text-align: center;
 	width: 2em;
+}
+.nb1	{
+	background: #FFF;
+	border-radius: 2em;
+	font-weight: normal;
+	padding: .2em;
+}
+.nb2	{
+	border: 1px solid #FFF;
+	border-width: 0 1px;
+	color: #FFF;
+	cursor: vertical-text;
+	margin: .2em 1em 0 0;
+}
+.colonne .nb1	{
+	clear: right;
+}
+#aideUtilisation .nb1,
+#aideUtilisation .nb2	{
+	display: inline-block;
+	float: none;
+	font-size: .9em;
+	padding: 0;
+}
+#aideUtilisation .nb1	{
+	color: #000;
+}
+#aideUtilisation .nb2	{
+	margin: 0;
 }
 .label	{
 	background: #FFF;
 	border-radius: .2em;
 	display: inline-block;
 	font-size: .85em;
+	font-weight: bold;
 	line-height: 1.2;
 	padding: .25em .25em .1em .25em;
 	position: relative;
@@ -652,7 +973,7 @@ th	{
 	width: 100%;
 }
 .axe .label,
-table:not(.axes) .axe .nb	{
+table:not(.axes) .axe .nb1	{
 	background: #B00;
 	color: #FFF;
 }
@@ -688,7 +1009,9 @@ tbody td:not(:empty)::before	{
 	width: 2.66em;
 }
 
-.absent:not(.intersection) .label	{
+.absent:not(.intersection) .label,
+.absent:not(.intersection) .nb1,
+.absent:not(.intersection) .nb2	{
 	opacity: .25;
 }
 
@@ -751,37 +1074,43 @@ tbody tr:nth-child(1) td::before	{
 	box-shadow: .8em 0 #C96;
 }
 .axes tr:nth-child(1) .visible::before	{
-	box-shadow: .8em 0 #C96, 1.2em 0 #B00;
+	box-shadow: .8em 0 #C96, 1.3em 0 #B00;
 }
 .axe1 td.visible::before,
 .axe:nth-child(1) td:not(.secondaire)::before	{
 	background: #C96;
 	border-color: #C96;
-	box-shadow: .8em 0 #C96, 1.2em 0 #B00;
+	box-shadow: .8em 0 #C96, 1.9em 0 #B00;
 }
 tbody tr:nth-child(1) td:not(:empty)	{
 	box-shadow: 0 -2.5em #FFF inset, 0 -3em #C96 inset;
+}
+tr:nth-child(1) .label span	{
+	color: #C96;
 }
 
 
 tr:nth-child(2) th	{
 	background: #BCB;
 }
-tr:nth-child(2) td::before	{
+tbody tr:nth-child(2) td::before	{
 	border-color: #BCB;
 	box-shadow: .8em 0 #BCB;
 }
 .axes tr:nth-child(2) .visible::before	{
-	box-shadow: .8em 0 #BCB, 1.2em 0 #B00;
+	box-shadow: .8em 0 #BCB, 1.3em 0 #B00;
 }
 .axe2 td.visible::before,
 .axe:nth-child(2) td:not(.secondaire)::before	{
 	background: #BCB;
 	border-color: #BCB;
-	box-shadow: .8em 0 #BCB, 1.2em 0 #B00;
+	box-shadow: .8em 0 #BCB, 1.9em 0 #B00;
 }
-tr:nth-child(2) td:not(:empty)	{
+tbody tr:nth-child(2) td:not(:empty)	{
 	box-shadow: 0 -2em #FFF inset, 0 -2.5em #BCB inset;
+}
+tr:nth-child(2) .label span	{
+	color: #BCB;
 }
 
 
@@ -793,16 +1122,19 @@ tr:nth-child(3) td::before	{
 	box-shadow: .8em 0 #E96;
 }
 .axes tr:nth-child(3) .visible::before	{
-	box-shadow: .8em 0 #B00, 1.2em 0 #B00;
+	box-shadow: .8em 0 #E96, 1.3em 0 #B00;
 }
 .axe3 td.visible::before,
 .axe:nth-child(3) td:not(.secondaire)::before	{
 	background: #E96;
 	border-color: #E96;
-	box-shadow: .8em 0 #E96, 1.2em 0 #B00;
+	box-shadow: .8em 0 #E96, 1.9em 0 #B00;
 }
 tr:nth-child(3) td:not(:empty)	{
 	box-shadow: 0 -1.5em #FFF inset, 0 -2em #E96 inset;
+}
+tr:nth-child(3) .label span	{
+	color: #E96;
 }
 
 
@@ -814,16 +1146,19 @@ tr:nth-child(4) td::before	{
 	box-shadow: .8em 0 #BBE;
 }
 .axes tr:nth-child(4) .visible::before	{
-	box-shadow: .8em 0 #B00, 1.2em 0 #B00;
+	box-shadow: .8em 0 #BBE, 1.3em 0 #B00;
 }
 .axe4 td.visible::before,
 .axe:nth-child(4) td:not(.secondaire)::before	{
 	background: #BBE;
 	border-color: #BBE;
-	box-shadow: .8em 0 #BBE, 1.2em 0 #B00;
+	box-shadow: .8em 0 #BBE, 1.9em 0 #B00;
 }
 tr:nth-child(4) td:not(:empty)	{
 	box-shadow: 0 -1em #FFF inset, 0 -1.5em #BBE inset;
+}
+tr:nth-child(4) .label span	{
+	color: #BBE;
 }
 
 
@@ -835,16 +1170,19 @@ tr:nth-child(5) td::before	{
 	box-shadow: .8em 0 #ED5;
 }
 .axes tr:nth-child(5) .visible::before	{
-	box-shadow: .8em 0 #B00, 1.2em 0 #B00;
+	box-shadow: .8em 0 #ED5, 1.3em 0 #B00;
 }
 .axe5 td.visible::before,
 .axe:nth-child(5) td:not(.secondaire)::before	{
 	background: #ED5;
 	border-color: #ED5;
-	box-shadow: .8em 0 #ED5, 1.2em 0 #B00;
+	box-shadow: .8em 0 #ED5, 1.9em 0 #B00;
 }
 tr:nth-child(5) td:not(:empty)	{
 	box-shadow: 0 -.5em #FFF inset, 0 -1em #ED5 inset;
+}
+tr:nth-child(5) .label span	{
+	color: #ED5;
 }
 
 
@@ -856,16 +1194,19 @@ tr:nth-child(6) td::before	{
 	box-shadow: .8em 0 #AD7;
 }
 .axes tr:nth-child(6) .visible::before	{
-	box-shadow: .8em 0 #AD7, 1.2em 0 #B00;
+	box-shadow: .8em 0 #AD7, 1.3em 0 #B00;
 }
 .axe6 td.visible::before,
 .axe:nth-child(6) td:not(.secondaire)::before	{
 	background: #AD7;
 	border-color: #AD7;
-	box-shadow: .8em 0 #AD7, 1.2em 0 #B00;
+	box-shadow: .8em 0 #AD7, 1.9em 0 #B00;
 }
 tr:nth-child(6) td:not(:empty)	{
 	box-shadow: 0 -.5em #AD7 inset;
+}
+tr:nth-child(6) .label span	{
+	color: #AD7;
 }
 
 
@@ -881,7 +1222,7 @@ tr:nth-child(6) td:not(:empty)	{
 	box-shadow: 0 .5em .6em .4em #CBB inset;
 }
 .visite	{
-	box-shadow: 0 .5em .5em .5em #DDE inset;
+	box-shadow: 0 .5em .75em .15em #99A inset;
 }
 
 .passage .label	{
@@ -910,7 +1251,7 @@ tr:nth-child(6) td:not(:empty)	{
 	width: 100%;
 }
 .colonne .intersection .label::after	{
-	top: 3.5em;
+	top: 3.4em;
 }
 .visite .label:after	{
 	background: #99A;
@@ -1035,3 +1376,11 @@ table:not(.axes) .visible::before	{
 }
 
 
+
+/* largeur des intersections */
+#crutch .largeur,
+#crutch .largeurs .multi	{
+	background: #B00;
+	color: #FFF;
+	opacity: 1;
+}

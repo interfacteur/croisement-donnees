@@ -29,7 +29,7 @@
 	DÉVELOPPEMENT
 
 	to do : reprendre en orientation prototypale, ou orienté objet ES6 ?
-		- evenements.js OK
+		- 3-evenements.js OK
 
 	to do : $c.remove(); //to do: detach() pour tous cas semblables ?
 
@@ -47,6 +47,8 @@
 	var collection = cles, //cf. 1-analyse-donnees.js
 		listes = [],
 		longueur = 0,
+		longueurs = [],
+		total = 0,
 		code = ["<tbody>"],
 		manu = [
 			'<input type="radio" name="liste',
@@ -59,7 +61,7 @@
 			'commun',
 			'" value="'
 		],
-		ordres = ["Ordre d'origine&nbsp;:", "Ordre numérique&nbsp;:", "Tout sélectionner&nbsp;:", "|| Tout désélectionner&nbsp;:"],
+		ordres = ["Ordre d'origine&nbsp;:", "ou numérique&nbsp;:", "Sélectionner tout&nbsp;:", "rien&nbsp;:"],
 		charge = [$("table")]; //n'existe pas au chargement donc n'a pas de .length
 
 
@@ -69,18 +71,20 @@
 
 
 	//placer en-têtes les séries aux surfaces d'extension les plus riches
-	collection.sort(function (a, b) { return extensions[b] - extensions[a]; });
+	collection.sort(function (a, b) { return extensions[b][0] - extensions[a][0]; });
 
 
 	$("#titre").html(informations.titre);
 	charge[charge[0].length] = charge[0].hasClass("colonne"); //au chargement : length == 0 ; nouvelles données : length == 1
-	$("table").remove();
-	$(".presentation input").off(); //cf. commentaire début de evenements.js
 
+	$("table, #synthese").remove();
+	$(".presentation input").off(); //cf. commentaire début de 3-evenements.js
 
 	for (var i=0,l=collection.length;i<l;++i) {
 		listes.push($.map(datas[collection[i]],function(zel) { return zel; }));
 		listes[i].unshift(listes[i].pop());
+		longueurs.push(listes[i].length - 1);
+		total += listes[i].length - 1;
 		longueur = listes[i].length > longueur ? listes[i].length : longueur;
 	}
 	for (var i=0;i<l;++i) {
@@ -88,15 +92,46 @@
 			+ manu[0] + i + manu[1] + i + 0 + manu[8] + 0 + manu[2]
 			+ manu[0] + i + manu[1] + i + 1 + manu[8] + 1 + manu[3]
 			+ manu[4] + i + 2 + manu[3]
-			+ '<label for="' + manu[7] + i + 2 + '" class="nb" title="' + extensions[collection[i]] + ' valeurs partagées pour ' + listes[i][0] + '">' + extensions[collection[i]] + "</label>"
-			+ '<br><label class="label" for="' + manu[7] + i + 2 + '">' + listes[i][0] + "</label>");
+			+ '<label for="' + manu[7] + i + 2 + '" class="nb1" title="Surface d\'extension de ' + extensions[collection[i]][0] + extension
+			+ ' pour &#x22;' + listes[i][0] + '&#x22;">' + extensions[collection[i]][0] + "</label>"
+			+ '<span class="nb2" title="Largeur d\'extension de ' + extensions[collection[i]][1] + extension
+			+ ' pour &#x22;' + listes[i][0] + '&#x22;" tabindex="0">' + extensions[collection[i]][1] + '</span>'
+			+ '<br><label class="label" for="' + manu[7] + i + 2 + '">' + listes[i][0] + " <span>(" + longueurs[i] + ")</span></label>");
 		for (var i2=1;i2<longueur;++i2){
 			code.push('<td data-item="' + i2 + '" data-nombre="' + (listes[i][i2] || 100000000000) + '">' + (listes[i][i2] || "") + "</td>");
 		}
 		code.push("</tr>");
 	}
 	code.push("</tbody>");
-	code.unshift('<thead><tr><td colspan="' + longueur + '"> '
+
+	// code.unshift('<tr><td colspan="' + longueur + '">'
+	// 	+ 'Les deux ' + informations.typeElements[1] + ' dont l\'intersection est : '
+	// 	+ '<select id="intersection"><option value="-1">… … … …</option></select>'
+	// 	+ '</td></tr></thead>');
+
+
+
+
+
+	code.unshift('<tr><td colspan="' + longueur + '">'
+		+ '<select id="intersection">'
+		+ '<option selected>Intersections maximales et minimales</option>'
+		+ '<optgroup label="Couples à intersection maximale :" id="intersection1"></optgroup>'
+		+ '<optgroup label="Couples à intersection minimale :" id="intersection2"></optgroup>'
+		+ '</select>'
+		+ '</td></tr></thead>');
+
+
+
+
+
+
+
+
+
+
+
+	code.unshift('<thead><tr><td colspan="' + longueur + '">'
 		+ '<label for="croiser" class="croiser">Amplitudes extrêmes : </label>'
 		+ '<select id="croiser"><option value="-1">… … … …</option></select>'
 		+ manu[5] + 90 + manu[3] + ordres[0] + manu[6]
@@ -107,7 +142,27 @@
 		+ manu[0] + 9 + manu[1] + 92 + manu[8] + 2 +  manu[3]
 		+ manu[5] + 93 + manu[3] + ordres[3] + manu[6]
 		+ manu[0] + 9 + manu[1] + 93 + manu[8] + 3 +  manu[3]
-		+ "</td></tr></thead>");
+
+
+		// + '<select id="intersection">'
+		// + '<option selected>Intersections maximales et minimales</option>'
+		// + '<optgroup label="Couples à intersection maximale :" id="intersection1"></optgroup>'
+		// + '<optgroup label="Couples à intersection minimale :" id="intersection2"></optgroup>'
+		// + '</select>'
+
+
+
+
+		+ "</td></tr>");
+
+	$("<p>", {
+		id: "synthese",
+		html: total + ' ' + informations.typeElements[1] + ' : dont ' + communs[0] + ' commun'
+			+ (informations.genreElements == "f" ? "e" : "") + 's aux ' + listes.length + ' ' + informations.typeTableaux[1]
+			+ ', soient ' + '<a href="#" id="commun">' + communs[1] + ' ' + extension + '</a>'
+	})
+	.insertBefore(".visu-datas");
+
 
 	$ta = $("<table>", {
 		data: { width : [12 + longueur * 4.4, l * 7.7], state: Date.now() },
@@ -185,7 +240,7 @@
 		c.sort(function(a,b) {
 			return parseInt($(a).data(crible)) - parseInt($(b).data(crible));
 		});
-		$c.remove(); //to do: detach() pour tous cas semblables ?
+		$c.remove(); /* to do: detach() pour tous cas semblables ? */
 		c.forEach(function(cel) {
 			$(cel).appendTo($p);
 		});

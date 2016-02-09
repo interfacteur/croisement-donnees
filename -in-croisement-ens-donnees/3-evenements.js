@@ -65,16 +65,20 @@ tandis que :
 		},
 
 
-//Visualiser les intersections extrèmes : fonction constructrice, prototype etc.
+//Visualiser les amplitudes extrèmes : fonction constructrice, prototype etc.
 		visualiser = (function visualiser () {
 
 			var $visus = [],							//instances d'une pseudo classe (héritage natif) gérant la visualisation des analyses
-				$ml = $("#meta a"),						//accéder aux analyses via les liens : point d'ancrage dans le DOM des instances précédentes
-				$croiser = $("#croiser"),				//accéder aux analyses via une boîte de sélection
 				$table = $("table"),					//le tableau où les données sont affichées
-				$profondeur = $("#profondeur"),			//suite des analyse
-				$span = $("#m span"),					//état de l'affichage de la suite des analyses
-				valindex = 0;
+				$ml = $("#meta a"),						//visualiser les amplitudes via les liens : point d'ancrage dans le DOM des instances précédentes
+				$croiser = $("#croiser"),				//visualiser les amplitudes via une boîte de sélection
+				$profondeur = $("#profondeur"),			//suite des amplitudes
+				$span = $("#m span"),					//état d'affichage de la fin des amplitudes
+				valindex = 0,
+				$nb2 = $(".nb2"),						//affichage des largeurs
+				$commun = $("#commun"),					//affichage des éléments partagés
+				$intersection = $("#intersection"),		//visualiser les intersections extrêmes
+				$communs = $("tbody :checkbox");		//affichage des intersections
 
 			cles.forEach(function (val) {
 				var storage = $("#" + val + " th").css("background-color");
@@ -360,7 +364,7 @@ tandis que :
 			}
 
 
-	//Ajuster la valeur de la boîte de sélection des intersections
+	//Ajuster la valeur de la boîte de sélection des amplitudes
 			Visu.prototype.correler = function (ind, tps) {
 				clearTimeout(latence);
 				! Visu.select
@@ -376,13 +380,14 @@ tandis que :
 			$ml.each(function (ind) {
 				$visus.push(new Visu(ind));
 			});
+//Fin du code à orientation prototypale (visualiser les amplitudes extrèmes)
 
 
-	//La boîte de sélection des intersections
+	//La boîte de sélection des amplitudes
 			$croiser.append(
-				intersectionsQuali.map(function (val, ind) {
-					return intersections[ind].map(function (v) {
-						return '<option value="' + (valindex++) + '">' + val + " : " + v + '</option>';
+				amplitudesQuali.map(function (val, ind) {
+					return amplitudes[ind].map(function (v) {
+						return '<option value="' + (valindex++) + '">' + val + " : " + v[0] + ' (' + v[1] + ')</option>';
 					})
 					.join("")
 				})
@@ -393,6 +398,9 @@ tandis que :
 					$croiser.data("keydown", $croiser.val());
 				},
 				"keyup": function () {
+				/* to do : bug sur Firefox avec données vins au 160209 :
+						"la moins large : le Rhône (6)" est sélectionnée, au clavier "la plus importante", "la plus large", "la plus importante",
+						puis souris sur "la moins large : le Rhône (6)" ne provoque plus le "change" */
 					var storage = $croiser.data("keydown");
 					$croiser.data("keydown", null);
 					$croiser.val() != storage
@@ -406,9 +414,59 @@ tandis que :
 					&& Visu.etape.visiter(true);
 			}	});
 
+
+	//Affichage des éléments partagés
+			$commun.on({
+				"click": function (e) {
+					e.preventDefault();
+				},
+				"mouseover focus": function () {
+					$f.addClass("largeurs");
+				},
+				"mouseout blur": function () {
+					$f.removeClass("largeurs");
+			}	});
+
+
+	//Affichage des largeurs
+			$nb2.on({
+				"mouseover": function () {
+					$(this).parents("tr").find(".multi").addClass("largeur");
+				},
+				"mouseout": function () {
+					$(this).parents("tr").find(".multi").removeClass("largeur");
+			}	});
+
+
+	//La boîte de sélection des intersections
+			intersections.forEach(function (val, ind) {
+				$("#intersection" + (ind + 1)).append(
+					val.map(function (va) {
+						var storage = va[0] > 0 ?
+						(va[0] * 2) + ' ' + informations.typeElements[1] + " partagé" + (informations.genreElements == "f" ? "e" : "") + "s"
+						: "aucun" + (informations.genreElements == "f" ? "e " : " ") + informations.typeElements[0] + " partagé" + (informations.genreElements == "f" ? "e" : "");
+						return '<option value="' + va[1] + '">&#x22;' + va[2] + '&#x22; et &#x22;' + va[3] + '&#x22; : ' + storage + '</option>';
+			})	);	});
+
+			$intersection.on("change", function () {
+/* à faire :
+	les deux select sur la même ligne ?
+	au clavier
+	la réciproque
+		du coup a priori pas besoin de localStorage */
+
+
+				var storage = $intersection.val().split(" ");
+				$communs.prop("checked", false)
+				.trigger("change");
+				$("#" + storage[0] + " :checkbox, #" + storage[1] + " :checkbox").prop("checked", true)
+				.trigger("change");
+			});
+
+
+
 			return visualiser;
 		})();
-//Fin du code à orientation prototypale (visualiser les intersections extrèmes)
 
 
 
@@ -467,27 +525,33 @@ tandis que :
 
 
 //Aide (à partir de l'atribut "title") contextuelle pour visualiser de nouvelles données
-	$aideP.on("focus mouseover click", function (e) {
-		e.preventDefault();
-		$(".contribuer").length == 0
-		&& $(this).after($("<p>", {
-			class: "contribuer",
-			tabindex: 1,
-			html: $(this).attr("title")
-				.replace(/;/g, ",<br>")
-				.replace(/…/g, ".<br>")
-				.replace("Tout retour", "<br>Tout retour")
-				.replace(/(http:\/\/.+)\.$/, '<a href="$1" onclick="event.stopPropagation();">contact</a>.') //to do : pourquoi pas après ligne suivante ?
-				.replace(/(exemple(-là)?)/g, '<a href="' + $("#exemple").attr("href") + '" onclick="event.stopPropagation();">$1</a>')
-				.replace(/\(([^\)]+)\)/, '- <a href="' + $("#ex").attr("value") + '" onclick="event.stopPropagation();">$1</a> -')
-				+ fermeture,
-			on: {
-				"click": function (e) {
-					e.preventDefault();
-					$(".contribuer").remove();
-		}	}	}))
-		.focus();
-	})
+	$aideP.on({
+		"click": function (e) {
+			e.preventDefault();
+			$(".contribuer").length == 1
+			&& $(".contribuer").remove()
+			|| $aideP.trigger("focus");
+		},
+		"focus mouseover": function () {
+			$(".contribuer").length == 0
+			&& $(this).after($("<p>", {
+				class: "contribuer",
+				tabindex: 1,
+				html: $(this).attr("title")
+					.replace(/;/g, ",<br>")
+					.replace(/…/g, ".<br>")
+					.replace("Tout retour", "<br>Tout retour")
+					.replace(/(http:\/\/.+)\.$/, '<a href="$1" onclick="event.stopPropagation();">contact</a>.') /* to do : pourquoi pas après ligne suivante ? */
+					.replace(/(exemple(-là)?)/g, '<a href="' + $("#exemple").attr("href") + '" onclick="event.stopPropagation();">$1</a>')
+					.replace(/\(([^\)]+)\)/, '- <a href="' + $("#ex").attr("value") + '" onclick="event.stopPropagation();">$1</a> -')
+					+ fermeture,
+				on: {
+					"click": function (e) {
+						e.preventDefault();
+						$(".contribuer").remove();
+			}	}	}))
+			.focus();
+	}	});
 	$("[href='#aidePersonnalisation']").on("click", function (e) {
 		e.preventDefault();
 		$aideP.trigger("click");
@@ -501,7 +565,7 @@ tandis que :
 		"keydown": function () {
 			$datas.data("keydown", $datas.val())
 			.css("width", $datas.outerWidth());
-			// .addClass("key"); //to do : impossible de trigger $modifier au clavier ?
+			// .addClass("key"); /* to do : impossible de trigger $modifier au clavier ? */
 			$datas.defaut = $("#dernier").detach();
 		},
 		"keyup": function (e) {
@@ -697,8 +761,8 @@ tandis que :
 			&& $pres.eq(parseInt(tempo)).prop("checked", true).trigger("change");
 
 			tempo = localStorage.getItem("liste9");
-			tempo != $("[name='liste9']:checked").val()
-			&& $("[name='liste9']:checked").prop("checked", false) //tempo == undefined
+			tempo != "undefined"
+			&& tempo != $("[name='liste9']:checked").val()
 			&& $("[name='liste9']").eq(parseInt(tempo)).prop("checked", true).trigger("change");
 
 			tempo = JSON.parse(localStorage.getItem("mdemploi"));
@@ -713,17 +777,22 @@ tandis que :
 			tempo != $("#croiser").val()
 			&& $("#croiser").val(tempo).trigger("change");
 
-			for (var k in localStorage) //organisation du tableau
+			for (var k in localStorage) //organisation du tableau : les radio (qui peuvent être maqsués par l'action des checkbox)
+				if (k.indexOf("presentationC") == 0) {
+					$tempo[2] = parseInt(k.split("presentationC")[1]);
+
+					tempo = parseInt(localStorage.getItem("presentationR" + $tempo[2])); //valeur est une chaîne mais pas toujours ?
+					tempo != 0
+					&& $tempo[1].eq($tempo[2] * 2 + 1).prop("checked", true).trigger("change");
+			}
+
+			for (var k in localStorage) //organisation du tableau : les checkbox
 				if (k.indexOf("presentationC") == 0) {
 					$tempo[2] = parseInt(k.split("presentationC")[1]);
 
 					tempo = JSON.parse(localStorage.getItem(k));
 					tempo != $tempo[0].eq($tempo[2]).is(":checked")
 					&& $tempo[0].eq($tempo[2]).prop("checked", tempo).trigger("change");
-
-					tempo = parseInt(localStorage.getItem("presentationR" + $tempo[2])); //valeur est une chaîne mais pas toujours ?
-					tempo != 0
-					&& $tempo[1].eq($tempo[2] * 2 + 1).prop("checked", true).trigger("change");
 	}	});	}
 
 	localStorage.setItem("debut", Date.now());

@@ -1,5 +1,6 @@
 /* méta-informations - 01/2016 */
 
+//Objets et variables globaux
 ;var conditions = (!! Array.prototype.forEach)
 		* ("keys" in Object)
 		* Modernizr.boxshadow
@@ -11,10 +12,14 @@
 	$f = $("form"),
 	$meta = $("#meta"),
 	cles,
-	intersectionsQuali = [],
-	intersections,
-	extensions,
+	communs, //nombre d'éléments partagés par les séries de données
+	intersections = [[],[]], //intersections maximales et minimales entre séries de données
+	amplitudesQuali = [],//sélection des amplitudes extrêmes : séries de données ayant la surface d'extension maximale
+	amplitudes,	//sélection des amplitudes extrêmes : séries de données ayant la surface d'extension minimale
+	extensions, //surface d'extension de chaque série de données
+	extension,
 
+//Ordre de présentation des amplitudes - paramétrable :
 	ordre = {
 		pl: 0,
 		pe: 1,
@@ -22,6 +27,8 @@
 		me: 3,
 		pp: 4 //À LAISSER EN 4
 	};
+
+
 
 
 ;var analyser = (function () {
@@ -38,14 +45,15 @@
 		});
 
 
+//Paramètres de présentation
 	var resume = [],
 		interz = {};
 
-	intersectionsQuali[ordre["ml"]] = "la moins large";
-	intersectionsQuali[ordre["pl"]] = "la plus large";
-	intersectionsQuali[ordre["me"]] = "la moins vaste";
-	intersectionsQuali[ordre["pe"]] = "la plus vaste";
-	intersectionsQuali[ordre["pp"]] = "la plus profonde";
+	amplitudesQuali[ordre["ml"]] = "la moins large";
+	amplitudesQuali[ordre["pl"]] = "la plus large";
+	amplitudesQuali[ordre["me"]] = "la moins importante";
+	amplitudesQuali[ordre["pe"]] = "la plus importante";
+	amplitudesQuali[ordre["pp"]] = "la plus profonde";
 
 	resume[ordre["ml"]] = ["largeur minimale", "d2"];
 	resume[ordre["pl"]] = ["largeur maximale", "d2"];
@@ -54,21 +62,21 @@
 	resume[ordre["pp"]] = ["profondeur maximale", "d3"];
 
 	interz.large = {
-		moins: intersectionsQuali[ordre["ml"]] + ", avec ",
-		plus: intersectionsQuali[ordre["pl"]] + ", avec "
+		moins: amplitudesQuali[ordre["ml"]] + ", avec ",
+		plus: amplitudesQuali[ordre["pl"]] + ", avec "
 	};
 	interz.etendue = {
-		 moins: intersectionsQuali[ordre["me"]] + ", sur ",
-		 plus: intersectionsQuali[ordre["pe"]] + ", sur "
+		 moins: amplitudesQuali[ordre["me"]] + ", sur ",
+		 plus: amplitudesQuali[ordre["pe"]] + ", sur "
 	};
-	interz.profonde = intersectionsQuali[ordre["pp"]] + ", "
+	interz.profonde = amplitudesQuali[ordre["pp"]] + ", "
+
+
 
 
 	return (function analysant () {
 
 		cles = Object.keys(datas);
-		intersections = [],
-		extensions = [];
 
 		var nombreTableaux = cles.length,
 			tableaux = [],
@@ -96,8 +104,8 @@
 				function (ind) {
 					i = ind;
 					l = code.length - 1;
-					intersections.push([]);
-					li = intersections.length - 1;
+					amplitudes.push([]);
+					li = amplitudes.length - 1;
 				},
 				function (l, r, t) {
 					code[l].sort(function (a, b) { return titresIndex.lastIndexOf(a[0]) -  titresIndex.lastIndexOf(b[0]); });
@@ -114,11 +122,15 @@
 							+ '">'
 							+ val
 							+ '</a>';
-						intersections[li].push(val);
+						amplitudes[li].push([val, t]);
 					});
 					code[l] = code[l].join(" ; ") + "</p>";
-				}
-			];
+			}	];
+
+		communs = [0, 0],
+		amplitudes = [],
+		extensions = [];
+		extension = " " + typeEle[1] + " partagé" + (genreEle == "f" ? "e" : "") + "s";
 
 
 		code.push("<h1>L'extension :</h1>");
@@ -133,8 +145,7 @@
 			titresIndex.push(titres[val] = $.map(datas[val], function (ele) {
 				if (ele / ele != 1)
 					return ele;
-			}));
-		});
+		}));});
 
 		cles.forEach(function (val, ind) {
 			titres[val] = titres[val][0];
@@ -142,8 +153,7 @@
 			tableaux[val].forEach(function (va) {
 				tousElements.push(va);
 				elementsParTableau.push([val, va]);
-			});
-		});
+		});	});
 
 		tousElements.sort(function (a, b) { return a - b; } );
 		nombreElements = tousElements.length;
@@ -179,15 +189,16 @@
 
 
 
-	//Pour calculer surface et largeur d'intersection
+	//Pour calculer surface et largeur d'extension
 		decompteElements.forEach(function (val) {
 			if (val[1] == 1)
 				return;
+			communs[0]++;
+			communs[1] += val[1];
 			val[2].forEach(function (va) {
 				surfaceTableaux[va] += val[1];
 				largeurTableaux[va] += 1;
-			});
-		});
+		});	});
 
 		largeurs = cles.map(function (val) {
 			return [largeurTableaux[val], titres[val]];
@@ -207,7 +218,7 @@
 				if (ordre[k] == y) {
 					switch (k) {
 
-	//Tableau(x) ayant la largeur d'intersection inférieure
+	//Série(s) de données ayant la largeur d'extension inférieure
 						case "ml":
 							code.push("<p>" + interz.large.moins + largeurs.slice(-1)[0][0] + " " + typeEle[1] + " :<br>&nbsp;&nbsp;&nbsp;&nbsp;");
 							code.push([largeurs.slice(-1)[0][1]]);
@@ -217,7 +228,7 @@
 							routine[1](l, ordre["ml"], largeurs.slice(-1)[0][0]);
 							break;
 
-	//Tableau(x) ayant la largeur d'intersection supérieure
+	//Série(s) de données ayant la largeur d'extension supérieure
 						case "pl":
 							code.push("<p>"  + interz.large.plus + largeurs[0][0] + " " + typeEle[1] + " :<br>&nbsp;&nbsp;&nbsp;&nbsp;");
 							code.push([largeurs[0][1]]);
@@ -227,7 +238,7 @@
 							routine[1](l, ordre["pl"], largeurs[0][0]);
 							break;
 
-	//Tableau(x) ayant la surface d'intersection inférieure
+	//Série(s) de données ayant la surface d'extension inférieure
 						case "me":
 							code.push("<p>" + interz.etendue.moins + surfaces.slice(-1)[0][0] + " " + typeEle[1] + " :<br>&nbsp;&nbsp;&nbsp;&nbsp;");
 							code.push([surfaces.slice(-1)[0][1]]);
@@ -237,7 +248,7 @@
 							routine[1](l, ordre["me"], surfaces.slice(-1)[0][0]);
 							break;
 
-	//Tableau(x) ayant la surface d'intersection supérieure
+	//Série(s) de données ayant la surface d'extension supérieure
 						case "pe":
 							code.push("<p>" + interz.etendue.plus + surfaces[0][0] + " " + typeEle[1] + " :<br>&nbsp;&nbsp;&nbsp;&nbsp;");
 							code.push([surfaces[0][1]]);
@@ -246,15 +257,12 @@
 								code[l].push(surfaces[i][1]);
 							}
 							routine[1](l, ordre["pe"], surfaces[0][0]);
-					}
-				}
-			}
-		}
+		}	}	}	}
 
 
 
 
-	//Tableau(x) ayant la profondeur d'intersection supérieure, et élements les plus représentés
+	//Série(s) de données ayant la profondeur d'extension supérieure, et élements les plus représentés
 		code.push("<p>" + interz.profonde + "1 " + typeEle[0] + " sur " + decompteElements[0][1] + " " + typeTab[1] + " :<br>&nbsp;&nbsp;&nbsp;&nbsp;");
 		code.push(decompteElements[0][3]);
 
@@ -286,7 +294,7 @@
 				+ '">'
 				+ val
 				+ '</a>';
-			intersections[li].push(val);
+			amplitudes[li].push([val, decompteElements[0][1]]);
 		});
 		code[l - 3] = code[l - 3].join(" ; ") + "</p>";
 		code[l].sort(function (a, b) { return a - b; });
@@ -307,10 +315,52 @@
 
 
 
-	//Surface d'extension de chaque élément (objet global)
-		surfaces.forEach(function (val) {
-			extensions[cles[titresIndex.indexOf(val[1])]] = val[0];
+	//Surface et largeur d'extension de chaque série de données (objet global)
+		surfaces.forEach(function (val, ind) {
+			extensions[cles[titresIndex.indexOf(val[1])]] = [val[0], largeurs[ind][0]];
 		});
+
+
+
+
+	//Intersections maximales et minimales entre séries de données (objet global)
+		(function () {
+			var storage = {},
+				inter,
+				c, i, k, l;
+
+			cles.forEach(function (val) {
+				cles.forEach(function (va) {
+					if (val != va && typeof storage[val + " " + va] == "undefined" && typeof storage[va + " " + val] == "undefined") {
+						storage[val + " " + va] = [];
+						for (c in datas[val])
+							for (k in datas[va])
+								if (datas[val][c] == datas[va][k]) {
+									storage[val + " " + va].push(datas[val][c]);
+									break;
+			}	}	})	});
+
+			inter = Object.keys(storage);
+			l = inter.length;
+
+			inter.sort(function (a, b) { return storage[b].length - storage[a].length; }); //intersections maximales
+			intersections[0] = [[storage[inter[0]].length, inter[0], titres[inter[0].split(" ")[0]], titres[inter[0].split(" ")[1]]]];
+			for (i = 1; i < l; ++i)
+				if (storage[inter[i - 1]].length == storage[inter[i]].length)
+					intersections[0].push([storage[inter[i]].length, inter[i], titres[inter[i].split(" ")[0]], titres[inter[i].split(" ")[1]]]);
+				else
+					break;
+
+			inter.reverse(); //intersections minimales
+			intersections[1] = [[storage[inter[0]].length, inter[0], titres[inter[0].split(" ")[0]], titres[inter[0].split(" ")[1]]]];
+			for (i = 1; i < l; ++i)
+				if (storage[inter[i - 1]].length == storage[inter[i]].length)
+					intersections[1].push([storage[inter[i]].length, inter[i], titres[inter[i].split(" ")[0]], titres[inter[i].split(" ")[1]]]);
+				else
+					break;
+		})();
+
+
 
 
 
