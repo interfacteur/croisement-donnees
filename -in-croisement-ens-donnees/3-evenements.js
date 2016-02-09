@@ -388,13 +388,23 @@ tandis que :
 				})
 				.join("")
 			)
-			.on("change keyup", function () {
-				var va = parseInt($(this).val());
-				va > -1
-				&&	(! Visu.etape || (va != Visu.etape.indexSource) ? $ml.eq(va).data("instance").visiter(true) : true) //en fin de course au clavier
-				|| Visu.etape
-				&& Visu.etape.visiter(true);
-			});
+			.on({
+				"keydown": function () {
+					$croiser.data("keydown", $croiser.val());
+				},
+				"keyup": function () {
+					var storage = $croiser.data("keydown");
+					$croiser.data("keydown", null);
+					$croiser.val() != storage
+					&& $croiser.trigger("change");
+				},
+				"change": function () {
+					var va = parseInt($croiser.val());
+					va > -1
+					&&	(! Visu.etape || (va != Visu.etape.indexSource) ? $ml.eq(va).data("instance").visiter(true) : true) //en fin de course au clavier
+					|| Visu.etape
+					&& Visu.etape.visiter(true);
+			}	});
 
 			return visualiser;
 		})();
@@ -485,35 +495,48 @@ tandis que :
 
 
 
-
 //Autres données disponibles via boîte de sélection
 	$f.data("vue", $datas.val());
-	$datas.on("change", function (e, r) {
-		var va = $(this).val();
-		if (va == 0) { //charger de nouvelles données
-			$datas.val($f.data("vue"));
-			return $modifier.trigger("click");
-		}
-		$f.data("vue", va);
-		$f.removeClass("settled"); //remis dans 2-interface.js cf interfacter()
-		$("#jsdatas").remove();
-		var $s = $("<script>", {
-			id: "jsdatas",
-			on: {
-				"load": function () {
-					analyser();
-					interfacter();
-					visualiser();
-					r //promesse depuis le chargement de nouvelles données ou depuis localStorage
-					&& r();
-		}	}	})
-		.appendTo($b);
-		if (va != "perso")
-			return $s.attr("src", va);
-		$s.text(localStorage.getItem("personnalisees"))
-		.trigger("load");
-
-	})
+	$datas.on({
+		"keydown": function () {
+			$datas.data("keydown", $datas.val())
+			.css("width", $datas.outerWidth());
+			// .addClass("key"); //to do : impossible de trigger $modifier au clavier ?
+			$datas.defaut = $("#dernier").detach();
+		},
+		"keyup": function (e) {
+			var storage = $datas.data("keydown");
+			$datas.data("keydown", null)
+			.css("width", "auto");
+			$datas.defaut.appendTo($datas);
+			$datas.val() != storage
+			&& $datas.trigger("change");
+		},
+		"change": function (e, r) {
+			var va = $datas.val();
+			if (va == "0") { //charger de nouvelles données
+				$datas.val($f.data("vue"));
+				return $modifier.trigger("click");
+			}
+			$f.data("vue", va);
+			$f.removeClass("settled"); //remis dans 2-interface.js cf interfacter()
+			$("#jsdatas").remove();
+			var $s = $("<script>", {
+				id: "jsdatas",
+				on: {
+					"load": function () {
+						analyser();
+						interfacter();
+						visualiser();
+						r //promesse depuis le chargement de nouvelles données ou depuis localStorage
+						&& r();
+			}	}	})
+			.appendTo($b);
+			if (va != "perso")
+				return $s.attr("src", va);
+			$s.text(localStorage.getItem("personnalisees"))
+			.trigger("load");
+	}	})
 	.get(0)
 	.selectedIndex = 0;
 

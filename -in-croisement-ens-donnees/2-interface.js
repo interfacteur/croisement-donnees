@@ -110,7 +110,7 @@
 		+ "</td></tr></thead>");
 
 	$ta = $("<table>", {
-		data: { width : [12 + longueur * 4, l * 7], state: Date.now() },
+		data: { width : [12 + longueur * 4.4, l * 7.7], state: Date.now() },
 		class: charge.slice(-1)[0] == true ? "colonne" : "",
 		html: code.join("")}
 	)

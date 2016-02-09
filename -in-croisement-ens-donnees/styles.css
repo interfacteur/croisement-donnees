@@ -500,6 +500,10 @@ body:not(.init) #meta p	{
 	position: relative;
 	text-align: center;
 }
+/*.key #dernier	{
+	display: none;
+}
+*/
 .visu-datas label,
 .croiser	{
 	border: 1px solid #99A;
@@ -578,6 +582,7 @@ table:not(.axes) thead #liste93,
 	padding: .1em .33em;
 }
 .colonne #croiser	{
+	clear: left;
 	display: block;
 	margin: 0 0 1.4em 0;
 }
@@ -708,9 +713,13 @@ table.colonne::after	{
 .colonne th,
 .colonne tbody td	{
 	display: block;
-	height: 7.5em;
+	height: 6.81em;
 	vertical-align: middle;
 	width: 7em;
+}
+.colonne th	{
+	height: 8.4em;
+	width: 7.7em;
 }
 .colonne tbody td	{
 	height: 5.6em;
@@ -899,6 +908,9 @@ tr:nth-child(6) td:not(:empty)	{
 	text-align: center;
 	top: 3em;
 	width: 100%;
+}
+.colonne .intersection .label::after	{
+	top: 3.5em;
 }
 .visite .label:after	{
 	background: #99A;
