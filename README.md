@@ -19,8 +19,6 @@ Croiser der séries de données numériques pour en visualiser les intersections
 
 To do :
 * FONCTIONNALITES
-	- analyse des croisements les plus riches entre deux tableaux (comme un bouton cliquable plus que comme une analyse)
-	- analyse du croisement minimal entre tous les tableaux (comme un bouton cliquable plus que comme une analyse)
 	- avec d'autres données que numériques
 * ACCESSIBILITÉ
 	- couche ARIA ?
