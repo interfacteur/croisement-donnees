@@ -23,62 +23,69 @@
 
 		<section class="essence">
 			<p class="tdbord">
-				<label for="analyse">Amplitudes extrêmes</label>
+				<label for="analyse">Amplitude des étendues</label>
 				<input type="checkbox" id="analyse" checked>
 				<label for="mde">Le mode d'emploi</label>
 				<input type="checkbox" id="mde" checked>
 			</p>
-			<section id="meta"></section>
+			<section id="meta" class="init"></section>
 		</section>
 
 		<section class="presentations">
 			<p class="presentation">
-				<label for="pres1">Les données :</label>
+				<label for="pres1">Présenter les données :</label>
 				<input type="radio" name="presentation" id="pres1" value="0" checked>
 				<label for="pres1">par ligne</label>
 				<input type="radio" name="presentation" id="pres2" value="1">
 				<label for="pres2">par colonne</label>
 			</p>
 
-			<ul id="aideUtilisation" class="sans">
+			<ul id="aideUtilisation" class="sans init">
 				<li>
-					<p class="outcipit pseudo-item"><strong>&#x25CF; PERSONNALISATION</strong> : la manière de charger et de visualiser <strong>ses propres données</strong> <a href="#aidePersonnalisation">est détaillée plus haut</a>.
+					<p class="outcipit pseudo-item"><strong><span class="clair">&#x2299;</span> PERSONNALISATION</strong> : la manière de charger <strong>ses propres données</strong> pour les visualiser <a href="#aidePersonnalisation">est détaillée plus haut</a>.
 					</p>
 				</li>
 				<li>
 					<p class="incipit pseudo-item">
-						<strong>&#x25CF; VISUALISER L'EXTENSION des <span class="typeEle2"></span> <span class="discret">commun<span class="genreEle"></span>s</span> d'un<span class="genreTab"></span> <span class="typeTab1"></span> dans les autres <span class="discret"><span class="typeTab2"></span></span>.</strong> <a href="#" id="mdemploi">→ mode d'emploi suite</a><br>
+						<strong><span class="clair">&#x2299;</span> VISUALISER L'EXTENSION des <span class="typeEle2"></span> <span class="discret">commun<span class="genreEle"></span>s</span> d'un<span class="genreTab"></span> <span class="typeTab1"></span> dans les autres <span class="discret"><span class="typeTab2"></span></span>.</strong> <a href="#" id="mdemploi">→ mode d'emploi suite</a><br>
 						<em>En tête de chaque <span class="typeTab1"></span>, la case à cocher <input type="checkbox" tabindex="-1"> sélectionne un<span class="genreTab"></span> <span class="typeTab1"></span> - les autres <span class="typeTab2"></span> s'alignant dessus.</em>
 					</p>
 					<p>
-						<strong>Les <span class="typeTab2"></span> sont trié<span class="genreTab"></span>s par leur surface d'extension des <span class="typeEle2"></span> partagé<span class="genreEle"></span>s <span class="nb1">n</span></strong>, elle apparaît à la sélection.<br>
-						L'autre indication <span class="nb2">n</span> indique la <strong>largeur</strong> de l'extension. Cette largeur se révèle au survol de la souris.
-					</p>
-					<p class="outcipit">
-						Plusieurs <span class="typeTab2"></span> sélectionné<span class="genreTab"></span>s visualisent leurs <span class="typeEle2"></span> partagé<span class="genreEle"></span>s, et leur extension dans les autres <span class="typeTab2"></span>.
+						<strong>Les séries sont ordonnées par surface d'extension des valeurs partagées <span class="nb1">n</span></strong>, que révèle la sélection.<br>
+						L'autre indication <span class="nb2">n</span> indique la <strong>largeur</strong> de l'extension. Cette largeur apparaît au survol de la souris.
 					</p>
 					<p>
-						Sauf en sélection multiple, l'ordre des données est d'origine. Il n'est pas toujours croissant, et peut donc être trié.<br>
+						Plusieurs <span class="typeTab2"></span> sélectionné<span class="genreTab"></span>s montrent l'intersection de leurs <span class="typeEle2"></span> commun<span class="genreEle"></span>s, et leur extension.<br>
+						<em>Les paires à <strong>intersections maximales et minimales</strong> sont manipulables en tête du tableau.</em>
+					</p>
+					<p>
+						Sauf en sélection multiple, l'ordre des données est l'ordre d'origine. Il n'est pas toujours croissant, et peut donc être trié.<br>
 						<em>Les deux boutons radio <input type="radio" tabindex="-1"> donnent le choix entre les ordres d'origine (par défaut) et numérique.</em>
 					</p>
-					<p>Les 3/4 boutons radio situés en tête du tableau permettent de manipuler en bloc l'ensemble de ces cases et boutons.<br>
+					<p>
+						Les 3/4 boutons radio situés en tête du tableau permettent de manipuler en bloc l'ensemble de ces cases et boutons.<br>
 						<em>Ils sont <strong>exclusifs</strong>&nbsp;: "ordre d'origine" par ex. <strong>désélectionne</strong> toutes les <span class="typeTab2"></span> sélectionnées</em>.
 					</p>
 				</li>
 				<li>
-					<p class="pseudo-item"><strong> &#x25CF; AMPLITUDES EXTRÊMES</strong> : manipuler la liste (le survol révélant et le clic fixant) pour visualiser les types de croisements<br>
-						minimaux et maximaux. C'est avec le même résultat qu'on actionne la boîte de sélection en tête du tableau.</p>
-					<p><strong>Conseils :</strong> éclaircir la vue en sélectionnant tou<span class="tout"></span> les <span class="typeTab2"></span> (via le bouton radio en tête de tableau) afin de<br>
-						visualiser les amplitudes. D'autre part, faire coïncider les amplitudes extrêmes avec leurs sélections.
+					<p class="pseudo-item">
+						<strong><span class="clair">&#x2299;</span> AMPLITUDE DES ÉTENDUES</strong> : liens pour visualiser les formes maximales et minimales d'extension,<br>
+						<em class="inci">à survoler - révélation - et à cliquer - fixation. On actionne aussi la boîte de sélection en tête du tableau pour les visualiser.</em>
+					</p>
+					<p>
+						<strong>Conseils :</strong> éclaircir le tableau en sélectionnant tou<span class="tout"></span> les <span class="typeTab2"></span> (via le bouton radio en tête de tableau) pour ne<br>
+						visualiser que les amplitudes. Ou faire coïncider, d'autre part, ces étendues extrêmes avec leurs sélections.
 					</p>
 				</li>
 				<li>
-					<p class="pseudo-item"><strong>&#x25CF; AFFICHAGE</strong> : le mode d'emploi aussi bien que les amplitudes extrêmes sont rétractables - via les 2 cases à cocher en<br>
-						haut sur la gauche. La visualisation des amplitudes reste toujours accessible par la boîte de sélection en haut du tableau.
+					<p class="pseudo-item"><strong>
+						<span class="clair">&#x2299;</span> AFFICHAGE</strong> : le mode d'emploi aussi bien que l'amplitude des étendues sont rétractables - via les 2 cases à cocher en<br>
+						haut sur la gauche. Les amplitudes restent toujours accessibles par la boîte de sélection en haut du tableau.
 					</p>
-					<p><strong>Paramètres :</strong> l'affichage des éléments contextuels (l'entrée dans ce mode d'emploi, la liste des amplitudes), du résultat des<br>
-						manipulations (sélection et ordre des données, amplitudes), et de la personnalisation des données, est conservé sur un<br>
-						mois (sans activité). Le bouton <strong>"affichage par défaut"</strong> oublie, y compris les données personnalisées du bouton dédié.
+					<p>
+						<strong>Paramétrage :</strong> l'affichage des éléments contextuels (l'entrée dans ce mode d'emploi, amplitude des étendues), des<br>
+						visualisations (sélection et ordre des données, amplitudes) et de la personnalisation des données, est conservé sur un<br>
+						mois inactif. Le bouton <strong>"affichage par défaut"</strong> oublie - y compris les données personnalisées du bouton dédié.
 						<a class="fermeture" href="#mdemploi" title="Fermer l'aide contextuelle">X</a>
 					</p>
 				</li>
@@ -90,28 +97,31 @@
 	<section class="modifier">
 		<label for="modifier">
 			Nouvelles données -
-			<a href="http://www.equatorium.net/e1/-in-croisement-ens-donnees/donnees-fleuves.js" id="exemple" title="exemple">ex.</a>  :
+			<a href="http://www.equatorium.net/e1/-in-croisement-ens-donnees/donnees-departements.js" id="exemple" title="exemple">ex.</a>  :
 		</label>
 		<input type="file" title="Nouvelles données" id="modifier">
-		<a href="#" id="aidePersonnalisation" title="PERSONNALISER LES DONNÉES… Sélectionner sur l'ordinateur un fichier .txt ou .js semblable à celui donnée en exemple. Passer par 'Nouvelles données' ou par la boîte de sélection 'Données visualisées'… Ou encore glisser-déposer directement le fichier sur la page… Il est possible d'enregistrer ce premier exemple (ou celui des millésimes) pour le modifier et l'adapter… Conserver les variables, et les clés dans 'informations'… Dans 'datas', conserver les 'titre' et le principe de numérotation… Les 'titre' ne devraient pas exéder 50 caractères… Il vaut mieux éviter les doublons… Une fois personnalisées, les données apparaissent dans la boîte de sélection centrale… Chaque nouvelle personnalisation remplace la précédente… Un bouton &#x22;oubli des données personnalisées&#x22; les soustrait… Jusqu'à 6 séries (&#x22;régions&#x22;, &#x22;albums&#x22; etc.) sont visualisables; au-delà les styles manquent…	Tout retour et toute remarque sont bienvenus et attendus : http://emploi.alsacreations.com/demande-20022-Developpeur-front-end.html."><strong>?</strong></a>
+		<a href="#" id="aidePersonnalisation" title="PERSONNALISER LES DONNÉES… Sélectionner sur l'ordinateur un fichier .txt ou .js semblable à celui donnée en exemple - via le champ 'Nouvelles données' ou par la boîte de sélection 'Données visualisées'… Ou encore glisser-déposer directement le fichier sur la page… Il est possible d'enregistrer ce premier exemple (ou celui des millésimes) pour le modifier et l'adapter… Conserver les variables, et les clés dans 'informations'… Dans 'datas', conserver les 'titre' et le principe de numérotation… Les 'titre' ne devraient pas exéder 50 caractères… Il vaut mieux éviter les doublons. Les commentaires sont facultatifs… Une fois personnalisées, les données apparaissent dans la boîte de sélection centrale… Chaque nouvelle personnalisation remplace la précédente… Un bouton &#x22;oubli des données personnalisées&#x22; les soustrait… Jusqu'à 6 séries (&#x22;régions&#x22;, &#x22;albums&#x22; etc.) sont visualisables; au-delà les styles manquent…	Tout retour et toute remarque sont bienvenus et attendus : http://emploi.alsacreations.com/demande-20022-Developpeur-front-end.html."><strong>?</strong></a>
 	</section>
+
+	<p id="synthese">&nbsp;</p>
 
 	<p class="visu-datas">
 		<input type="reset" id="defaut" value="Affichage par défaut" class="reset">
 		<label for="datas">Données visualisées : </label><select id="datas">
-			<option value="-in-croisement-ens-donnees/donnees-vins.js" selected id="ex">millésimes marquants</option>
-			<option value="-in-croisement-ens-donnees/donnees-fleuves.js">bassins fluviaux</option>
-			<option value="-in-croisement-ens-donnees/donnees-sonates.js">sonates de Scarlatti</option>
+			<option value="-in-croisement-ens-donnees/donnees-millesimes.js" selected id="ex">les meilleurs millésimes dans 6 régions</option>
+			<option value="-in-croisement-ens-donnees/donnees-sonates.js">les sonates de Scarlatti dans 6 albums</option>
+			<option value="-in-croisement-ens-donnees/donnees-departements.js">les départements de 4 bassins fluviaux</option>
 			<option value="0" id="dernier">→ personnaliser les données</option>
 		</select>
 		<button class="effacement" id="effacer">Oubli des données personnalisées</button>
 	</p>
 
-	<h2 id="titre"></h2>
+	<h2 id="titre">&nbsp;</h2>
+
 </form>
 <footer>Pour Firefox et Chrome, IE 10+ possible mais non testé : tout navigateur standard supportant "box-shadow", "table-layout", "gradient", les sélecteurs avancés, 'forEach()', 'Object.keys()',<br>
 	l'API FileReader pour la modification de données, 'localStorage' pour la mémorisation de l'affichage.<br><br>
-	<address>Août 2014 - skin novembre 2015 - amplitudes extrêmes et personnalisation janvier 2016 - <a href="http://www.langhade.net/gaetan/">Gaëtan Langhade, Interfacteur</a></address><br><br>
+	<address>Août 2014 - skin novembre 2015 - liste des étendues et personnalisation janvier 2016 - <a href="http://www.langhade.net/gaetan/">Gaëtan Langhade, Interfacteur</a></address><br><br>
 	<!-- <a href="http://interfacteur.blogspot.fr/2016/01/croiser-donnees.html">Note de présentation</a> - -->
 	<a href="https://github.com/interfacteur/croisement-donnees">Code sur Github</a></footer>
 <script src="-in-croisement-ens-donnees/jquery-1.11.0.min.js"></script>
@@ -120,7 +130,7 @@
 ! Modernizr.promises
 && $("<script>", { "src" : "-media/es6-promise.min.js" }).insertAfter($("#plug"));
 </script>
-<script src="-in-croisement-ens-donnees/donnees-vins.js"></script>
+<script src="-in-croisement-ens-donnees/donnees-millesimes.js"></script>
 <script src="-in-croisement-ens-donnees/1-analyse-donnees.js"></script>
 <script src="-in-croisement-ens-donnees/2-interface.js"></script>
 <script src="-in-croisement-ens-donnees/3-evenements.js"></script>

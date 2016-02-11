@@ -33,23 +33,36 @@ tandis que :
 		$aideU = $("#aideUtilisation"),				//<ul id="aideUtilisation" class="sans">
 		$mde = $("#mde"),							//<a href="#" id="mdemploi">→ mode d'emploi suite</a>
 
+		$effacer = $("#effacer"),					//<button id="effacer" class="effacement in">Oubli des données personnalisées</button>
+
 		perso = ["Données personnalisées : ", "personnalisées : ", $fichier.text()],
 		$perso = null,
 
-		$effacer = $("#effacer"),
-
-		tempo,
+		tempo, //à contenu temporaire
 
 		message = "Les données chargées ne correspondraient pas à la forme attendue",
 		fermeture = $(".fermeture").get(0)
 			.outerHTML
 			.replace(/(href="#)[^"]+"/, '$1javascript:void(0);"'),
 
- 		neutraliser = function (e) {
+ 		neutraliser = function (e) { //gérer l'action du clic
 			e.stopPropagation();
 			e.preventDefault();
 		},
-		eclaircir = function (str) { //https://github.com/interfacteur/js-segments/blob/master/regex.fonctions.js
+
+		selectKeydown = function () { //au clavier sur les boîtes de sélection
+			var $ti = $(this);
+			$ti.data("keydown", $ti.val());
+		},
+		selectUp = function () {
+			var $ti = $(this),
+				storage = $ti.data("keydown");
+			$ti.data("keydown", null);
+			$ti.val() != storage
+			&& $ti.trigger("change");
+		},
+
+		eclaircir = function (str) { //nettoyer les données chargées, cf. https://github.com/interfacteur/js-segments/blob/master/regex.fonctions.js
 			return str.replace(/\/\/.*/g, "") //sans les commentaires sur une ligne
 				.replace(/\/\*([^\*]|\*(?!\/))*\*\//g, "") //sans les commentaires sur plusieurs lignes
 				.replace(/^\s*/, "") //sans les espacements initiaux (dont retours)
@@ -58,27 +71,28 @@ tandis que :
 				.replace(/\x20{2,}/g, " "); //remplacer les espacements multiples par un espacement
 		},
 
-
-		re = {
+		re = { //expressions régulières de contrôle des données chargées
 			informations: /var informations ?= ?{(?=.*"titre" ?: ?(?:(?:"(?:[^"]|\\")*[^\\]")|(?:'(?:[^']|\\')*[^\\]')))(?=.*"typeTableaux" ?: ?\[ ?(?:(?:(?:"(?:[^"]|\\")*[^\\]")|(?:'(?:[^']|\\')*[^\\]'))(?:(?: ?, ?(?=["']))|(?: ?))){3} ?\])(?=.*"genreTableaux" ?: ?(["'])[mf]\1)(?=.*"typeElements" ?: ?\[ ?(?:(?:(?:"(?:[^"]|\\")*[^\\]")|(?:'(?:[^']|\\')*[^\\]'))(?:(?: ?, ?(?=["']))|(?: ?))){2} ?\])(?=.*"genreElements" ?: ?(["'])[mf]\2)/g,
 			datas: /var datas ?= ?\{ ?(?: ?"[^"]+" ?: ?\{ ?"titre" ?: ?(?:(?:"(?:[^"]|\\")*[^\\]")|(?:'(?:[^']|\\')*[^\\]')) ?, ?(?:"\d+" ?: ?\d+ ?(?:(?:, ?(?=(?:"\d)|\}))|(?=\}))){1,} ?\} ?(?:(?:, ?(?=["}]))|(?=\}))){2,7}\}/g
 		},
 
 
-//Visualiser les amplitudes extrèmes : fonction constructrice, prototype etc.
+//Visualiser l'amplitude des étendues : fonction constructrice, prototype etc.
 		visualiser = (function visualiser () {
 
 			var $visus = [],							//instances d'une pseudo classe (héritage natif) gérant la visualisation des analyses
 				$table = $("table"),					//le tableau où les données sont affichées
-				$ml = $("#meta a"),						//visualiser les amplitudes via les liens : point d'ancrage dans le DOM des instances précédentes
-				$croiser = $("#croiser"),				//visualiser les amplitudes via une boîte de sélection
-				$profondeur = $("#profondeur"),			//suite des amplitudes
-				$span = $("#m span"),					//état d'affichage de la fin des amplitudes
-				valindex = 0,
+				$td = $("tbody td:not(:empty)"),		//les cellules avec données
+				$ml = $("#meta a"),						//visualiser l'amplitude des étendues via les liens : point d'ancrage dans le DOM des instances précédentes
+				$croiser = $("#croiser"),				//visualiser l'amplitude des étendues via une boîte de sélection
+				$profondeur = $("#profondeur"),			//suite de l'amplitude des étendues
+				$span = $("#m span"),					//état d'affichage de la fin des étendues
 				$nb2 = $(".nb2"),						//affichage des largeurs
 				$commun = $("#commun"),					//affichage des éléments partagés
 				$intersection = $("#intersection"),		//visualiser les intersections extrêmes
 				$communs = $("tbody :checkbox");		//affichage des intersections
+
+
 
 			cles.forEach(function (val) {
 				var storage = $("#" + val + " th").css("background-color");
@@ -117,9 +131,8 @@ tandis que :
 				this.$champ = $("#" + this.idChamp);
 				this.$label = this.$champ.find("label");
 
-				this.couleur = this.$champ.find("th").css("background-color")
-				.replace("rgb", "rgba").replace(")", ", .99)");
-				this.couleuRe = new RegExp(this.couleur.replace(/, *\.99/, ", *0*\\.99").replace("(", "\\(").replace(")", "\\)").replace(/ *,/g, " *,"), "g");
+				this.colorer(this.$champ.find("th").css("background-color"));
+
 				this.indexSource = ind;
 				this.indexChamp = this.$champ.index();
 
@@ -132,6 +145,28 @@ tandis que :
 			Visu.debug = false;
 
 
+	//Préparer les couleurs de fond des cellules
+			Visu.prototype.colorer = function (couleur) {
+				var storage = this.idChamp;
+				$td.each(function () {
+					var $ti = $(this);
+					$ti.data("pres1" + storage, $ti.data("pres1").replace(/rgb\( *255 *, *255 *, *255 *\)/g, couleur));
+					$ti.data("pres2" + storage, $ti.data("pres2").replace(/rgb\( *255 *, *255 *, *255 *\)/g, couleur));
+			})	}
+	//Application de la couleur de fond (amplitude), ou rétablissement du fond par défaut
+			$.fn.colorer = function (sto, apl) {
+				var $ti = $(this);
+				$ti.css("box-shadow", $ti.data(sto))
+				.data("ampli", apl);
+			}
+
+
+	//Gérer les événements sur les liens
+			Visu.prototype.domEvenementsGerer = function () {
+				this.$lien.on("mouseover keyup", { reaction: "passer"}, Visu.reagir)
+				.on("mouseout blur", { reaction: "depasser"}, Visu.reagir)
+				.on("click", { reaction: "visiter"}, Visu.reagir);
+			}
 	//Routeur pour la gestion d'événements
 			Visu.reagir = function (e) {
 				e.preventDefault();
@@ -182,14 +217,6 @@ tandis que :
 			}
 
 
-	//Gérer les événements sur les liens
-			Visu.prototype.domEvenementsGerer = function () {
-				this.$lien.on("mouseover keyup", { reaction: "passer"}, Visu.reagir)
-				.on("mouseout blur", { reaction: "depasser"}, Visu.reagir)
-				.on("click", { reaction: "visiter"}, Visu.reagir);
-			}
-
-
 	//Activer provisoirement l'intersection
 			Visu.prototype.passer = function (select) {
 				var storage;
@@ -217,20 +244,20 @@ tandis que :
 
 				this.$label.attr("data-intersection", this.croisement + " : " + this.taille);
 
-				storage = this.couleur;
+				storage = ($table.hasClass("colonne") ? "pres2" : "pres1") + this.idChamp;
 
 				this.croisementtype.indexOf("d2") >= 0 //intersection de largeur ou de surface
 				&& (this.etats.$champ += " intersectionD2")
 				&& this.$champ.find(".multi")
 				.each(function () {
-					$(this).css("box-shadow", $(this).css("box-shadow").replace(/rgb\( *255 *, *255 *, *255 *\)/g, storage));
+					$(this).colorer(storage, true);
 				});
 
 				this.croisementtype.indexOf("d3") >= 0 //intersection de surface ou de profondeur
 				&& (this.etats.$champs += " intersexion intersexion" + (this.indexChamp + 1))
 				&& this[this.croisementtype == "d2d3" ? "$champsD2D3" : "$champsD3indirect"]().addClass(" intersexion intersexion" + (this.indexChamp + 1))
 				.each(function () {
-					$(this).css("box-shadow", $(this).css("box-shadow").replace(/rgb\( *255 *, *255 *, *255 *\)/g, storage));
+					$(this).colorer(storage, true);
 				});
 
 				this.croisementtype == "d3" //intersection de profondeur
@@ -238,7 +265,7 @@ tandis que :
 				&& (this.etats.$champs += " diasection")
 				&& this.$champsD3direct().addClass(" diasection")
 				.each(function () {
-					$(this).css("box-shadow", $(this).css("box-shadow").replace(/rgb\( *255 *, *255 *, *255 *\)/g, storage));
+					$(this).colorer(storage, true);
 				});
 
 				this.$champ.addClass(this.etats.$champ)
@@ -274,17 +301,19 @@ tandis que :
 				if (Visu.debug) console.log("depasser", this.idChamp, this.indexSource);
 
 				this.$label.attr("data-intersection", "");
-				storage = this.couleuRe;
+
+				storage = $table.hasClass("colonne") ? "pres2" : "pres1";
+
 				this.$champs().removeClass(this.etats.$champs)
 				.each(function () {
-					$(this).css("box-shadow", $(this).css("box-shadow").replace(storage, "rgb(255, 255, 255)"));
+					$(this).colorer(storage, false);
 				});
 				this.etats.$champs = "";
 
 				this.$champ.removeClass(this.etats.$champ)
 				.find(".multi")
 				.each(function () {
-					$(this).css("box-shadow", $(this).css("box-shadow").replace(storage, "rgb(255, 255, 255)"));
+					$(this).colorer(storage, false);
 				});
 				this.etats.$champ = "";
 
@@ -364,7 +393,7 @@ tandis que :
 			}
 
 
-	//Ajuster la valeur de la boîte de sélection des amplitudes
+	//Ajuster la valeur de la boîte de sélection de l'amplitude des étendues
 			Visu.prototype.correler = function (ind, tps) {
 				clearTimeout(latence);
 				! Visu.select
@@ -380,32 +409,16 @@ tandis que :
 			$ml.each(function (ind) {
 				$visus.push(new Visu(ind));
 			});
-//Fin du code à orientation prototypale (visualiser les amplitudes extrèmes)
+//Fin du code à orientation prototypale (visualiser l'amplitude des étendues)
 
 
-	//La boîte de sélection des amplitudes
-			$croiser.append(
-				amplitudesQuali.map(function (val, ind) {
-					return amplitudes[ind].map(function (v) {
-						return '<option value="' + (valindex++) + '">' + val + " : " + v[0] + ' (' + v[1] + ')</option>';
-					})
-					.join("")
-				})
-				.join("")
-			)
-			.on({
-				"keydown": function () {
-					$croiser.data("keydown", $croiser.val());
-				},
-				"keyup": function () {
+	//La boîte de sélection de l'amplitude des étendues
+			$croiser.on({
+				"keydown": selectKeydown,
 				/* to do : bug sur Firefox avec données vins au 160209 :
 						"la moins large : le Rhône (6)" est sélectionnée, au clavier "la plus importante", "la plus large", "la plus importante",
 						puis souris sur "la moins large : le Rhône (6)" ne provoque plus le "change" */
-					var storage = $croiser.data("keydown");
-					$croiser.data("keydown", null);
-					$croiser.val() != storage
-					&& $croiser.trigger("change");
-				},
+				"keyup": selectUp,
 				"change": function () {
 					var va = parseInt($croiser.val());
 					va > -1
@@ -439,30 +452,16 @@ tandis que :
 
 
 	//La boîte de sélection des intersections
-			intersections.forEach(function (val, ind) {
-				$("#intersection" + (ind + 1)).append(
-					val.map(function (va) {
-						var storage = va[0] > 0 ?
-						(va[0] * 2) + ' ' + informations.typeElements[1] + " partagé" + (informations.genreElements == "f" ? "e" : "") + "s"
-						: "aucun" + (informations.genreElements == "f" ? "e " : " ") + informations.typeElements[0] + " partagé" + (informations.genreElements == "f" ? "e" : "");
-						return '<option value="' + va[1] + '">&#x22;' + va[2] + '&#x22; et &#x22;' + va[3] + '&#x22; : ' + storage + '</option>';
-			})	);	});
-
-			$intersection.on("change", function () {
-/* à faire :
-	les deux select sur la même ligne ?
-	au clavier
-	la réciproque
-		du coup a priori pas besoin de localStorage */
-
-
-				var storage = $intersection.val().split(" ");
-				$communs.prop("checked", false)
-				.trigger("change");
-				$("#" + storage[0] + " :checkbox, #" + storage[1] + " :checkbox").prop("checked", true)
-				.trigger("change");
-			});
-
+			$intersection.on({
+				"keydown": selectKeydown,
+				"keyup": selectUp,
+				"change": function () {
+					var storage = $intersection.val().split(" ");
+					$communs.prop("checked", false)
+					.trigger("change", [true]);
+					$("#" + storage[0] + " :checkbox, #" + storage[1] + " :checkbox").prop("checked", true)
+					.trigger("change", [true]);
+			}	});
 
 
 			return visualiser;
@@ -569,12 +568,9 @@ tandis que :
 			$datas.defaut = $("#dernier").detach();
 		},
 		"keyup": function (e) {
-			var storage = $datas.data("keydown");
-			$datas.data("keydown", null)
-			.css("width", "auto");
-			$datas.defaut.appendTo($datas);
-			$datas.val() != storage
-			&& $datas.trigger("change");
+			$datas.css("width", "auto")
+			.defaut.appendTo($datas);
+			selectUp.call($datas);
 		},
 		"change": function (e, r) {
 			var va = $datas.val();
@@ -596,6 +592,8 @@ tandis que :
 						&& r();
 			}	}	})
 			.appendTo($b);
+			window.commentaires = undefined;
+			window.zero = undefined;
 			if (va != "perso")
 				return $s.attr("src", va);
 			$s.text(localStorage.getItem("personnalisees"))
@@ -734,8 +732,10 @@ tandis que :
 
 
 //Mémoriser les paramètres d'affichage de l'analyse et du mode d'emploi, les restituer
-	if (localStorage.getItem("debut") === null || (/^\d{13,}$/).test(localStorage.getItem("debut")) && Date.now() - parseInt(localStorage.getItem("debut")) > 2592000000) //30 jours
+	if (localStorage.getItem("debut") === null || (/^\d{13,}$/).test(localStorage.getItem("debut")) && Date.now() - parseInt(localStorage.getItem("debut")) > 2592000000) { //30 jours
 		localStorage.clear();
+		$(".init").removeClass("init");
+	}
 	else {
 	//reset du formulaire statique au chargment cf. 2-interface.js : $f.get(0).reset();
 		localStorage.getItem("optionPerso") !== null
@@ -745,7 +745,6 @@ tandis que :
 		.addClass("perso")
 		&& $effacer.addClass("in")
 		.on("click", oublier);
-
 
 		tempo = localStorage.getItem("datas");
 		new Promise(function (resolve) {
@@ -793,7 +792,10 @@ tandis que :
 					tempo = JSON.parse(localStorage.getItem(k));
 					tempo != $tempo[0].eq($tempo[2]).is(":checked")
 					&& $tempo[0].eq($tempo[2]).prop("checked", tempo).trigger("change");
-	}	});	}
+			}
+
+			$(".init").removeClass("init");
+	});	}
 
 	localStorage.setItem("debut", Date.now());
 
@@ -802,8 +804,8 @@ tandis que :
 		localStorage.setItem("presentation", $("[name='presentation']:checked").val()); //ligne ou colonne
 		localStorage.setItem("liste9", $("[name='liste9']:checked").val()); //champs en tête de tableau
 		localStorage.setItem("mdemploi", $mde.is(":checked")); //mode d'emploi
-		localStorage.setItem("analyse", $analyse.is(":checked")); //liens de l'analyse des amplitudes
-		localStorage.setItem("amplitude", $("#croiser").val()); //boîte de sélection de l'analyse des amplitudes
+		localStorage.setItem("analyse", $analyse.is(":checked")); //liens de l'amplitude des étendues
+		localStorage.setItem("amplitude", $("#croiser").val()); //boîte de sélection de l'amplitude des étendues
 		for (var k in localStorage) //organisation du tableau
 			if (k.indexOf("selection") == 0)
 				localStorage.removeItem(k);
@@ -816,8 +818,8 @@ tandis que :
 
 
 
-	setTimeout(function () {
-		$b.removeClass("init");
-	}, 1000);
+	// setTimeout(function () {
+	// 	$b.removeClass("init");
+	// }, 1000);
 
 })();

@@ -13,13 +13,12 @@
 	$meta = $("#meta"),
 	cles,
 	communs, //nombre d'éléments partagés par les séries de données
-	intersections = [[],[]], //intersections maximales et minimales entre séries de données
-	amplitudesQuali = [],//sélection des amplitudes extrêmes : séries de données ayant la surface d'extension maximale
-	amplitudes,	//sélection des amplitudes extrêmes : séries de données ayant la surface d'extension minimale
 	extensions, //surface d'extension de chaque série de données
-	extension,
+	extension, //ensemble des valeurs partagées par les séries de données
+	intersections = [[],[]], //intersections maximales et minimales entre séries de données
+	amplitudes,	//amplitude des étendues càd formes maximales et minimales d'extension des séries de données
 
-//Ordre de présentation des amplitudes - paramétrable :
+//Ordre de présentation des étendues - paramétrable :
 	ordre = {
 		pl: 0,
 		pe: 1,
@@ -46,7 +45,8 @@
 
 
 //Paramètres de présentation
-	var resume = [],
+	var amplitudesQuali = [],
+		resume = [],
 		interz = {};
 
 	amplitudesQuali[ordre["ml"]] = "la moins large";
@@ -100,6 +100,7 @@
 			adjectif = { "f": "répandues, présentes", "m": "répandus, présents" },
 			i, l, li,
 			masquer = '<label for="analyse">Masquer</label>',
+			valindex = 0,
 			routine = [
 				function (ind) {
 					i = ind;
@@ -133,7 +134,7 @@
 		extension = " " + typeEle[1] + " partagé" + (genreEle == "f" ? "e" : "") + "s";
 
 
-		code.push("<h1>L'extension :</h1>");
+		code.push("<h1>L'étendue :</h1>");
 
 
 		cles.forEach(function (val) {
@@ -266,7 +267,7 @@
 		code.push("<p>" + interz.profonde + "1 " + typeEle[0] + " sur " + decompteElements[0][1] + " " + typeTab[1] + " :<br>&nbsp;&nbsp;&nbsp;&nbsp;");
 		code.push(decompteElements[0][3]);
 
-		code.push('<h1><button id="m">Présence des ' + typeEle[1] + '… <span>→</span></button></h1><article id="profondeur">');
+		code.push('<h1><button id="m">Occurrences des ' + typeEle[1] + '… <span>→</span></button></h1><article id="profondeur">');
 
 		code.push("<p>les plus " + adjectif[genreEle] + " sur " + decompteElements[0][1] + " " + typeTab[1] + ":<br>&nbsp;&nbsp;&nbsp;&nbsp;");
 		code.push([decompteElements[0][0]]);
@@ -315,6 +316,7 @@
 
 
 
+
 	//Surface et largeur d'extension de chaque série de données (objet global)
 		surfaces.forEach(function (val, ind) {
 			extensions[cles[titresIndex.indexOf(val[1])]] = [val[0], largeurs[ind][0]];
@@ -344,23 +346,33 @@
 			l = inter.length;
 
 			inter.sort(function (a, b) { return storage[b].length - storage[a].length; }); //intersections maximales
-			intersections[0] = [[storage[inter[0]].length, inter[0], titres[inter[0].split(" ")[0]], titres[inter[0].split(" ")[1]]]];
-			for (i = 1; i < l; ++i)
-				if (storage[inter[i - 1]].length == storage[inter[i]].length)
-					intersections[0].push([storage[inter[i]].length, inter[i], titres[inter[i].split(" ")[0]], titres[inter[i].split(" ")[1]]]);
-				else
-					break;
+			intersections.forEach(function (val, ind) {
+				ind == 1
+				&& inter.reverse(); //intersections minimales
+				intersections[ind] = [[storage[inter[0]].length, inter[0], titres[inter[0].split(" ")[0]], titres[inter[0].split(" ")[1]]]];
+				for (i = 1; i < l; ++i)
+					if (storage[inter[i - 1]].length == storage[inter[i]].length)
+						intersections[ind].push([storage[inter[i]].length, inter[i], titres[inter[i].split(" ")[0]], titres[inter[i].split(" ")[1]]]);
+					else
+						break;
+				intersections[ind] = intersections[ind].map(function (va) {
+					var storage = va[0] > 0 ?
+						(va[0] * 2) + ' ' + typeEle[1] + " commun" + (genreEle == "f" ? "e" : "") + "s"
+						: "aucun" + (genreEle == "f" ? "e " : " ") + typeEle[0] + " commun" + (genreEle == "f" ? "e" : "");
+					return '<option value="' + va[1] + '">&#x22;' + va[2] + '&#x22; et &#x22;' + va[3] + '&#x22; : ' + storage + '</option>';
+		})	})	})();
 
-			inter.reverse(); //intersections minimales
-			intersections[1] = [[storage[inter[0]].length, inter[0], titres[inter[0].split(" ")[0]], titres[inter[0].split(" ")[1]]]];
-			for (i = 1; i < l; ++i)
-				if (storage[inter[i - 1]].length == storage[inter[i]].length)
-					intersections[1].push([storage[inter[i]].length, inter[i], titres[inter[i].split(" ")[0]], titres[inter[i].split(" ")[1]]]);
-				else
-					break;
-		})();
 
 
+
+	//Amplitude des étendues càd formes maximales et minimales d'extension des séries de données
+		amplitudes = amplitudesQuali.map(function (val, ind) {
+			return amplitudes[ind].map(function (v) {
+				return '<option value="' + (valindex++) + '">' + val + " : " + v[0] + ' (' + v[1] + ')</option>';
+			})
+			.join("")
+		})
+		.join("");
 
 
 
@@ -377,10 +389,7 @@
 		$(".tout").text(genreTab == "f" ? "tes" : "s");
 
 		return analysant;
-
-
-
-
 	})();
+
 
 })();

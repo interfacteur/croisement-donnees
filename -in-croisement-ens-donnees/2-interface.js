@@ -7,13 +7,12 @@
 
 	FONCTIONNALITES
 
-	to do : analyse des croisements les plus riches entre deux tableaux
-		comme un bouton cliquable plus que comme une analyse
-
-	to do : analyse du croisement minimal entre tous les tableaux
-		comme un bouton cliquable plus que comme une analyse
-
 	to do : avec d'autres données que numériques
+
+		done : analyse des croisements les plus riches entre deux tableaux
+		comme un bouton cliquable plus que comme une analyse
+
+		done : analyse du croisement minimal entre deux tableaux
 
 	ACCESSIBILITÉ
 
@@ -35,7 +34,9 @@
 
 	PRESENTATION
 
-	to do : effets de transition (notamment sur Chrome ?)
+	to do : largeur tableau quand excédée par largeur de #intersection ; &  l * 7.7 + .1 sur Chrome
+
+		done : effets de transition (notamment sur Chrome ?)
 
 */
 
@@ -43,9 +44,9 @@
 	if (! conditions) //cf. 1-analyse-donnees.js
 		return;
 
-
 	var collection = cles, //cf. 1-analyse-donnees.js
 		listes = [],
+		combien,
 		longueur = 0,
 		longueurs = [],
 		total = 0,
@@ -62,7 +63,13 @@
 			'" value="'
 		],
 		ordres = ["Ordre d'origine&nbsp;:", "ou numérique&nbsp;:", "Sélectionner tout&nbsp;:", "rien&nbsp;:"],
-		charge = [$("table")]; //n'existe pas au chargement donc n'a pas de .length
+		charge = [$("table")], //n'existe pas au chargement donc n'a pas de .length
+		$synthese = $("#synthese"),
+		$commentaires = $("#commentaires"),
+		tempo,
+		equarrir = function (n) {
+			return typeof n == "undefined" || n > 9 ? n : "0" + n;
+		}
 
 
 	! charge[0].length //au chargement
@@ -77,7 +84,8 @@
 	$("#titre").html(informations.titre);
 	charge[charge[0].length] = charge[0].hasClass("colonne"); //au chargement : length == 0 ; nouvelles données : length == 1
 
-	$("table, #synthese").remove();
+	$("table").remove();
+	$synthese.html("&nbsp;");
 	$(".presentation input").off(); //cf. commentaire début de 3-evenements.js
 
 	for (var i=0,l=collection.length;i<l;++i) {
@@ -87,6 +95,7 @@
 		total += listes[i].length - 1;
 		longueur = listes[i].length > longueur ? listes[i].length : longueur;
 	}
+	combien = listes.length;
 	for (var i=0;i<l;++i) {
 		code.push('<tr id="' + collection[i] + '"><th scope="row">'
 			+ manu[0] + i + manu[1] + i + 0 + manu[8] + 0 + manu[2]
@@ -97,82 +106,72 @@
 			+ '<span class="nb2" title="Largeur d\'extension de ' + extensions[collection[i]][1] + extension
 			+ ' pour &#x22;' + listes[i][0] + '&#x22;" tabindex="0">' + extensions[collection[i]][1] + '</span>'
 			+ '<br><label class="label" for="' + manu[7] + i + 2 + '">' + listes[i][0] + " <span>(" + longueurs[i] + ")</span></label>");
-		for (var i2=1;i2<longueur;++i2){
-			code.push('<td data-item="' + i2 + '" data-nombre="' + (listes[i][i2] || 100000000000) + '">' + (listes[i][i2] || "") + "</td>");
-		}
+		if (typeof zero == "undefined")
+			for (var i2=1;i2<longueur;++i2)
+				code.push('<td data-item="' + i2 + '" data-nombre="' + (listes[i][i2] || 100000000000) + '">' + (listes[i][i2] || "") + "</td>");
+		else
+			for (var i2=1;i2<longueur;++i2) {
+				tempo = equarrir(listes[i][i2]);
+				code.push('<td data-item="' + i2 + '" data-nombre="' + (tempo || 100000000000) + '">' + (tempo || "") + "</td>");
+			}
 		code.push("</tr>");
 	}
 	code.push("</tbody>");
 
-	// code.unshift('<tr><td colspan="' + longueur + '">'
-	// 	+ 'Les deux ' + informations.typeElements[1] + ' dont l\'intersection est : '
-	// 	+ '<select id="intersection"><option value="-1">… … … …</option></select>'
-	// 	+ '</td></tr></thead>');
-
-
-
-
-
-	code.unshift('<tr><td colspan="' + longueur + '">'
-		+ '<select id="intersection">'
-		+ '<option selected>Intersections maximales et minimales</option>'
-		+ '<optgroup label="Couples à intersection maximale :" id="intersection1"></optgroup>'
-		+ '<optgroup label="Couples à intersection minimale :" id="intersection2"></optgroup>'
-		+ '</select>'
-		+ '</td></tr></thead>');
-
-
-
-
-
-
-
-
-
-
-
 	code.unshift('<thead><tr><td colspan="' + longueur + '">'
-		+ '<label for="croiser" class="croiser">Amplitudes extrêmes : </label>'
-		+ '<select id="croiser"><option value="-1">… … … …</option></select>'
+
+		+ '<p class="cloison">'
+
+		+ '<label for="croiser" class="croiser">Amplitudes des étendues : </label>'
+		+ '<select id="croiser"><option value="-1">… … … …</option>'
+		+ amplitudes
+		+ '</select>'
+
+		+ '<select id="intersection">'
+		+ '<option selected value="-1">Paires à intersections maximales et minimales</option>'
+		+ '<optgroup label="Paires à intersection maximale :" id="intersection1"></optgroup>'
+		+ intersections[0]
+		+ '<optgroup label="Paires à intersection minimale :" id="intersection2"></optgroup>'
+		+ intersections[1]
+		+ '</select>'
+
+		+ '</p>'
+		+ '<p class="cloison">'
+
 		+ manu[5] + 90 + manu[3] + ordres[0] + manu[6]
 		+ manu[0] + 9 + manu[1] + 90 + manu[8] + 0 + manu[2]
 		+ manu[5] + 91 + manu[3] + ordres[1] + manu[6]
 		+ manu[0] + 9 + manu[1] + 91 + manu[8] + 1 +  manu[3]
+
 		+ manu[5] + 92 + manu[3] + ordres[2] + manu[6]
 		+ manu[0] + 9 + manu[1] + 92 + manu[8] + 2 +  manu[3]
 		+ manu[5] + 93 + manu[3] + ordres[3] + manu[6]
 		+ manu[0] + 9 + manu[1] + 93 + manu[8] + 3 +  manu[3]
 
+		+ '</p>'
 
-		// + '<select id="intersection">'
-		// + '<option selected>Intersections maximales et minimales</option>'
-		// + '<optgroup label="Couples à intersection maximale :" id="intersection1"></optgroup>'
-		// + '<optgroup label="Couples à intersection minimale :" id="intersection2"></optgroup>'
-		// + '</select>'
-
-
-
+		+ (typeof commentaires != "undefined" ? '<p class="cloison" id="commentaires">' + commentaires + '</p>' : "")
 
 		+ "</td></tr>");
 
-	$("<p>", {
-		id: "synthese",
-		html: total + ' ' + informations.typeElements[1] + ' : dont ' + communs[0] + ' commun'
-			+ (informations.genreElements == "f" ? "e" : "") + 's aux ' + listes.length + ' ' + informations.typeTableaux[1]
-			+ ', soient ' + '<a href="#" id="commun">' + communs[1] + ' ' + extension + '</a>'
-	})
-	.insertBefore(".visu-datas");
+
+	$synthese.html('Sur ' + combien + ' ' + informations.typeTableaux[1] + ', ' + communs[0] + ' ' + informations.typeElements[1]
+		+ ' en commun, soient <a href="#" id="commun">' + communs[1] + ' ' + extension + '</a> sur ' + total
+	);
 
 
 	$ta = $("<table>", {
-		data: { width : [12 + longueur * 4.4, l * 7.7], state: Date.now() },
+		data: { width : [12 + longueur * 4.4, l * 7.7 + .1], state: Date.now() },
 		class: charge.slice(-1)[0] == true ? "colonne" : "",
 		html: code.join("")}
 	)
 	.appendTo($f.addClass("settled"));
 
 	$("header, form").css("width", 12 + longueur * 4 > 65 ? (12 + longueur * 4 < 80 ? 12 + longueur * 4 + "em" : "80em") : "65em");
-	$b.removeClass("prinit");
+	setTimeout(function () {
+		$b.removeClass("prinit");
+		$f.addClass("settled"); //Chrome ?
+	}, 225);
 
 
 /*
@@ -186,11 +185,13 @@
 	var $ta = $("table"),
 		$tb = $("tbody"),
 		$td = $("tbody td:not(:empty)"),
-		$g = $("[colspan] input"),
+		$g = $("thead input"),
 		$i = $("tbody input"),
 		$i0 = $i.filter("[id$='0']"),
 		$i1 = $i.filter("[id$='1']"),
 		$i2 = $i.filter("[id$='2']"),
+		$intersection = $("#intersection"),
+		$commentaires = $("#commentaires"), //faculatifs
 		bordures = ["3.3em 0 #FFF inset, ","5.95em 0 #FFF inset, "],
 		bordures = ["",""],
 		choix = "pres" + charge.slice(-1)[0] == true ? 2 : 1;
@@ -217,17 +218,39 @@
 
 	function redeployer(e) {
 		var choix = $(this).attr("id"),
-			$ta = $("table"); //(?)
-		if (choix == "pres1")
+			$ta = $("table"), //(?)
+			$tbodytd = $("tbody td"),
+			$theadtd = $("thead td"),
+			$cloisons = $commentaires.length == 1 ? [$(".cloison:eq(0)"), $(".cloison:eq(1)")] : null,
+			ampli = $(".passage").length == 1 ? $(".passage").attr("id") : "", //couleurs de fond
+			largeurTbody, largeurThead; //patch pour $("#intersection")
+		if (choix == "pres1") {
 			$ta.removeClass("colonne").css("width",$ta.data("width")[0] + "em");
-		else
+			$intersection.css("margin", null);
+			$commentaires.length == 1
+			&& $commentaires.css("width",
+				$theadtd.width()
+				- $cloisons[0].outerWidth() - parseInt($cloisons[0].css("margin-right"))
+				- $cloisons[1].outerWidth() - parseInt($cloisons[1].css("margin-right"))
+				- 44
+			);
+		} else {
+			$commentaires.length == 1
+			&& $commentaires.css("width", "auto");
+			$intersection.css("margin", null);
 			$ta.addClass("colonne").css("width",$ta.data("width")[1] + "em");
+			largeurTbody = $tbodytd.outerWidth() * combien; //patch pour $("#intersection")
+			largeurThead = $theadtd.outerWidth() - 4;
+			$intersection.css("margin", largeurThead > largeurTbody ? "1em " + (largeurTbody - largeurThead) / 2 + "px" : null);
+		}
 		$td.each(function(zi) {
 			var $t = $(this);
-			$t.css("box-shadow",$t.data(choix));
+			$t.css("box-shadow",$t.data(choix + ($t.data("ampli") == true ? ampli : "")));
 	});	}
-	if (charge.length == 2 || localStorage.length == 0 || localStorage.getItem("presentation") === null || localStorage.getItem("presentation") == "0")
-		redeployer.call("[type='radio']:checked:eq(0)");
+	if (localStorage.getItem("presentation") !== null)
+		$(".presentation input").eq(parseInt(localStorage.getItem("presentation"))).prop("checked", true);
+	// if (charge.length == 2 || localStorage.length == 0 || localStorage.getItem("presentation") === null || localStorage.getItem("presentation") == "0")
+	redeployer.call(".presentation input:checked");
 	$(".presentation input").on({ "change": redeployer });
 
 
@@ -255,10 +278,12 @@
 	});	}
 	$g.eq(0).on({
 		change: function() {
+			$intersection.val(-1);
 			lotir.call($i0,"item");
 	}	});
 	$g.eq(1).on({
 		change: function() {
+			$intersection.val(-1);
 			lotir.call($i1,"nombre");
 	}	});
 
@@ -346,9 +371,10 @@
 		$ta.data("state", Date.now());
 	}
 	$i2.on({
-		change: function() {
+		change: function(e, select) {
 			var $t = $(this),
 				$p = $t.parents("tr");
+			tempo = [];
 			$g.prop("checked",false);
 			retablir();
 			if ($t.is(":checked"))
@@ -356,6 +382,8 @@
 			else
 				$p.removeClass("axe");
 			var configuration = $(".axe").length;
+			typeof select == "undefined"
+			&& $intersection.val(-1);
 			for (var i = configuration == 0 ? 0 : 2;i<3;i++) {
 				if ($i.filter("[id$='" + i + "']:checked").length == l) {
 					$g.eq(i).prop("checked",true);
@@ -397,6 +425,14 @@
 					$("tbody tr:not(:has(td.visible))").not($p).addClass("absent");
 					$("tr:has(.visible)").addClass("present");
 					break;
+				case 2: //coordonner avec la boîte de sélection des intersections
+					typeof select == "undefined"
+					&& $("tbody :checkbox:checked").each(function () {
+						tempo.push($(this).parents("tr").attr("id"));
+					})
+					&& (tempo = $("[value~=" + tempo[0] + "][value~=" + tempo[1] + "]"))
+					&& tempo.length > 0
+					&& $intersection.val(tempo.attr("value"));
 				default:
 					aligner(configuration);
 	}	}	});
