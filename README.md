@@ -10,12 +10,12 @@ Une note de présentation : http://interfacteur.blogspot.fr/2016/01/croiser-donn
 
  Analyse des amplitudes des intersections entre tableaux ("régions", "albums" etc.) :
 * la plus large
-* la plus vaste
+* la plus importante
 * la moins large
-* la moins vaste
+* la moins importante
 * la plus profonde
-* données les plus présentes
-* données les moins présentes
+* données les plus répandues
+* données les moins répandues
 
 To do :
 * FONCTIONNALITES
