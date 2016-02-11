@@ -29,4 +29,4 @@ To do :
 	- reprendre en orientation prototypale, ou orienté objet ES6 ? (- evenements.js OK)
 	- $c.remove(); //to do: detach() pour tous cas semblables ?
 * PRESENTATION
-	- effets de transition (notamment sur Chrome ?)
+	- largeur tableau quand excédée par largeur de #intersection ; &  l * 7.7 + .1 sur Chrome
