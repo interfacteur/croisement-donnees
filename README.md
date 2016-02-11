@@ -2,7 +2,7 @@ Croiser des séries de données
 ==================
 
 
-Croiser der séries de données numériques pour en visualiser les intersections possibles, personnalisation des données, pour navigateurs standards (une partie du code est de 2014, à reprendre en OO ?)
+Croiser der séries de données numériques pour en visualiser les intersections max, min…, personnalisation des données, pour navigateurs standards (une partie du code est de 2014, à reprendre en OO ?)
 
 L'interface : http://www.equatorium.net/e1/in-croisement-ens-donnees.html
 
