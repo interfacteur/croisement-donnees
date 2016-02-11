@@ -80,7 +80,7 @@ tandis que :
 //Visualiser l'amplitude des étendues : fonction constructrice, prototype etc.
 		visualiser = (function visualiser () {
 
-			var $visus = [],							//instances d'une pseudo classe (héritage natif) gérant la visualisation des analyses
+			var $visus = [],							//instances d'une pseudo classe (héritage natif) gérant la visualisation des amplitudes
 				$table = $("table"),					//le tableau où les données sont affichées
 				$td = $("tbody td:not(:empty)"),		//les cellules avec données
 				$ml = $("#meta a"),						//visualiser l'amplitude des étendues via les liens : point d'ancrage dans le DOM des instances précédentes
@@ -99,7 +99,7 @@ tandis que :
 				$("#meta [href='#" + val + "']").css("box-shadow", "0 0 0 1px " + storage + " inset, 0 0 1px 1px " + storage);
 			});
 
-			$("#m").on("click", function (e) { //replier et déplier les analyses détaillées des millésimes
+			$("#m").on("click", function (e) { //replier et déplier les amplitudes des étendues
 				e.preventDefault();
 				$(this).toggleClass("visu");
 				$profondeur.toggleClass("visu");
@@ -498,9 +498,9 @@ tandis que :
 
 
 
-//Replier et déplier les analyses détaillées
+//Replier et déplier les amplitudes des étendues
 	$analyse.on("change", function (e) {
-		$meta.attr("class", $analyse.is(":checked") ? "" : "sans");
+		$meta[($analyse.is(":checked") ? "remove" : "add") + "Class"]("sans");
 	});
 
 
@@ -729,77 +729,86 @@ tandis que :
 
 
 
+//Restituer les paramètres d'affichage (amplitude, mode d'emploi) et l'état de la visualisation
+	new Promise(function (resolve) {
 
+		$f.get(0).reset(); //état par défaut du formulaire
 
-//Mémoriser les paramètres d'affichage de l'analyse et du mode d'emploi, les restituer
-	if (localStorage.getItem("debut") === null || (/^\d{13,}$/).test(localStorage.getItem("debut")) && Date.now() - parseInt(localStorage.getItem("debut")) > 2592000000) { //30 jours
-		localStorage.clear();
+	//Pas de configuration mémorisée
+		if (localStorage.getItem("debut") === null || (/^\d{13,}$/).test(localStorage.getItem("debut")) && Date.now() - parseInt(localStorage.getItem("debut")) > 2592000000) { //30 jours
+			localStorage.clear();
+			resolve();
+		}
+
+	//Configuration à restituer
+		else {
+			localStorage.getItem("optionPerso") !== null
+			&& $(localStorage.getItem("optionPerso")).insertBefore($dernier)
+			&& ($perso = $("#perso"))
+			&& $fichier.text(perso[0] + '"' + $perso.data("perso") + '"')
+			.addClass("perso")
+			&& $effacer.addClass("in")
+			.on("click", oublier);
+
+			tempo = localStorage.getItem("datas");
+			new Promise(function (res) {
+				tempo != $datas.val()
+				&& $datas.val(tempo).trigger("change", [res])
+				|| res();
+			})
+			.then(function () {
+				var $tempo = [$("tbody :checkbox"), $("tbody :radio")];
+
+				tempo = localStorage.getItem("presentation");
+				tempo != $("[name='presentation']:checked").val()
+				&& $pres.eq(parseInt(tempo)).prop("checked", true).trigger("change");
+
+				tempo = localStorage.getItem("liste9");
+				tempo != "undefined"
+				&& tempo != $("[name='liste9']:checked").val()
+				&& $("[name='liste9']").eq(parseInt(tempo)).prop("checked", true).trigger("change");
+
+				tempo = JSON.parse(localStorage.getItem("mdemploi"));
+				tempo != $mde.is(":checked")
+				&& $mde.prop("checked", tempo).trigger("change");
+
+				tempo = JSON.parse(localStorage.getItem("analyse"));
+				tempo != $analyse.is(":checked")
+				$analyse.prop("checked", tempo).trigger("change");
+
+				tempo = localStorage.getItem("amplitude");
+				tempo != $("#croiser").val()
+				&& $("#croiser").val(tempo).trigger("change");
+
+				for (var k in localStorage) //organisation du tableau : les radio (qui peuvent être maqsués par l'action des checkbox)
+					if (k.indexOf("presentationC") == 0) {
+						$tempo[2] = parseInt(k.split("presentationC")[1]);
+
+						tempo = parseInt(localStorage.getItem("presentationR" + $tempo[2])); //valeur est une chaîne mais pas toujours ?
+						tempo != 0
+						&& $tempo[1].eq($tempo[2] * 2 + 1).prop("checked", true).trigger("change");
+				}
+
+				for (var k in localStorage) //organisation du tableau : les checkbox
+					if (k.indexOf("presentationC") == 0) {
+						$tempo[2] = parseInt(k.split("presentationC")[1]);
+
+						tempo = JSON.parse(localStorage.getItem(k));
+						tempo != $tempo[0].eq($tempo[2]).is(":checked")
+						&& $tempo[0].eq($tempo[2]).prop("checked", tempo).trigger("change");
+				}
+			resolve();
+	});	}	})
+	.then(function () {
 		$(".init").removeClass("init");
-	}
-	else {
-	//reset du formulaire statique au chargment cf. 2-interface.js : $f.get(0).reset();
-		localStorage.getItem("optionPerso") !== null
-		&& $(localStorage.getItem("optionPerso")).insertBefore($dernier)
-		&& ($perso = $("#perso"))
-		&& $fichier.text(perso[0] + '"' + $perso.data("perso") + '"')
-		.addClass("perso")
-		&& $effacer.addClass("in")
-		.on("click", oublier);
+	});
 
-		tempo = localStorage.getItem("datas");
-		new Promise(function (resolve) {
-			tempo != $datas.val()
-			&& $datas.val(tempo).trigger("change", [resolve])
-			|| resolve();
-		})
-		.then(function () {
-			var $tempo = [$("tbody :checkbox"), $("tbody :radio")];
 
-			tempo = localStorage.getItem("presentation");
-			tempo != $("[name='presentation']:checked").val()
-			&& $pres.eq(parseInt(tempo)).prop("checked", true).trigger("change");
 
-			tempo = localStorage.getItem("liste9");
-			tempo != "undefined"
-			&& tempo != $("[name='liste9']:checked").val()
-			&& $("[name='liste9']").eq(parseInt(tempo)).prop("checked", true).trigger("change");
 
-			tempo = JSON.parse(localStorage.getItem("mdemploi"));
-			tempo != $mde.is(":checked")
-			&& $mde.prop("checked", tempo).trigger("change");
-
-			tempo = JSON.parse(localStorage.getItem("analyse"));
-			tempo != $analyse.is(":checked")
-			$analyse.prop("checked", tempo).trigger("change");
-
-			tempo = localStorage.getItem("amplitude");
-			tempo != $("#croiser").val()
-			&& $("#croiser").val(tempo).trigger("change");
-
-			for (var k in localStorage) //organisation du tableau : les radio (qui peuvent être maqsués par l'action des checkbox)
-				if (k.indexOf("presentationC") == 0) {
-					$tempo[2] = parseInt(k.split("presentationC")[1]);
-
-					tempo = parseInt(localStorage.getItem("presentationR" + $tempo[2])); //valeur est une chaîne mais pas toujours ?
-					tempo != 0
-					&& $tempo[1].eq($tempo[2] * 2 + 1).prop("checked", true).trigger("change");
-			}
-
-			for (var k in localStorage) //organisation du tableau : les checkbox
-				if (k.indexOf("presentationC") == 0) {
-					$tempo[2] = parseInt(k.split("presentationC")[1]);
-
-					tempo = JSON.parse(localStorage.getItem(k));
-					tempo != $tempo[0].eq($tempo[2]).is(":checked")
-					&& $tempo[0].eq($tempo[2]).prop("checked", tempo).trigger("change");
-			}
-
-			$(".init").removeClass("init");
-	});	}
-
-	localStorage.setItem("debut", Date.now());
-
+//Mémoriser les paramètres d'affichage (amplitude, mode d'emploi) et l'état de la visualisation
 	window.onunload = function () {
+		localStorage.setItem("debut", Date.now());
 		localStorage.setItem("datas", $datas.val()); //set de données
 		localStorage.setItem("presentation", $("[name='presentation']:checked").val()); //ligne ou colonne
 		localStorage.setItem("liste9", $("[name='liste9']:checked").val()); //champs en tête de tableau
@@ -815,11 +824,5 @@ tandis que :
 			localStorage.setItem("presentationR" + ind, $ti.find(":radio:checked").val());
 	});	}
 
-
-
-
-	// setTimeout(function () {
-	// 	$b.removeClass("init");
-	// }, 1000);
 
 })();

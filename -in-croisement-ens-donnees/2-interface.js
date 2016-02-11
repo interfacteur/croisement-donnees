@@ -72,8 +72,6 @@
 		}
 
 
-	! charge[0].length //au chargement
-	&& $f.get(0).reset();
 
 
 
