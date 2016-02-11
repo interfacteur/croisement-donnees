@@ -21,61 +21,10 @@ form + div	{
 p em	{
 	display: inline-block;
 }
-body > header > h1	{
-	background: #F5F5F5;
-	font-family: Courier;
-	font-size: 1.2em;
-	font-weight: normal;
-	padding-left: 1em;
-}
-h2	{
-	background: #889;
-	border-top: 2px solid #445;
-	color: #FFF;
-	font-family: "Trebuchet MS", Helvetica, sans-serif;
-	font-size: 1.15em;
-	font-weight: normal;
-	margin: 0 -1em;
-	padding: .33em;
-	text-align: center;
-}
-h2 span	{
-	font-weight: bold;
-}
-
-header	{
-	background: #FFF;
-	border-bottom: 2px solid #F0F0F0;
-	position: relative;
-	z-index: 2;
-}
-header p,
-header p a	{
-	color: rgba(68, 68, 85, .5);
-	font-style: italic;
-	text-align: center;
-}
-header p:hover,
-header p:hover a,
-header p a:focus,
-#fichier.perso	{
-	color: #000;
-	font-style: normal;
-}
-form	{
-	box-shadow: 0 -1em 1em #99A;
-	font-family: Arial;
-	padding: 0 1em;
-	position: relative;
-}
 label	{
 	cursor: pointer;
 }
-footer	{
-	font-size: .85em;
-	margin-top: 1em;
-	padding: 1em 2em;
-}
+
 
 
 
@@ -137,14 +86,14 @@ body.prinit footer,
 body.prinit header > *,
 body.prinit form > *,
 body.prinit form .interaction > *,
-body.prinit form .interaction .essence > *	{
+body.prinit form .interaction .base > *	{
 	opacity: .66;
 }
 body.prinit header h1,
 body.prinit header h1 span,
 body.prinit form .interaction,
-body.prinit form .interaction .essence,
-body.prinit form .interaction .essence .tdbord	{
+body.prinit form .interaction .base,
+body.prinit form .interaction .base .tdbord	{
 	opacity: 1;
 }
 body.prinit form,
@@ -209,10 +158,79 @@ body.prinit form > *,
 
 
 /* structure */
+body > header > h1	{
+	background: #F5F5F5;
+	font-family: Courier;
+	font-size: 1.2em;
+	font-weight: normal;
+	padding-left: 1em;
+}
+h2	{
+	background: #889;
+	border-top: 2px solid #445;
+	color: #FFF;
+	font-family: "Trebuchet MS", Helvetica, sans-serif;
+	font-size: 1.15em;
+	font-weight: normal;
+	margin: 0 -1em;
+	padding: .33em;
+	text-align: center;
+}
+h2 span	{
+	font-weight: bold;
+}
+header	{
+	background: #FFF;
+	border-bottom: 2px solid #F0F0F0;
+	position: relative;
+	z-index: 2;
+}
+header p,
+header p a	{
+	color: rgba(68, 68, 85, .5);
+	font-style: italic;
+	text-align: center;
+}
+header p:hover,
+header p:hover span a,
+header p span a:focus,
+#fichier.perso	{
+	color: #000;
+	font-style: normal;
+}
+header p	{
+	position: relative;
+}
+header small	{
+	left: 0;
+	position: absolute;
+}
+header small a	{
+	background: #445;
+	border-radius: 0 .5em .5em 0;
+	color: #E7E7FF;
+	font-style: normal;
+	left: 0;
+	opacity: .6;
+	padding-right: .4em;
+	position: absolute;
+	white-space: nowrap;
+}
+header small a:hover,
+header small a:focus	{
+	color: #FFF;
+	opacity: 1;
+}
+form	{
+	box-shadow: 0 -1em 1em #99A;
+	font-family: Arial;
+	padding: 0 1em;
+	position: relative;
+}
 .interaction	{
 	min-height: 3em;
 }
-.essence	{
+.base	{
 	float: left;
 	width: 34%;
 }
@@ -225,9 +243,17 @@ body.prinit form > *,
 	height: 2.9em;
 	padding-top: .9em;
 }
+footer	{
+	font-size: .85em;
+	margin-top: 1em;
+	padding: 1em 2em;
+}
 
 
-/* structure : "essence" */
+
+
+
+/* structure : "base" */
 .tdbord	{
 	box-shadow: -.5em 0 #FFF, -1em 0 #99A;
 	white-space: nowrap;
@@ -236,7 +262,7 @@ body.prinit form > *,
 .tdbord input	{
 	margin-right: 2em;
 }
-/* structure : "essence" : analyse */
+/* structure : "base" : analyse */
 #meta	{
 	box-shadow: 0 0 0 .5em #FFF, -.5em 0 .15em #445;
 	background: -webkit-repeating-linear-gradient(0deg, #F8F8F8, #F8F8F8 2px, #FFF 2px, #FFF 7px);

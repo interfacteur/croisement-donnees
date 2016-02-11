@@ -542,7 +542,8 @@ tandis que :
 					.replace("Tout retour", "<br>Tout retour")
 					.replace(/(http:\/\/.+)\.$/, '<a href="$1" onclick="event.stopPropagation();">contact</a>.') /* to do : pourquoi pas après ligne suivante ? */
 					.replace(/(exemple(-là)?)/g, '<a href="' + $("#exemple").attr("href") + '" onclick="event.stopPropagation();">$1</a>')
-					.replace(/\(([^\)]+)\)/, '- <a href="' + $("#ex").attr("value") + '" onclick="event.stopPropagation();">$1</a> -')
+					.replace(/\[(ou celui )([^,]+)/, '- $1<a href="' + $("#ex1").attr("value") + '" onclick="event.stopPropagation();">$2</a>')
+					.replace(/, ([^\]]+)\]/, ', <a href="' + $("#ex2").attr("value") + '" onclick="event.stopPropagation();">$1</a> -')
 					+ fermeture,
 				on: {
 					"click": function (e) {
