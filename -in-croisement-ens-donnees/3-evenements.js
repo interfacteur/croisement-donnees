@@ -593,8 +593,10 @@ tandis que :
 						&& r();
 			}	}	})
 			.appendTo($b);
-			window.commentaires = undefined;
+			window.informations = undefined; //normalement inutile
+			window.datas = undefined; //normalement inutile
 			window.zero = undefined;
+			window.commentaires = undefined;
 			if (va != "perso")
 				return $s.attr("src", va);
 			$s.text(localStorage.getItem("personnalisees"))

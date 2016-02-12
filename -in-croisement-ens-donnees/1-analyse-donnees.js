@@ -128,8 +128,8 @@
 					code[l] = code[l].join(" ; ") + "</p>";
 			}	];
 
-		communs = [0, 0],
-		amplitudes = [],
+		communs = [0, 0];
+		amplitudes = [];
 		extensions = [];
 		extension = " " + typeEle[1] + " partagé" + (genreEle == "f" ? "e" : "") + "s";
 
@@ -212,19 +212,16 @@
 		.sort(function (a, b) { return b[0] - a[0]; });
 
 
-
-
 		for (var y = 0; y < 4; ++y) {
 			for (var k in ordre) {
 				if (ordre[k] == y) {
 					switch (k) {
-
 	//Série(s) de données ayant la largeur d'extension inférieure
 						case "ml":
 							code.push("<p>" + interz.large.moins + largeurs.slice(-1)[0][0] + " " + typeEle[1] + " :<br>&nbsp;&nbsp;&nbsp;&nbsp;");
 							code.push([largeurs.slice(-1)[0][1]]);
 							routine[0](nombreTableaux - 1);
-							while (largeurs[i][0] == largeurs[--i][0])
+							while (i >= 1 && largeurs[i][0] == largeurs[--i][0])
 								code[l].push(largeurs[i][1]);
 							routine[1](l, ordre["ml"], largeurs.slice(-1)[0][0]);
 							break;
@@ -234,7 +231,7 @@
 							code.push("<p>"  + interz.large.plus + largeurs[0][0] + " " + typeEle[1] + " :<br>&nbsp;&nbsp;&nbsp;&nbsp;");
 							code.push([largeurs[0][1]]);
 							routine[0](0);
-							while (largeurs[i][0] == largeurs[++i][0])
+							while (i < nombreTableaux - 1 && largeurs[i][0] == largeurs[++i][0])
 								code[l].push(largeurs[i][1]);
 							routine[1](l, ordre["pl"], largeurs[0][0]);
 							break;
@@ -244,7 +241,7 @@
 							code.push("<p>" + interz.etendue.moins + surfaces.slice(-1)[0][0] + " " + typeEle[1] + " :<br>&nbsp;&nbsp;&nbsp;&nbsp;");
 							code.push([surfaces.slice(-1)[0][1]]);
 							routine[0](nombreTableaux - 1);
-							while (surfaces[i][0] == surfaces[--i][0])
+							while (i >= 1 && surfaces[i][0] == surfaces[--i][0])
 								code[l].push(surfaces[i][1]);
 							routine[1](l, ordre["me"], surfaces.slice(-1)[0][0]);
 							break;
@@ -254,9 +251,8 @@
 							code.push("<p>" + interz.etendue.plus + surfaces[0][0] + " " + typeEle[1] + " :<br>&nbsp;&nbsp;&nbsp;&nbsp;");
 							code.push([surfaces[0][1]]);
 							routine[0](0);
-							while (i + 1 < surfaces.length && surfaces[i][0] == surfaces[++i][0]) {
+							while (i < nombreTableaux - 1 && surfaces[i][0] == surfaces[++i][0])
 								code[l].push(surfaces[i][1]);
-							}
 							routine[1](l, ordre["pe"], surfaces[0][0]);
 		}	}	}	}
 
