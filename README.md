@@ -2,7 +2,7 @@ Croiser des séries de données
 ==================
 
 
-Croiser des séries de données numériques pour en visualiser les diverses intersections et éléments partagés, avec personnalisation des données, pour navigateurs standards.
+Croiser des séries de données numériques pour en visualiser les diverses intersections, éléments partagés etc., avec personnalisation des données, pour navigateurs standards.
 
 L'interface : http://www.equatorium.net/e1/in-croisement-ens-donnees.html
 
