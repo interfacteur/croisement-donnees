@@ -453,7 +453,7 @@ footer	{
 	color: #000;
 	font-weight: normal;
 }
-#aideUtilisation .clair,
+#aideUtilisation:not(.sans) .clair,
 #aideUtilisation a	{
 	color: #FFF;
 }
