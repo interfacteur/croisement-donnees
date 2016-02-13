@@ -1,4 +1,5 @@
-/* méta-informations - 01/2016 */
+/* "modèle" de MVC - 01-02/2016 */
+
 
 //Objets et variables globaux
 ;var conditions = (!! Array.prototype.forEach)
@@ -29,7 +30,7 @@
 
 
 
-
+//Traiter les données
 ;var analyser = (function () {
 	"use strict";
 

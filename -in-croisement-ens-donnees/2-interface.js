@@ -1,51 +1,17 @@
+/* "vue" et "contrôle vue" de MVC - 2014, 01-02/2016 */
+
+
+//Générer l'interface, visualiser les séries par sélection
 ;var interfacter = (function interfacter () {
 	"use strict";
 
-/* code août 2014, procédural
-	révision skin en 2015f
-	analyse des données 2015-2016
-
-	FONCTIONNALITES
-
-	to do : avec d'autres données que numériques
-
-	to do : que faire quand partage le plus important == partage le moins important ?
-
-		done : analyse des croisements les plus riches entre deux tableaux
-		comme un bouton cliquable plus que comme une analyse
-
-		done : analyse du croisement minimal entre deux tableaux
-
-	ACCESSIBILITÉ
-
-	to do : couche ARIA ?
-
-	to do : tester Voice Over ou NVDA : .on("keyup",
-		cf. this.$lien.on("mouseover keyup", Visu.passer);
-
-	COMPATIBILITÉ
-
-	to do : tests sur MSIE
-
-	DÉVELOPPEMENT
-
-	to do : reprendre en orientation prototypale, ou orienté objet ES6 ?
-		- 3-evenements.js OK
-
-	to do : $c.remove(); //to do: detach() pour tous cas semblables ?
-
-	PRESENTATION
-
-	to do : largeur tableau quand excédée par largeur de #intersection ; &  l * 7.7 + .1 sur Chrome
-
-		done : effets de transition (notamment sur Chrome ?)
-
-*/
+/* code initial août 2014, procédural
+	révision skin en 2015
+	analyse des données en 2015-2016 cf. 1-analyse-donnes.js et 3-evenements.js */
 
 
 	if (! conditions) //cf. 1-analyse-donnees.js
 		return;
-
 
 
 	var collection = cles, //cf. 1-analyse-donnees.js
@@ -220,6 +186,7 @@
 	});	});
 
 	function redeployer(e) {
+		console.log("coucou")
 		var choix = $(this).attr("id"),
 			$ta = $("table"), //(?)
 			$tbodytd = $("tbody td"),
@@ -250,9 +217,8 @@
 			var $t = $(this);
 			$t.css("box-shadow",$t.data(choix + ($t.data("ampli") == true ? ampli : "")));
 	});	}
-	if (localStorage.getItem("presentation") !== null)
+	if (charge.length == 1 && localStorage.getItem("presentation") !== null)
 		$(".presentation input").eq(parseInt(localStorage.getItem("presentation"))).prop("checked", true);
-	// if (charge.length == 2 || localStorage.length == 0 || localStorage.getItem("presentation") === null || localStorage.getItem("presentation") == "0")
 	redeployer.call(".presentation input:checked");
 	$(".presentation input").on({ "change": redeployer });
 

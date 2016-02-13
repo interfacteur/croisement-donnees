@@ -1,19 +1,21 @@
-/* Aide, affichages, changer de données - 01/2016 */
+/* "contrôle vue" et "contrôle modèle" de MVC - 01-02/2016 */
 
+
+ //Visualiser les séries par amplitude, gérer l'aide, les paramètres de l'affichage, la personnalisation des données
 ;(function () {
 	"use strict";
-
 
 	if (! conditions) //cf. 1-analyse-donnees.js
 		return;
 
 
 
-/* cf. $(".presentation input").off(); dans 2-interface.js :
+/* Relations entre éléments stables, élémens instables et gestionnaires :
+- cf. $(".presentation input").off(); dans 2-interface.js :
 	les boutons radio pour ligne colonne : sont stables mais s'adressent à élément instables, adapter la gestion au cycle des éléments
-tandis que :
-	éléments re-écrits comme le tableau : leur gestionnaire d'événements n'est pas à "gérer", suit l'existence de ces éléments
-	éléments stables, comme le bouton reset : pas de souci
+- tandis que :
+	* éléments re-écrits comme le tableau : leur gestionnaire d'événements n'est pas à "gérer", suit l'existence de ces éléments
+	* éléments stables, comme le bouton reset : pas de souci
 */
 
 
@@ -38,7 +40,7 @@ tandis que :
 		perso = ["Données personnalisées : ", "personnalisées : ", $fichier.text()],
 		$perso = null,
 
-		tempo, //à contenu temporaire
+		tempo, //à valeur temporaire
 
 		message = "Les données chargées ne correspondraient pas à la forme attendue",
 		fermeture = $(".fermeture").get(0)
@@ -762,9 +764,7 @@ tandis que :
 			.then(function () {
 				var $tempo = [$("tbody :checkbox"), $("tbody :radio")];
 
-				tempo = localStorage.getItem("presentation");
-				tempo != $("[name='presentation']:checked").val()
-				&& $pres.eq(parseInt(tempo)).prop("checked", true).trigger("change");
+				$pres.eq(parseInt(localStorage.getItem("presentation"))).prop("checked", true); //cf. 2-interface.js : if (localStorage.getItem("presentation") !== null)
 
 				tempo = localStorage.getItem("liste9");
 				tempo != "undefined"
