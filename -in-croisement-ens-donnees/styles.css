@@ -117,13 +117,14 @@ body.prinit form > *,
 	-o-transition: .5s;
 	transition: .5s;
 
-    -webkit-transform: translateZ(0);  /* activation de l'AM */
-    -moz-transform: translateZ(0);  /* activation de l'AM */
-    -ms-transform: translateZ(0);  /* activation de l'AM */
-    -o-transform: translateZ(0);  /* activation de l'AM */
-    transform: translateZ(0);  /* activation de l'AM */
+	-webkit-transform: translateZ(0);  /* activation de l'AM */
+	-moz-transform: translateZ(0);  /* activation de l'AM */
+	-ms-transform: translateZ(0);  /* activation de l'AM */
+	-o-transform: translateZ(0);  /* activation de l'AM */
+	transform: translateZ(0);  /* activation de l'AM */
 }
-#aideUtilisation p:not(.incipit),
+
+#aideUtilisation p,
 #meta h1,
 #meta p	{
 	opacity: 1;
@@ -131,8 +132,6 @@ body.prinit form > *,
 	padding: .5em .3em 0 .66em;
 }
 #aideUtilisation.sans p:not(.incipit),
-#aideUtilisation.sans .secondo,
-#aideUtilisation.sans .penultieme,
 #meta.sans h1,
 #meta.sans p,
 #meta.init h1,
@@ -142,7 +141,6 @@ body.prinit form > *,
 	opacity: 0;
 	padding-top: 0;
 	pointer-events: none;
-	width: 0;
 }
 #crutch #aideUtilisation.init,
 #crutch #aideUtilisation.nulle	{
@@ -150,10 +148,17 @@ body.prinit form > *,
 	height: 0;
 	padding: 0;
 }
-
-
-
-
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+	#aideUtilisation	{
+		height: 864px;
+	}
+	#aideUtilisation.sans	{
+		height: 3em;
+	}
+	#aideUtilisation.sans p:not(.incipit)	{
+		display: none;
+	}
+}
 
 
 
@@ -162,6 +167,9 @@ body.prinit form > *,
 /* structure */
 body > header > h1	{
 	background: #F5F5F5;
+	box-shadow: 33.33em 0 #606070 inset;
+	box-shadow: 33.33em 0 #99A inset;
+	color: #E7E7FF;
 	font-family: Courier;
 	font-size: 1.2em;
 	font-weight: normal;
@@ -208,20 +216,24 @@ header small	{
 	position: absolute;
 }
 header small a	{
-	background: #445;
+	/*background: #445;*/
+	background: #99A;
 	border-radius: 0 .5em .5em 0;
+	border-top: 1px solid #778;
 	color: #E7E7FF;
 	font-style: normal;
 	left: 0;
-	opacity: .6;
-	padding-right: .4em;
+	/*opacity: .6;*/
+	padding: 0 .4em 0 .2em;
 	position: absolute;
 	white-space: nowrap;
 }
 header small a:hover,
 header small a:focus	{
+	background: #445;
+	border-top: 1px solid #445;
 	color: #FFF;
-	opacity: 1;
+	/*opacity: 1;*/
 }
 form	{
 	box-shadow: 0 -1em 1em #99A;
@@ -402,7 +414,7 @@ footer	{
 	margin: 0 0 -34em 0;
 	opacity: 1;
 	overflow: hidden;
-	padding: 1em;
+	padding: .8em 1em 1.4em 1em;
 	position: relative;
 	white-space: nowrap;
 	width: 100%;
@@ -424,41 +436,68 @@ footer	{
 #aideUtilisation.sans:focus	{
 	opacity: 1;
 }
-.intro	{
-	text-align: center;
-}
-.secondo	{
+#aideUtilisation:not(.sans) .bloc	{
 	border-top: 1px solid #E7E7FF;
-	margin-top: 1.25em;
-	padding-top: 1.25em;
 }
-.penultieme	{
-	height: 7em;
+#aideUtilisation:not(.sans) p.pre-bloc	{
+	margin-bottom: .5em;
 }
-.secondo:last-child	{
+#aideUtilisation:not(.sans) .bloc p:first-child	{
+	margin-top: .75em;
+}
+.seuil	{
 	text-align: right;
+}
+#aideUtilisation:not(.sans) li + li p:first-child::before	{
+	color: #E7E7FF;
+	content: "\2299";
+	font-weight: bold;
+	margin-left: -1.1em;
+	position: absolute;
+}
+#aideUtilisation:not(.sans) li:last-child p:first-child::before	{
+	content: none;
+}
+#aideUtilisation p	{
+	margin-top: .1em;
+}
+#aideUtilisation .mince	{
+	height: 2.5em;
+}
+#aideUtilisation .consequent	{
+	height: 8em;
+}
+#aideUtilisation.sans .incipit	{
+	height: 2.5em;
+}
+#aideUtilisation.sans .incipit em	{
+	display: none;
+}
+
+
+#aideUtilisation input	{
+	box-shadow: 0 0 .1em .3em #E7E7FF;
 }
 .sans .discret	{
 	display: none;
 }
-#aideUtilisation p:first-child	{
-	padding: .5em .3em 0 .66em;
+#aideUtilisation strong	{
+	font-weight: normal;
 }
 #aideUtilisation:not(.sans) strong	{
 	color: #E7E7FF;
 	letter-spacing: 1px;
-	font-weight: normal;
 }
-#aideUtilisation.sans p:first-child strong	{
+#aideUtilisation:not(.sans) strong strong	{
+	color: #FFF;
+	font-weight: bold;
+}
+#aideUtilisation.sans .incipit strong,
+#aideUtilisation.sans .incipit strong strong	{
 	color: #000;
-	font-weight: normal;
 }
-#aideUtilisation:not(.sans) .clair,
 #aideUtilisation a	{
 	color: #FFF;
-}
-#aideUtilisation input	{
-	box-shadow: 0 0 .1em .3em #E7E7FF;
 }
 #mdemploi	{
 	color: #FFF;
@@ -481,19 +520,8 @@ footer	{
 	background: transparent;
 	content: "";
 }
-.pseudo-item	{
-	text-indent: -1em;
-}
-#aideUtilisation .incipit em,
-.cipit	{
-	display: inline;
-}
-#aideUtilisation.sans .incipit em	{
-	display: none;
-}
-#aideUtilisation p.outcipit	{
-	height: 2.5em;
-}
+
+
 
 
 
@@ -1168,11 +1196,7 @@ tr:nth-child(6) .label span	{
 table:not(.axes) .visible::before	{
 	color: #FFF!important;
 }
-/*.crutch td.visible::before	{
-	border-color: #F00;
-	box-shadow: .8em 0 #B00;
-}
-*/
+
 	/* analyse : */
 #crutch .intersection td:not(:empty),
 #crutch .diasection,
