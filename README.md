@@ -8,18 +8,19 @@ L'interface : http://www.equatorium.net/e1/in-croisement-ens-donnees.html
 
 Une note de présentation : http://interfacteur.blogspot.fr/2016/01/croiser-donnees.html
 
- Analyse des amplitudes des intersections entre tableaux ("régions", "albums" etc.) :
-* la plus large
-* la plus importante
-* la moins large
-* la moins importante
-* la plus profonde
+ Analyse des amplitudes des partages entre tableaux ("régions", "albums" etc.) :
+* le plus important
+* le plus large
+* le moins important
+* le moins large
+* le plus profond
 * données les plus répandues
 * données les moins répandues
 
 To do :
 * FONCTIONNALITES
 	- avec d'autres données que numériques
+	- que faire quand partage le plus important == partage le moins important ?
 * ACCESSIBILITÉ
 	- couche ARIA ?
 	- tester Voice Over ou NVDA : .on("keyup", (cf. this.$lien.on("mouseover keyup", Visu.passer);)
