@@ -16,14 +16,14 @@
 	extensions, //surface d'extension de chaque série de données
 	extension, //ensemble des valeurs partagées par les séries de données
 	intersections = [[],[]], //intersections maximales et minimales entre séries de données
-	amplitudes,	//amplitude des étendues càd formes maximales et minimales d'extension des séries de données
+	amplitudes,	//amplitude des partages càd formes maximales et minimales d'extension des séries de données
 
-//Ordre de présentation des étendues - paramétrable :
+//Ordre de présentation des amplitudes - paramétrable :
 	ordre = {
-		pl: 0,
-		pe: 1,
-		ml: 2,
-		me: 3,
+		pe: 0,
+		pl: 1,
+		me: 2,
+		ml: 3,
 		pp: 4 //À LAISSER EN 4
 	};
 
@@ -49,11 +49,11 @@
 		resume = [],
 		interz = {};
 
-	amplitudesQuali[ordre["ml"]] = "la moins large";
-	amplitudesQuali[ordre["pl"]] = "la plus large";
-	amplitudesQuali[ordre["me"]] = "la moins importante";
-	amplitudesQuali[ordre["pe"]] = "la plus importante";
-	amplitudesQuali[ordre["pp"]] = "la plus profonde";
+	amplitudesQuali[ordre["ml"]] = "le moins large";
+	amplitudesQuali[ordre["pl"]] = "le plus large";
+	amplitudesQuali[ordre["me"]] = "le moins important";
+	amplitudesQuali[ordre["pe"]] = "le plus important";
+	amplitudesQuali[ordre["pp"]] = "le plus profond";
 
 	resume[ordre["ml"]] = ["largeur minimale", "d2"];
 	resume[ordre["pl"]] = ["largeur maximale", "d2"];
@@ -77,6 +77,7 @@
 	return (function analysant () {
 
 		cles = Object.keys(datas);
+		cles.sort(); //Ordre alphabétique de base
 
 		var nombreTableaux = cles.length,
 			tableaux = [],
@@ -84,7 +85,7 @@
 			titresIndex = [],
 			elementsParTableau = [],
 			tousElements = [],
-			nombreElements,
+			// nombreElements,
 			elementMinimum,
 			elementMaximum,
 			decompteElements = [],
@@ -98,35 +99,18 @@
 			typeEle = informations.typeElements,
 			genreEle = informations.genreElements,
 			adjectif = { "f": "répandues, présentes", "m": "répandus, présents" },
-			i, l, li,
+			i, y, k, l,
 			masquer = '<label for="analyse">Masquer</label>',
 			valindex = 0,
-			routine = [
-				function (ind) {
-					i = ind;
-					l = code.length - 1;
-					amplitudes.push([]);
-					li = amplitudes.length - 1;
-				},
-				function (l, r, t) {
-					code[l].sort(function (a, b) { return titresIndex.lastIndexOf(a[0]) -  titresIndex.lastIndexOf(b[0]); });
-					code[l].forEach(function (val, ind) {
-						var k = cles[titresIndex.indexOf(val)];
-						code[l][ind] = '<a href="#'
-							+ k
-							+ '" data-croisement="'
-							+ resume[r][0]
-							+ '" data-croisementtype="'
-							+ resume[r][1]
-							+ '" data-taille="'
-							+ t
-							+ '">'
-							+ val
-							+ '</a>';
-						amplitudes[li].push([val, t]);
-					});
-					code[l] = code[l].join(" ; ") + "</p>";
-			}	];
+			routines = [],
+			routine = function (arr) {
+				i = 0;
+				l = code.length;
+				routines.push([l, arr[0][0]]);
+				code.push([arr[0][1]]);
+				while (i < nombreTableaux - 1 && arr[i][0] == arr[++i][0])
+					code[l].push(arr[i][1]);
+			};
 
 		communs = [0, 0];
 		amplitudes = [];
@@ -134,7 +118,7 @@
 		extension = " " + typeEle[1] + " partagé" + (genreEle == "f" ? "e" : "") + "s";
 
 
-		code.push("<h1>L'étendue :</h1>");
+		code.push("<h1>Le partage :</h1>");
 
 
 		cles.forEach(function (val) {
@@ -157,11 +141,11 @@
 		});	});
 
 		tousElements.sort(function (a, b) { return a - b; } );
-		nombreElements = tousElements.length;
+		// nombreElements = tousElements.length; //cf. total += listes[i].length - 1; dans 2-interface.js
 
 		elementMinimum = tousElements.slice(0, 1)[0];
 		elementMaximum = tousElements.slice(-1)[0];
-		for (var i = elementMinimum; i <= elementMaximum; ++i)
+		for (i = elementMinimum; i <= elementMaximum; ++i)
 			decompteElements[i] = [i, 0, [], []];
 
 		elementsParTableau.sort(function (a, b) { return a[1] - b[1]; } );
@@ -188,6 +172,8 @@
 		decompteElements = decompteElements[0];
 
 
+		communs[2] = decompteElements.length;
+
 
 
 	//Pour calculer surface et largeur d'extension
@@ -212,48 +198,46 @@
 		.sort(function (a, b) { return b[0] - a[0]; });
 
 
-		for (var y = 0; y < 4; ++y) {
-			for (var k in ordre) {
+
+
+	//Surface et largeur d'extension de chaque série de données (objet global)
+		surfaces.forEach(function (val, ind) {
+			extensions[cles[titresIndex.indexOf(val[1])]] = [val[0], largeurs[ind][0]];
+		});
+
+
+
+
+		for (y = 0; y < 4; ++y) {
+			for (k in ordre) {
 				if (ordre[k] == y) {
 					switch (k) {
 	//Série(s) de données ayant la largeur d'extension inférieure
 						case "ml":
 							code.push("<p>" + interz.large.moins + largeurs.slice(-1)[0][0] + " " + typeEle[1] + " :<br>&nbsp;&nbsp;&nbsp;&nbsp;");
-							code.push([largeurs.slice(-1)[0][1]]);
-							routine[0](nombreTableaux - 1);
-							while (i >= 1 && largeurs[i][0] == largeurs[--i][0])
-								code[l].push(largeurs[i][1]);
-							routine[1](l, ordre["ml"], largeurs.slice(-1)[0][0]);
+							largeurs.reverse();
+							routine(largeurs);
+							largeurs.reverse();
 							break;
 
 	//Série(s) de données ayant la largeur d'extension supérieure
 						case "pl":
 							code.push("<p>"  + interz.large.plus + largeurs[0][0] + " " + typeEle[1] + " :<br>&nbsp;&nbsp;&nbsp;&nbsp;");
-							code.push([largeurs[0][1]]);
-							routine[0](0);
-							while (i < nombreTableaux - 1 && largeurs[i][0] == largeurs[++i][0])
-								code[l].push(largeurs[i][1]);
-							routine[1](l, ordre["pl"], largeurs[0][0]);
+							routine(largeurs);
 							break;
 
 	//Série(s) de données ayant la surface d'extension inférieure
 						case "me":
 							code.push("<p>" + interz.etendue.moins + surfaces.slice(-1)[0][0] + " " + typeEle[1] + " :<br>&nbsp;&nbsp;&nbsp;&nbsp;");
-							code.push([surfaces.slice(-1)[0][1]]);
-							routine[0](nombreTableaux - 1);
-							while (i >= 1 && surfaces[i][0] == surfaces[--i][0])
-								code[l].push(surfaces[i][1]);
-							routine[1](l, ordre["me"], surfaces.slice(-1)[0][0]);
+							surfaces.reverse();
+							routine(surfaces);
+							surfaces.reverse();
 							break;
 
 	//Série(s) de données ayant la surface d'extension supérieure
 						case "pe":
 							code.push("<p>" + interz.etendue.plus + surfaces[0][0] + " " + typeEle[1] + " :<br>&nbsp;&nbsp;&nbsp;&nbsp;");
-							code.push([surfaces[0][1]]);
-							routine[0](0);
-							while (i < nombreTableaux - 1 && surfaces[i][0] == surfaces[++i][0])
-								code[l].push(surfaces[i][1]);
-							routine[1](l, ordre["pe"], surfaces[0][0]);
+							routine(surfaces);
 		}	}	}	}
 
 
@@ -267,33 +251,19 @@
 
 		code.push("<p>les plus " + adjectif[genreEle] + " sur " + decompteElements[0][1] + " " + typeTab[1] + ":<br>&nbsp;&nbsp;&nbsp;&nbsp;");
 		code.push([decompteElements[0][0]]);
-		routine[0](0);
-		while (decompteElements[i][1] == decompteElements[++i][1]) {
+		i = 0;
+		l = code.length - 1;
+		routines.push([l - 3, decompteElements[0][1]]);
+
+		while (i < communs[2] - 1 && decompteElements[i][1] == decompteElements[++i][1]) {
 			code[l - 3] = code[l - 3].concat(decompteElements[i][3]);
 			code[l].push(decompteElements[i][0]);
 		}
-		code[l - 3].sort(function (a, b) { return titresIndex.lastIndexOf(a) -  titresIndex.lastIndexOf(b); });
 		code[l - 3].forEach(function (val, ind) {
 			while (ind < code[l - 3].lastIndexOf(val))
 				code[l - 3].splice(code[l - 3].lastIndexOf(val), 1);
 		});
 
-		code[l - 3].forEach(function (val, ind) {
-			var k = cles[titresIndex.indexOf(val)];
-			code[l - 3][ind] = '<a href="#'
-				+ k
-				+ '" data-croisement="'
-				+ resume[4][0]
-				+ '" data-croisementtype="'
-				+ resume[4][1]
-				+ '" data-taille="'
-				+ decompteElements[0][1]
-				+ '">'
-				+ val
-				+ '</a>';
-			amplitudes[li].push([val, decompteElements[0][1]]);
-		});
-		code[l - 3] = code[l - 3].join(" ; ") + "</p>";
 		code[l].sort(function (a, b) { return a - b; });
 		code[l] = code[l].join(" ; ") + "</p>";
 
@@ -305,7 +275,7 @@
 		code.push([decompteElements.slice(-1)[0][0]]);
 		i = decompteElements.length - 1;
 		l = code.length - 1;
-		while (decompteElements[i][1] == decompteElements[--i][1])
+		while (i > 0 && decompteElements[i][1] == decompteElements[--i][1])
 			code[l].push(decompteElements[i][0]);
 		code[l].sort(function (a, b) { return a - b; });
 		code[l] = code[l].join(" ; ") + "</p></article>";
@@ -313,10 +283,40 @@
 
 
 
-	//Surface et largeur d'extension de chaque série de données (objet global)
-		surfaces.forEach(function (val, ind) {
-			extensions[cles[titresIndex.indexOf(val[1])]] = [val[0], largeurs[ind][0]];
-		});
+	//Placer en-têtes les séries aux surfaces d'extension les plus riches
+						/* doit venir après extension, càd après largeurs et surfaces, mais si vient avant les calculs de surface, largeur, profondeur, crée décalage… */
+		cles.sort(function (a, b) { return extensions[b][0] - extensions[a][0]; });
+		titresIndex = []; //Régularisation de l'ordre des titres
+		for (k in titres)
+			titresIndex[cles.indexOf(k)] = titres[k]
+
+
+
+
+	//Finalisation du code de "amplitude des partages"
+		routines.forEach(function (val, ind) {
+			y = val[0];
+			amplitudes.push([]);
+			l = amplitudes.length - 1;
+			code[y].sort(function (a, b) { return titresIndex.lastIndexOf(a) - titresIndex.lastIndexOf(b); });
+			code[y].forEach(function (va, i) {
+				k = cles[titresIndex.indexOf(va)];
+				code[y][i] = '<a href="#'
+					+ k
+					+ '" data-croisement="'
+					+ resume[ind][0]
+					+ '" data-croisementtype="'
+					+ resume[ind][1]
+					+ '" data-taille="'
+					+ val[1]
+					+ '">'
+					+ va
+					+ '</a>';
+				amplitudes[l].push([va, val[1]]);
+			});
+			code[y] = code[y].join(" ; ") + "</p>";
+		})
+		code.push(masquer);
 
 
 
@@ -361,7 +361,7 @@
 
 
 
-	//Amplitude des étendues càd formes maximales et minimales d'extension des séries de données
+	//Amplitude des partages càd formes maximales et minimales d'extension des séries de données
 		amplitudes = amplitudesQuali.map(function (val, ind) {
 			return amplitudes[ind].map(function (v) {
 				return '<option value="' + (valindex++) + '">' + val + " : " + v[0] + ' (' + v[1] + ')</option>';
@@ -373,9 +373,8 @@
 
 
 
-		code.push(masquer);
+	//Mise sur pied de l'interface
 		$meta.html(code.join(""));
-
 
 		$(".typeTab1").text(typeTab[0]);
 		$(".typeTab2").text(typeTab[1]);

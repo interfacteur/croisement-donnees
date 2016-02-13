@@ -2,7 +2,7 @@ var informations = {
 	"titre": '6 albums de sonates de D. Scarlatti numérotées selon le catalogue <abbr title="Kirkpatrick">Kk</abbr>',
 	"typeTableaux": ["album", "albums", "album(s)"],
 	"genreTableaux": "m",
-	"typeElements": ["piste", "pistes"],
+	"typeElements": ["sonate", "sonates"],
 	"genreElements": "f"
 }
 

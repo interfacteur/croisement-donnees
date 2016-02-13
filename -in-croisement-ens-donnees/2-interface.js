@@ -9,6 +9,8 @@
 
 	to do : avec d'autres données que numériques
 
+	to do : que faire quand partage le plus important == partage le moins important ?
+
 		done : analyse des croisements les plus riches entre deux tableaux
 		comme un bouton cliquable plus que comme une analyse
 
@@ -44,6 +46,8 @@
 	if (! conditions) //cf. 1-analyse-donnees.js
 		return;
 
+
+
 	var collection = cles, //cf. 1-analyse-donnees.js
 		listes = [],
 		combien,
@@ -62,7 +66,7 @@
 			'commun',
 			'" value="'
 		],
-		ordres = ["Ordre d'origine&nbsp;:", "ou numérique&nbsp;:", "Sélectionner tout&nbsp;:", "rien&nbsp;:"],
+		ordres = ["Ordre d'origine&nbsp;:", "ou croissant&nbsp;:", "Sélectionner tout&nbsp;:", "rien&nbsp;:"],
 		charge = [$("table")], //n'existe pas au chargement donc n'a pas de .length
 		$synthese = $("#synthese"),
 		$commentaires = $("#commentaires"),
@@ -73,10 +77,6 @@
 
 
 
-
-
-	//placer en-têtes les séries aux surfaces d'extension les plus riches
-	collection.sort(function (a, b) { return extensions[b][0] - extensions[a][0]; });
 
 
 	$("#titre").html(informations.titre);
@@ -120,16 +120,16 @@
 
 		+ '<p class="cloison">'
 
-		+ '<label for="croiser" class="croiser">Amplitudes des étendues : </label>'
-		+ '<select id="croiser"><option value="-1">… … … …</option>'
+		+ '<label for="croiser" class="croiser">Amplitudes des partages : </label>'
+		+ '<select id="croiser"><option value="-1">… Le partage …</option>'
 		+ amplitudes
 		+ '</select>'
 
 		+ '<select id="intersection">'
-		+ '<option selected value="-1">Paires à intersections maximales et minimales</option>'
-		+ '<optgroup label="Paires à intersection maximale :" id="intersection1"></optgroup>'
+		+ '<option selected value="-1">Couplages à intersections maximales et minimales</option>'
+		+ '<optgroup label="Couplages à intersection maximale :" id="intersection1"></optgroup>'
 		+ intersections[0]
-		+ '<optgroup label="Paires à intersection minimale :" id="intersection2"></optgroup>'
+		+ '<optgroup label="Couplages à intersection minimale :" id="intersection2"></optgroup>'
 		+ intersections[1]
 		+ '</select>'
 
@@ -153,8 +153,13 @@
 		+ "</td></tr>");
 
 
-	$synthese.html('Sur ' + combien + ' ' + informations.typeTableaux[1] + ', ' + communs[0] + ' ' + informations.typeElements[1]
-		+ ' en commun, soient <a href="#" id="commun">' + communs[1] + ' ' + extension + '</a> sur ' + total
+	$synthese.html(combien + ' ' + informations.typeTableaux[1] + ' : '
+		+ communs[2] + ' ' + informations.typeElements[1]						//nombre d'éléments spécifiques
+		+ ' en ' + total + ' occurrences,'										//nombre de leurs occurrences
+		+ ' avec ' + (communs[2] - communs[0]) + ' singletons,'					//nombre d'éléments non répétés
+		+ ' soient ' + communs[0] + ' ' + informations.typeElements[1]			//nombre d'éléments répétés
+		+ ' partagé' + (informations.genreElements == "f" ? "e" : "") + 's'
+		+ ' en <a href="#" id="commun">' + communs[1] + ' occurrences</a>'		//nombre de répétitions
 	);
 
 

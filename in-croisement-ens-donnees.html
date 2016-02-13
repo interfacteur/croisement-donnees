@@ -26,7 +26,7 @@
 
 		<section class="base">
 			<p class="tdbord">
-				<label for="analyse">Amplitude des étendues</label>
+				<label for="analyse">Amplitude des partages</label>
 				<input type="checkbox" id="analyse" checked>
 				<label for="mde">Le mode d'emploi</label>
 				<input type="checkbox" id="mde" checked>
@@ -45,56 +45,66 @@
 
 			<ul id="aideUtilisation" class="sans init">
 				<li>
-					<p class="pseudo-item">
-						<strong><span class="clair">&#x2299;</span> PERSONNALISATION</strong> : la manière de charger <strong>ses propres données</strong> pour les visualiser <a href="#aidePersonnalisation">est détaillée plus haut</a>.<br>
-						<small>NB : sur Blogspot un billet de <a href="http://interfacteur.blogspot.fr/2016/01/croiser-donnees.html">présentation de l'interface</a>.</small>
+					<p class="intro">
+						Personnalisation : la manière de charger <strong>ses propres données</strong> pour les visualiser <a href="#aidePersonnalisation">est détaillée plus haut</a>.<br>
+						<small>Sur Blogspot, un billet de <a href="http://interfacteur.blogspot.fr/2016/01/croiser-donnees.html">présentation de l'interface</a>.</small>
 					</p>
 				</li>
 				<li>
 					<p class="incipit pseudo-item">
-						<strong><span class="clair">&#x2299;</span> VISUALISER L'EXTENSION des <span class="typeEle2"></span> <span class="discret">commun<span class="genreEle"></span>s</span> d'un<span class="genreTab"></span> <span class="typeTab1"></span> dans les autres <span class="discret"><span class="typeTab2"></span></span>.</strong> <a href="#" id="mdemploi">→ mode d'emploi suite</a><br>
-						<em>En tête de chaque <span class="typeTab1"></span>, la case à cocher <input type="checkbox" tabindex="-1"> sélectionne un<span class="genreTab"></span> <span class="typeTab1"></span> - les autres <span class="typeTab2"></span> s'alignant dessus.</em>
+						<strong><span class="clair">&#x2299; <b>VISUALISER</b></span> le partage des <span class="typeEle2"></span> d'un<span class="genreTab"></span> <span class="typeTab1"></span> dans les autres<span class="discret">. Le <span class="nb1">n</span> indique la taille du partage</span>.</strong> <a href="#" id="mdemploi">→ mode d'emploi suite</a><br>
+						<em>En tête de chaque <span class="typeTab1"></span>, la case à cocher <input type="checkbox" tabindex="-1"> visualise ses <span class="typeEle2"></span> partagé<span class="genreEle"></span>s, les autres <span class="typeTab2"></span> s'alignant dessus.</em>
 					</p>
 					<p>
-						<strong>Les séries sont ordonnées par surface d'extension des valeurs partagées, <span class="nb1">n</span></strong>, que la sélection révèle.<br>
-						L'autre indication <span class="nb2">n</span> désigne la <strong>largeur</strong> de l'extension. Cette largeur apparaît au survol de la souris.
+						<strong>Le tableau débute par la série au partage, à "l'extension" la plus importante.</strong><br>
+						L'autre indication <span class="nb2">n</span> désigne la <strong>"largeur"</strong> de l'extension au sein de la série même - elle apparaît au survol de la souris.
 					</p>
 					<p>
-						Plusieurs <span class="typeTab2"></span> sélectionné<span class="genreTab"></span>s montrent l'intersection de leurs <span class="typeEle2"></span> commun<span class="genreEle"></span>s, et leur extension.<br>
-						<em>Les paires à <strong>intersections maximales et minimales</strong> sont manipulables en tête du tableau.</em>
-					</p>
-					<p>
-						Sauf en sélection multiple, l'ordre des données est l'ordre d'origine. Il n'est pas toujours croissant, et peut donc être trié.<br>
-		<!-- <p>🔘) at code point 128,280 (U+1F518) &#x1F518;</p> -->
-						<em>Les deux boutons radio <input type="radio" tabindex="-1"> donnent le choix entre les ordres d'origine (par défaut) et numérique.</em>
-					</p>
-					<p>
-						Les 3/4 boutons radio situés en tête du tableau permettent de manipuler en bloc l'ensemble de ces cases et boutons.<br>
-						<em>Ils sont <strong>exclusifs</strong>&nbsp;: "ordre d'origine" par ex. <strong>désélectionne</strong> toutes les <span class="typeTab2"></span> sélectionnées</em>.
+						<strong>Plusieurs <span class="typeTab2"></span> sélectionné<span class="genreTab"></span>s montrent l'intersection</strong> de leurs <span class="typeEle2"></span>, ainsi que son partage par les autres.<br>
+						<em>Les couplages qui fournissent les "intersections maximales et minimales" sont recensés en tête du tableau.</em>
 					</p>
 				</li>
 				<li>
 					<p class="pseudo-item">
-						<strong><span class="clair">&#x2299;</span> AMPLITUDE DES ÉTENDUES</strong> : liens pour visualiser les formes maximales et minimales d'extension,<br>
-						<em class="inci">à survoler - révélation - et à cliquer - fixation. On actionne aussi la boîte de sélection en tête du tableau pour les visualiser.</em>
-					</p>
-					<p>
-						<strong>Conseils :</strong> éclaircir le tableau en sélectionnant tou<span class="tout"></span> les <span class="typeTab2"></span> (via le bouton radio en tête de tableau) pour ne<br>
-						visualiser que les amplitudes. Ou faire coïncider, d'autre part, ces étendues extrêmes avec leurs sélections.
+						<strong><span class="clair">&#x2299;</span> Les données sont dans leur ordre d'origine</strong> - sauf en sélection multiple - en général ni croissant ni numériquement<br>
+		<!-- <p>🔘) at code point 128,280 (U+1F518) &#x1F518;</p> -->
+						ordonné. <em class="cipit">Les deux boutons radio <input type="radio" tabindex="-1"> par <span class="typeTab1"></span> donnent le choix entre ordre d'origine, par défaut, et ordre croissant.</em>
 					</p>
 				</li>
 				<li>
-					<p class="pseudo-item"><strong>
-						<span class="clair">&#x2299;</span> AFFICHAGE</strong> : le mode d'emploi aussi bien que l'amplitude des étendues sont rétractables - via les 2 cases à cocher en<br>
-						haut sur la gauche. Les amplitudes restent toujours accessibles par la boîte de sélection en haut du tableau.
+					<p class="pseudo-item">
+						<strong><span class="clair">&#x2299;</span> Les listes "amplitude des partages"</strong> donnent à visualser leurs formes d'extensions maximales et minimales.<br>
+						<em class="cipit">Les liens agissent au survol-focus pour révéler, au clic pour fixer, et sont solidaires avec la boîte de sélection.</em>
+					</p>
+					<p>L'<strong>importance</strong> du partage d'une série désigne son extension sur l'ensemble des séries. Sa <strong>largeur</strong> est son extension<br>
+						au sein de la série même. Sa <strong>profondeur</strong> répond au nombre de séries sur lequel il s'étend.</p>
+				</li>
+				<li class="secondo">
+					<p class="pseudo-item">
+						<strong><span class="clair">&#x2299; <b>LES AFFICHAGES :</b></span></strong> "mode d'emploi" et "amplitude des partages" sont escamotables - avec les deux cases à<br>
+						cocher en haut sur la gauche (les amplitudes restant toujours manipulables avec la boîte de sélection en tête du tableau).
 					</p>
 					<p>
-						<strong>Paramétrage :</strong> l'affichage des éléments contextuels (l'entrée dans ce mode d'emploi, amplitude des étendues), des<br>
-						visualisations (sélection et ordre des données, amplitudes) et de la personnalisation des données, est conservé sur un<br>
-						mois inactif. Le bouton <strong>"affichage par défaut"</strong> oublie - y compris les données personnalisées du bouton dédié.
+						Les boutons radio situés en tête du tableau manipulent en bloc l'ensemble des cases et boutons des <span class="typeTab2"></span>.<br>
+						<em>Ils sont <strong>exclusifs</strong>&nbsp;: "ordre d'origine" par exemple <strong>désélectionne</strong> toutes les séries sélectionnées</em>.
+					</p>
+					<p>
+						<strong>Conseils :</strong> éclaircir le tableau en sélectionnant tou<span class="tout"></span> les <span class="typeTab2"></span> - avec le bouton radio "sélectionner tout" - pour ne<br>
+						visualiser que "l'amplitude des partages". Par ailleurs, toute l'interface est manipulable au clavier.
+					</p>
+				</li>
+				<li class="penultieme">
+					<p class="pseudo-item">
+						<strong><span class="clair">&#x2299;</span> Le paramétrage et sa mémorisation :</strong> les éléments réglables (l'entrée dans ce mode d'emploi, "l'amplitude des<br>
+						partages"), les	visualisations (sélection des <span class="typeTab2"></span>, "intersections", "amplitudes", ordre des données) et<br> la personnalisation des données, sont conservés et restitués en deçà d'un mois inactif.<br>
+						Le bouton <strong>"affichage par défaut"</strong> oublie - y compris les données personnalisées, qui ont un bouton dédié.
 						<a class="fermeture" href="#mdemploi" title="Fermer l'aide contextuelle">X</a>
 					</p>
 				</li>
+				<li class="secondo outcipit">
+					Tout retour et toute remarque sont bienvenus et attendus : <a href="http://emploi.alsacreations.com/demande-20022-Developpeur-front-end.html">contact</a>
+				</li>
+
 			</ul>
 		</section>
 
@@ -129,7 +139,9 @@
 	l'API FileReader pour la modification de données, 'localStorage' pour la mémorisation de l'affichage.<br><br>
 	<address>Août 2014 - skin novembre 2015 - liste des étendues et personnalisation janvier 2016 - <a href="http://www.langhade.net/gaetan/">Gaëtan Langhade, Interfacteur</a></address><br><br>
 	<a href="http://interfacteur.blogspot.fr/2016/01/croiser-donnees.html">Note de présentation</a> -
-	<a href="https://github.com/interfacteur/croisement-donnees">Code sur Github</a></footer>
+	<a href="https://github.com/interfacteur/croisement-donnees">Code sur Github</a> -
+	Tout retour et toute remarque sont bienvenus et attendus (<a href="http://emploi.alsacreations.com/demande-20022-Developpeur-front-end.html">contact</a>)
+</footer>
 <script src="-in-croisement-ens-donnees/jquery-1.11.0.min.js"></script>
 <script id="plug">
 "use strict";

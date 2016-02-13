@@ -109,7 +109,7 @@ body.prinit header,
 body.prinit header > *,
 body.prinit form > *,
 #aideUtilisation,
-#aideUtilisation p + p,
+#aideUtilisation p:not(.incipit),
 #meta p	{
 	-webkit-transition: .5s;
 	-moz-transition: .5s;
@@ -131,6 +131,8 @@ body.prinit form > *,
 	padding: .5em .3em 0 .66em;
 }
 #aideUtilisation.sans p:not(.incipit),
+#aideUtilisation.sans .secondo,
+#aideUtilisation.sans .penultieme,
 #meta.sans h1,
 #meta.sans p,
 #meta.init h1,
@@ -362,7 +364,7 @@ footer	{
 	width: 30em;
 }
 #meta label	{
-	background: #F0F0FF;
+	background: #EEF;
 	border-bottom: 1px solid #99A;
 	display: block;
 	line-height: 1.3;
@@ -397,22 +399,22 @@ footer	{
 #aideUtilisation	{
 	border-radius: 5px;
 	font-size: .9em;
-	margin: 0;
+	margin: 0 0 -34em 0;
 	opacity: 1;
 	overflow: hidden;
-	padding: 1em 1em 3em 1em;
+	padding: 1em;
 	position: relative;
 	white-space: nowrap;
 	width: 100%;
 	z-index: 1;
 }
 #aideUtilisation.sans	{
-	background: #F0F0FF;
+	background: #EEF;
 	border-bottom: 1px solid #99A;
 	border-radius: 0 0 0 10em;
 	box-shadow: none;
 	font-size: .85em;
-	margin: 0 0 1em 15%;
+	margin: .5em 0 1em 15%;
 	opacity: .6;
 	padding: .2em 0 .4em 0;
 	text-align: center;
@@ -421,6 +423,20 @@ footer	{
 #aideUtilisation.sans:hover,
 #aideUtilisation.sans:focus	{
 	opacity: 1;
+}
+.intro	{
+	text-align: center;
+}
+.secondo	{
+	border-top: 1px solid #E7E7FF;
+	margin-top: 1.25em;
+	padding-top: 1.25em;
+}
+.penultieme	{
+	height: 7em;
+}
+.secondo:last-child	{
+	text-align: right;
 }
 .sans .discret	{
 	display: none;
@@ -454,6 +470,7 @@ footer	{
 .sans #mdemploi	{
 	color: #000;
 	font-size: 1em;
+	font-weight: bold;
 	position: inherit;
 }
 #mdemploi:before	{
@@ -468,7 +485,7 @@ footer	{
 	text-indent: -1em;
 }
 #aideUtilisation .incipit em,
-.inci	{
+.cipit	{
 	display: inline;
 }
 #aideUtilisation.sans .incipit em	{
@@ -588,7 +605,8 @@ footer	{
 	display: inherit;
 }
 #synthese	{
-	color: #CCD;
+	border-top: 1px dotted #99A;
+	color: #99A;
 	font-size: .85em;
 	font-weight: bold;
 	margin-top: .66em;
@@ -596,7 +614,7 @@ footer	{
 	text-align: center;
 }
 #synthese a	{
-	color: #99A;
+	color: #445;
 }
 
 
@@ -756,6 +774,7 @@ th	{
 	float: none;
 	font-size: .9em;
 	padding: 0;
+	text-indent: 0;
 }
 #aideUtilisation .nb1	{
 	color: #000;
