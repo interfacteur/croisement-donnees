@@ -6,8 +6,8 @@ var informations = {
 	"genreElements": "m"
 }
 
+var commentaires = "Inspiré et librement compilé des listes et cartes fournies par Wikipédia";
 var zero = true;
-var commentaires = "- inspiré des listes et cartes fournies par Wikipédia -";
 
 var datas = {
 	"garonne":	{
