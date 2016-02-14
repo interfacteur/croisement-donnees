@@ -915,146 +915,146 @@ table.colonne::after	{
 
 
 
-tr:nth-child(1) th	{
+tr:nth-child(6n+1) th	{
 	background: #C96;
 }
-tbody tr:nth-child(1) td::before	{
+tbody tr:nth-child(6n+1) td::before	{
 	border-color: #C96;
 	box-shadow: .8em 0 #C96;
 }
-.axes tr:nth-child(1) .visible::before	{
+.axes tr:nth-child(6n+1) .visible::before	{
 	box-shadow: .8em 0 #C96, 1.3em 0 #B00;
 }
 .axe1 td.visible::before,
-.axe:nth-child(1) td:not(.secondaire)::before	{
+.axe:nth-child(6n+1) td:not(.secondaire)::before	{
 	background: #C96;
 	border-color: #C96;
 	box-shadow: .8em 0 #C96, 1.9em 0 #B00;
 }
-tbody tr:nth-child(1) td:not(:empty)	{
+tbody tr:nth-child(6n+1) td:not(:empty)	{
 	box-shadow: 0 -2.5em #FFF inset, 0 -3em #C96 inset;
 }
-tr:nth-child(1) .label span	{
+tr:nth-child(6n+1) .label span	{
 	color: #C96;
 }
 
 
-tr:nth-child(2) th	{
+tr:nth-child(6n+2) th	{
 	background: #BCB;
 }
-tbody tr:nth-child(2) td::before	{
+tbody tr:nth-child(6n+2) td::before	{
 	border-color: #BCB;
 	box-shadow: .8em 0 #BCB;
 }
-.axes tr:nth-child(2) .visible::before	{
+.axes tr:nth-child(6n+2) .visible::before	{
 	box-shadow: .8em 0 #BCB, 1.3em 0 #B00;
 }
 .axe2 td.visible::before,
-.axe:nth-child(2) td:not(.secondaire)::before	{
+.axe:nth-child(6n+2) td:not(.secondaire)::before	{
 	background: #BCB;
 	border-color: #BCB;
 	box-shadow: .8em 0 #BCB, 1.9em 0 #B00;
 }
-tbody tr:nth-child(2) td:not(:empty)	{
+tbody tr:nth-child(6n+2) td:not(:empty)	{
 	box-shadow: 0 -2em #FFF inset, 0 -2.5em #BCB inset;
 }
-tr:nth-child(2) .label span	{
+tr:nth-child(6n+2) .label span	{
 	color: #BCB;
 }
 
 
-tr:nth-child(3) th	{
+tr:nth-child(6n+3) th	{
 	background: #E96;
 }
-tr:nth-child(3) td::before	{
+tr:nth-child(6n+3) td::before	{
 	border-color: #E96;
 	box-shadow: .8em 0 #E96;
 }
-.axes tr:nth-child(3) .visible::before	{
+.axes tr:nth-child(6n+3) .visible::before	{
 	box-shadow: .8em 0 #E96, 1.3em 0 #B00;
 }
 .axe3 td.visible::before,
-.axe:nth-child(3) td:not(.secondaire)::before	{
+.axe:nth-child(6n+3) td:not(.secondaire)::before	{
 	background: #E96;
 	border-color: #E96;
 	box-shadow: .8em 0 #E96, 1.9em 0 #B00;
 }
-tr:nth-child(3) td:not(:empty)	{
+tr:nth-child(6n+3) td:not(:empty)	{
 	box-shadow: 0 -1.5em #FFF inset, 0 -2em #E96 inset;
 }
-tr:nth-child(3) .label span	{
+tr:nth-child(6n+3) .label span	{
 	color: #E96;
 }
 
 
-tr:nth-child(4) th	{
+tr:nth-child(6n+4) th	{
 	background: #BBE;
 }
-tr:nth-child(4) td::before	{
+tr:nth-child(6n+4) td::before	{
 	border-color: #BBE;
 	box-shadow: .8em 0 #BBE;
 }
-.axes tr:nth-child(4) .visible::before	{
+.axes tr:nth-child(6n+4) .visible::before	{
 	box-shadow: .8em 0 #BBE, 1.3em 0 #B00;
 }
 .axe4 td.visible::before,
-.axe:nth-child(4) td:not(.secondaire)::before	{
+.axe:nth-child(6n+4) td:not(.secondaire)::before	{
 	background: #BBE;
 	border-color: #BBE;
 	box-shadow: .8em 0 #BBE, 1.9em 0 #B00;
 }
-tr:nth-child(4) td:not(:empty)	{
+tr:nth-child(6n+4) td:not(:empty)	{
 	box-shadow: 0 -1em #FFF inset, 0 -1.5em #BBE inset;
 }
-tr:nth-child(4) .label span	{
+tr:nth-child(6n+4) .label span	{
 	color: #BBE;
 }
 
 
-tr:nth-child(5) th	{
+tr:nth-child(6n+5) th	{
 	background: #ED5;
 }
-tr:nth-child(5) td::before	{
+tr:nth-child(6n+5) td::before	{
 	border-color: #ED5;
 	box-shadow: .8em 0 #ED5;
 }
-.axes tr:nth-child(5) .visible::before	{
+.axes tr:nth-child(6n+5) .visible::before	{
 	box-shadow: .8em 0 #ED5, 1.3em 0 #B00;
 }
 .axe5 td.visible::before,
-.axe:nth-child(5) td:not(.secondaire)::before	{
+.axe:nth-child(6n+5) td:not(.secondaire)::before	{
 	background: #ED5;
 	border-color: #ED5;
 	box-shadow: .8em 0 #ED5, 1.9em 0 #B00;
 }
-tr:nth-child(5) td:not(:empty)	{
+tr:nth-child(6n+5) td:not(:empty)	{
 	box-shadow: 0 -.5em #FFF inset, 0 -1em #ED5 inset;
 }
-tr:nth-child(5) .label span	{
+tr:nth-child(6n+5) .label span	{
 	color: #ED5;
 }
 
 
-tr:nth-child(6) th	{
+tr:nth-child(6n+6) th	{
 	background: #AD7;
 }
-tr:nth-child(6) td::before	{
+tr:nth-child(6n+6) td::before	{
 	border-color: #AD7;
 	box-shadow: .8em 0 #AD7;
 }
-.axes tr:nth-child(6) .visible::before	{
+.axes tr:nth-child(6n+6) .visible::before	{
 	box-shadow: .8em 0 #AD7, 1.3em 0 #B00;
 }
 .axe6 td.visible::before,
-.axe:nth-child(6) td:not(.secondaire)::before	{
+.axe:nth-child(6n+6) td:not(.secondaire)::before	{
 	background: #AD7;
 	border-color: #AD7;
 	box-shadow: .8em 0 #AD7, 1.9em 0 #B00;
 }
-tr:nth-child(6) td:not(:empty)	{
+tr:nth-child(6n+6) td:not(:empty)	{
 	box-shadow: 0 -.5em #AD7 inset;
 }
-tr:nth-child(6) .label span	{
+tr:nth-child(6n+6) .label span	{
 	color: #AD7;
 }
 
@@ -1124,28 +1124,28 @@ tr:nth-child(6) .label span	{
 #AD7;
 */
 
-.intersectionD2:nth-child(1) .multi,
-.intersectionD3:nth-child(1) .diasection	{
+.intersectionD2:nth-child(6n+1) .multi,
+.intersectionD3:nth-child(6n+1) .diasection	{
 	background: linear-gradient(#99A, #99A .8em, #C96 .8em, #C96 100%);
 }
-.intersectionD2:nth-child(2) .multi,
-.intersectionD3:nth-child(2) .diasection	{
+.intersectionD2:nth-child(6n+2) .multi,
+.intersectionD3:nth-child(6n+2) .diasection	{
 	background: linear-gradient(#99A, #99A .8em, #BCB .8em, #BCB 100%);
 }
-.intersectionD2:nth-child(3) .multi,
-.intersectionD3:nth-child(3) .diasection	{
+.intersectionD2:nth-child(6n+3) .multi,
+.intersectionD3:nth-child(6n+3) .diasection	{
 	background: linear-gradient(#99A, #99A .8em, #E96 .8em, #E96 100%);
 }
-.intersectionD2:nth-child(4) .multi,
-.intersectionD3:nth-child(4) .diasection	{
+.intersectionD2:nth-child(6n+4) .multi,
+.intersectionD3:nth-child(6n+4) .diasection	{
 	background: linear-gradient(#99A, #99A .8em, #BBE .8em, #BBE 100%);
 }
 .intersectionD2:nth-child(5) .multi,
 .intersectionD3:nth-child(5) .diasection	{
 	background: linear-gradient(#99A, #99A .8em, #ED5 .8em, #ED5 100%);
 }
-.intersectionD2:nth-child(6) .multi,
-.intersectionD3:nth-child(6) .diasection	{
+.intersectionD2:nth-child(6n+6) .multi,
+.intersectionD3:nth-child(6n+6) .diasection	{
 	background: linear-gradient(#99A, #99A .8em, #AD7 .8em, #AD7 100%);
 }
 
