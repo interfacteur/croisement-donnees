@@ -37,6 +37,9 @@
 
 		$effacer = $("#effacer"),					//<button id="effacer" class="effacement in">Oubli des données personnalisées</button>
 
+		$ex1 = $("#exemple1"),
+		$ex2 = $("#exemple2"),
+
 		perso = ["Données personnalisées : ", "personnalisées : ", $fichier.text()],
 		$perso = null,
 
@@ -543,7 +546,9 @@
 					.replace(/…/g, ".<br>")
 					.replace("Tout retour", "<br>Tout retour")
 					.replace(/(http:\/\/.+)\.$/, '<a href="$1" onclick="event.stopPropagation();">contact</a>.') /* to do : pourquoi pas après ligne suivante ? */
-					.replace(/(exemple(-là)?)/g, '<a href="' + $("#exemple").attr("href") + '" onclick="event.stopPropagation();">$1</a>')
+					.replace(/(exemple)/g, '<a href="' + $ex1.attr("href") + '" onclick="event.stopPropagation();">$1</a>'
+						+ '&nbsp;<a href="' + $ex2.attr("href") + '" onclick="event.stopPropagation();" title="Exemple à télécharger">'
+						+ $ex2.html() + '</a>&nbsp;')
 					.replace(/\[(ou celui )([^,]+)/, '- $1<a href="' + $("#ex1").attr("value") + '" onclick="event.stopPropagation();">$2</a>')
 					.replace(/, ([^\]]+)\]/, ', <a href="' + $("#ex2").attr("value") + '" onclick="event.stopPropagation();">$1</a> -')
 					+ fermeture,

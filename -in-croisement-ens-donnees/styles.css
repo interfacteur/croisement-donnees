@@ -559,6 +559,9 @@ footer	{
 .contribuer a	{
 	color: #FFF;
 }
+.contribuer path	{
+	fill: #FFF;
+}
 .contribuer .fermeture	{
 	background: #FFF;
 	color: #000;
