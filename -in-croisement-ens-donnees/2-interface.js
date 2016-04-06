@@ -32,8 +32,8 @@
 			'commun',
 			'" value="'
 		],
-		ordres = ["Ordre d'origine&nbsp;:", "ou croissant&nbsp;:", "Sélectionner tout&nbsp;:", "rien&nbsp;:"],
-		charge = [$("table")], //n'existe pas au chargement donc n'a pas de .length
+		ordres = ["Données dans l'ordre d'origine&nbsp;:", "croissant&nbsp;:", "Sélectionner tout&nbsp;:", "rien&nbsp;:"],
+		charge = [$("table")], //$("table") n'existe pas au chargement
 		$synthese = $("#synthese"),
 		$commentaires = $("#commentaires"),
 		tempo,
@@ -46,7 +46,7 @@
 
 
 	$("#titre").html(informations.titre);
-	charge[charge[0].length] = charge[0].hasClass("colonne"); //au chargement : length == 0 ; nouvelles données : length == 1
+	charge[charge[0].length] = charge[0].hasClass("colonne"); //au chargement : charge[0].length == 0 ; nouvelles données : charge[0].length == 1 d'où charge.lenght == 2
 
 	$("table").remove();
 	$synthese.html("&nbsp;");
@@ -61,15 +61,15 @@
 	}
 	combien = listes.length;
 	for (var i=0;i<l;++i) {
-		code.push('<tr id="' + collection[i] + '"><th scope="row">'
+		code.push('<tr id="' + collection[i] + '"><th scope="row" data-qte="' + longueurs[i] + '">'
 			+ manu[0] + i + manu[1] + i + 0 + manu[8] + 0 + manu[2]
 			+ manu[0] + i + manu[1] + i + 1 + manu[8] + 1 + manu[3]
-			+ manu[4] + i + 2 + manu[3]
 			+ '<label for="' + manu[7] + i + 2 + '" class="nb1" title="Surface d\'extension de ' + extensions[collection[i]][0] + extension
 			+ ' pour &#x22;' + listes[i][0] + '&#x22;">' + extensions[collection[i]][0] + "</label>"
+			+ manu[4] + i + 2 + manu[3]
 			+ '<span class="nb2" title="Largeur d\'extension de ' + extensions[collection[i]][1] + extension
 			+ ' pour &#x22;' + listes[i][0] + '&#x22;" tabindex="0">' + extensions[collection[i]][1] + '</span>'
-			+ '<br><label class="label" for="' + manu[7] + i + 2 + '">' + listes[i][0] + " <span>(" + longueurs[i] + ")</span></label>");
+			+ '<br><label class="label" for="' + manu[7] + i + 2 + '">' + listes[i][0] + " </label>");
 		if (typeof zero == "undefined")
 			for (var i2=1;i2<longueur;++i2)
 				code.push('<td data-item="' + i2 + '" data-nombre="' + (listes[i][i2] || 100000000000) + '">' + (listes[i][i2] || "") + "</td>");
@@ -86,18 +86,18 @@
 
 		+ '<p class="cloison">'
 
-		+ '<label for="croiser" class="croiser">Amplitudes des partages : </label>'
-		+ '<select id="croiser"><option value="-1">… Le partage …</option>'
+		+ '<label for="croiser" class="croiser">Entre 1 série et les autres, </label>'
+		+ '<select id="croiser"><option value="-1">série dont le partage sur l\'ensemble est :</option>'
 		+ amplitudes
 		+ '</select>'
 
 		+ '<select id="intersection">'
-		+ '<option selected value="-1">Couplages à intersections maximales et minimales</option>'
-		+ '<optgroup label="Couplages à intersection maximale :" id="intersection1"></optgroup>'
+		+ '<option selected value="-1">Intersections maximales et minimales entre 2 séries</option>'
+		+ '<optgroup label="Paires à intersection maximale :">'
 		+ intersections[0]
-		+ '<optgroup label="Couplages à intersection minimale :" id="intersection2"></optgroup>'
+		+ '</optgroup><optgroup label="Paires à intersection minimale :" id="intersection2">'
 		+ intersections[1]
-		+ '</select>'
+		+ '</optgroup></select>'
 
 		+ '</p>'
 		+ '<p class="cloison">'
@@ -116,27 +116,29 @@
 
 		+ (typeof commentaires != "undefined" ? '<p class="cloison" id="commentaires">' + commentaires + '</p>' : "")
 
-		+ "</td></tr>");
+		+ "</td></tr>"
+		+ '<tr><th scope="col">' + informations.typeTableaux[1] + "</th>"
+		+ '<th scope="col" colspan="' + (longueur - 1) + '">' + informations.typeElements[1] + "</th>");
 
 
-	$synthese.html(combien + ' ' + informations.typeTableaux[1] + ' : '
-		+ communs[2] + ' ' + informations.typeElements[1]						//nombre d'éléments spécifiques
-		+ ' en ' + total + ' occurrences,'										//nombre de leurs occurrences
-		+ ' avec ' + (communs[2] - communs[0]) + ' singletons,'					//nombre d'éléments non répétés
-		+ ' soient ' + communs[0] + ' ' + informations.typeElements[1]			//nombre d'éléments répétés
-		+ ' partagé' + (informations.genreElements == "f" ? "e" : "") + 's'
-		+ ' en <a href="#" id="commun">' + communs[1] + ' occurrences</a>'		//nombre de répétitions
+	$synthese.html(combien + ' ' + informations.typeTableaux[1] + ' avec '
+		+ total + ' occurrences de '											//nombre d'occurrences des éléments spécifiques
+		+ communs[2] + ' ' + informations.typeElements[1] + ' : '				//nombre d'éléments spécifiques
+		+ ' <a href="#" id="singleton">'
+		+ (communs[2] - communs[0]) + ' singletons</a> + '						//nombre d'éléments non répétés
+		+ ' <a href="#" id="commun">' + communs[1] + ' occurrences</a>'			//nombre de répétitions
+		+ ' de ' + communs[0] + ' ' + informations.typeElements[1]				//nombre d'éléments répétés
 	);
 
 
 	$ta = $("<table>", {
-		data: { width : [12 + longueur * 4.4, l * 7.7 + .1], state: Date.now() },
+		data: { width : [12 + longueur * 3.3, l * 7.7 + .1], state: Date.now() },
 		class: charge.slice(-1)[0] == true ? "colonne" : "",
 		html: code.join("")}
 	)
 	.appendTo($f.addClass("settled"));
 
-	$("header, form").css("width", 12 + longueur * 4 > 65 ? (12 + longueur * 4 < 80 ? 12 + longueur * 4 + "em" : "80em") : "65em");
+	$("header, form").css("width", 12 + longueur * 3 > 65 ? (12 + longueur * 3 < 80 ? 12 + longueur * 3 + "em" : "80em") : "65em");
 	setTimeout(function () {
 		$b.removeClass("prinit");
 		$f.addClass("settled"); //Chrome ?
@@ -186,7 +188,6 @@
 	});	});
 
 	function redeployer(e) {
-		console.log("coucou")
 		var choix = $(this).attr("id"),
 			$ta = $("table"), //(?)
 			$tbodytd = $("tbody td"),
@@ -202,7 +203,7 @@
 				$theadtd.width()
 				- $cloisons[0].outerWidth() - parseInt($cloisons[0].css("margin-right"))
 				- $cloisons[1].outerWidth() - parseInt($cloisons[1].css("margin-right"))
-				- 44
+				- 84
 			);
 		} else {
 			$commentaires.length == 1

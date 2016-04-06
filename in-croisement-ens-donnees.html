@@ -18,7 +18,7 @@
 	<h1>Croiser des séries de données</h1>
 	<p>
 		<small><a href="http://interfacteur.blogspot.fr/2016/01/croiser-donnees.html">Présentation sur Blogspot</a></small>
-		<span id="fichier"><a href="#aidePersonnalisation" title="Introduire et visualiser de nouvelles données">données personnalisables</a></span>
+		<span><a href="#aidePersonnalisation" title="Introduire et visualiser de nouvelles données" id="fichier">Données personnalisables par <abbr title="drag and drop" lang="en">DnD</abbr></a></span>
 	</p>
 </header>
 <form action="#" class="crutch">
@@ -26,17 +26,16 @@
 
 		<section class="base">
 			<p class="tdbord">
-				<label for="analyse">Amplitude des partages</label>
 				<input type="checkbox" id="analyse">
-				<label for="mde">Le mode d'emploi</label>
+				<label for="analyse">entre une série et les autres</label>
 				<input type="checkbox" id="mde" checked>
+				<label for="mde">guide d'utilisation</label>
 			</p>
 			<section id="meta" class="init"></section>
 		</section>
 
 		<section class="presentations">
 			<p class="presentation">
-				<label for="pres1">Présenter les données :</label>
 				<input type="radio" name="presentation" id="pres1" value="0" checked>
 				<label for="pres1">par ligne</label>
 				<input type="radio" name="presentation" id="pres2" value="1">
@@ -49,40 +48,47 @@
 						<strong><strong>Personnalisation</strong> : la manière de charger ses propres données</strong> pour les visualiser <a href="#aidePersonnalisation">est détaillée plus haut</a>.<br>
 						<small>Sur Blogspot, un billet de <a href="http://interfacteur.blogspot.fr/2016/01/croiser-donnees.html">présentation de l'interface</a>.</small>
 					</p>
+					<p class="pre-bloc mince">
+						<strong><strong>NOUVEAU :</strong></strong> en-têtes et cellules du tableau réagissent au survol de la souris
+						pour visualiser les "extensions"…
+					</p>
+				</li>
+				<li class="bloc">
 				</li>
 				<li class="bloc">
 					<p class="incipit">
-						<strong><strong>VISUALISER</strong> le partage des <span class="typeEle2"></span> d'un<span class="genreTab"></span> <span class="typeTab1"></span> dans l'ensemble.</strong><span class="discret"> Le <span class="nb1">n</span> indique la taille du partage.</span> <a href="#" id="mdemploi">→ mode d'emploi suite</a><br>
-						<em>La case à cocher <input type="checkbox" tabindex="-1"> en tête de chaque <span class="typeTab1"></span> en visualise les <span class="typeEle2"></span> partagé<span class="genreEle"></span>s, les autres <span class="typeTab2"></span> s'alignant dessus.</em>
+						<strong><strong>VISUALISER</strong> le partage des '<span class="typeEle2"></span>' d'un<span class="genreTab"></span> '<span class="typeTab1"></span>' dans l'ensemble.</strong><span class="discret"> Le <span class="nb1">n</span> indique la taille de ce partage.</span> <a href="#" id="mdemploi">→ guide d'utilisation suite</a><br>
+						<em>La case à cocher <input type="checkbox" tabindex="-1"> en tête de chaque '<span class="typeTab1"></span>' en visualise les '<span class="typeEle2"></span>' partagé<span class="genreEle"></span>s, les autres '<span class="typeTab2"></span>' s'alignant sur elles.</em>
 					</p>
 					<p>
-						<strong>Le tableau débute par la série au partage le plus important,</strong> à "l'extension" la plus vaste.<br>
-						L'autre indication <span class="nb2">n</span> désigne la <strong>"largeur"</strong> de l'extension au sein de la série même. Celle-ci apparaît au survol de la souris.
+						<strong>Le tableau débute par la série à "l'extension" la plus vaste, au "partage" le plus important</strong>.<br>
+						L'autre indication <span class="nb2">n</span> désigne la <strong>"largeur</strong> du partage" au sein de la série même. Celle-ci apparaît au survol de la souris.
 					</p>
 					<p>
-						<strong>Plusieurs <span class="typeTab2"></span> sélectionné<span class="genreTab"></span>s montrent l'intersection</strong> de leurs <span class="typeEle2"></span>, ainsi que son partage.<br>
-						<em>Les couplages entre <span class="typeTab2"></span> qui fournissent les "intersections maximales et minimales" sont recensés en tête du tableau.</em>
+						<strong>Plusieurs '<span class="typeTab2"></span>' sélectionné<span class="genreTab"></span>s montrent l'intersection</strong> de leurs '<span class="typeEle2"></span>', ainsi que son extension.<br>
+						<em>Les paires entre '<span class="typeTab2"></span>' qui fournissent les "intersections maximales et minimales" sont recensées en tête du tableau.</em>
 					</p>
 				</li>
 				<li>
 					<p>
 						<strong>Les données apparaissent dans l'ordre d'origine</strong> - sauf en sélection multiple - en général ni croissant ni numé-<br>
 		<!-- <p>🔘) at code point 128,280 (U+1F518) &#x1F518;</p> -->
-						riquement ordonné. <em class="cipit">Les deux boutons radio <input type="radio" tabindex="-1"> pour chaque <span class="typeTab1"></span> l'ordonnent par défaut, ou de manière croissante.</em>
+						riquement ordonné. <em class="cipit">Les deux boutons radio <input type="radio" tabindex="-1"> pour chaque '<span class="typeTab1"></span>' l'ordonnent par défaut, ou de manière croissante.</em>
 					</p>
 				</li>
 				<li>
 					<p class="consequent pre-bloc">
-						<strong>Les listes "amplitude des partages"</strong> donnent à visualser leurs formes d'extensions maximales et minimales.<br>
+						<strong>Les éléments "entre une série et les autres"</strong> donnent à visualiser trois types de partages maximaux et minimaux.<br>
 						L'<strong>importance</strong> du partage d'une série désigne son extension sur l'ensemble des séries. Sa <strong>largeur</strong> est son extension<br>
-						au sein de la série même. Sa <strong>profondeur</strong> répond au nombre de séries sur lequel il s'étend.<br>
-						<em class="cipit">Les liens agissent au survol-focus pour <strong>révéler</strong>, au clic pour <strong>fixer</strong>, et sont solidaires avec la boîte de sélection "amplitude…".</em>
+						au sein de la série même. Sa <strong>profondeur</strong> répond au nombre de séries sur lequel il s'étend.
+						<em class="cipit">Les liens agissent au survol et<br>
+							focus pour <strong>révéler</strong>, et au clic pour <strong>fixer</strong>. La boîte de sélection "entre une série et les autres" en est solidaire.</em>
 					</p>
 				</li>
 				<li class="bloc">
 					<p>
-						<strong><strong>LES AFFICHAGES :</strong> "mode d'emploi" et "amplitude des partages" sont escamotables</strong> - avec les deux cases à<br>
-						cocher en haut sur la gauche - les amplitudes restant toujours manipulables avec la boîte de sélection en tête du tableau.
+						<strong><strong>LES AFFICHAGES :</strong> "guide d'utilisation" et "entre une série et les autres" sont escamotables</strong> - avec les 2 cases<br>
+						à cocher en haut sur la gauche - les "partages" restant toujours manipulables avec la boîte de sélection en tête du tableau.
 					</p>
 					<p>
 						<strong>Les boutons radio situés en tête du tableau</strong> manipulent en bloc l'ensemble des cases et boutons des <span class="typeTab2"></span>.<br>
@@ -95,8 +101,8 @@
 				</li>
 				<li>
 					<p class="consequent pre-bloc">
-						<strong>Le paramétrage et sa mémorisation :</strong> les éléments réglables (l'entrée dans ce mode d'emploi, "l'amplitude des<br>
-						partages"), les	visualisations (sélection des <span class="typeTab2"></span>, "intersections", "amplitudes", ordre des données) et<br> la personnalisation des données, sont conservés et restitués en deçà d'un mois inactif.<br>
+						<strong>Le paramétrage et sa mémorisation :</strong> les éléments réglables ("guide d'utlisation", "entre une série est les autres"),<br>
+						les	visualisations (sélection des <span class="typeTab2"></span>, "intersections", "partages", ordre des données) et<br> la personnalisation des données, sont conservés et restitués en deçà d'un mois inactif.<br>
 						Le bouton <strong>"affichage par défaut"</strong> oublie - y compris les données personnalisées, qui ont un bouton dédié.
 						<a class="fermeture" href="#mdemploi" title="Fermer l'aide contextuelle">X</a>
 					</p>
@@ -119,14 +125,20 @@
 			  :
 		</label>
 		<input type="file" title="Nouvelles données" id="modifier">
-		<a href="#" id="aidePersonnalisation" title="PERSONNALISER LES DONNÉES… Sélectionner sur l'ordinateur un fichier .txt ou .js semblable à celui donnée en exemple - via le champ 'Nouvelles données' ou par la boîte de sélection 'Données visualisées'… Ou encore glisser-déposer directement le fichier sur la page… Il est possible d'enregistrer ce premier exemple [ou celui des millésimes, des bassins fluviaux] pour le modifier et l'adapter… Conserver les variables, et les clés dans 'informations'… Dans 'datas', conserver les 'titre' et le principe de numérotation… Les 'titre' ne devraient pas exéder 50 caractères… Il vaut mieux éviter les doublons. Les commentaires sont facultatifs… Une fois personnalisées, les données apparaissent dans la boîte de sélection centrale… Chaque nouvelle personnalisation remplace la précédente… Un bouton &#x22;oubli des données personnalisées&#x22; les soustrait… Jusqu'à 6 séries (&#x22;régions&#x22;, &#x22;albums&#x22; etc.) sont visualisables; au-delà les styles manquent…	Tout retour est bienvenu et attendu : http://emploi.alsacreations.com/demande-20022-Developpeur-front-end.html."><strong>?</strong></a>
+		<a href="#" id="aidePersonnalisation" title="PERSONNALISATION DES DONNÉES…
+		Préparer un fichier .txt ou .js semblable à l'exemple…
+		Puis par drag and drop direct, le glisser-déposer sur la page, ou bien le sélectionner avec le bouton 'Nouvelles données'…
+		Adaptation de ce modèle [ou celui des millésimes, des bassins fluviaux] : conserver les variables, et les clés dans 'informations'…
+		Dans 'datas', conserver les 'titre' et le principe de numérotation…
+		Les 'titre' ne devraient pas exéder 50 caractères… Il vaut mieux éviter les doublons. Les commentaires sont facultatifs…
+		Quand les données sont personnalisées, le nouveau jeu de données apparaît dans la boîte de sélection au centre. Chaque nouvelle personnalisation remplace la précédente. Un bouton &#x22;oubli des données personnalisées&#x22; les soustrait de l'interface…
+		Jusqu'à 6 séries (&#x22;régions&#x22;, &#x22;albums&#x22; etc.) sont visualisables; au-delà les styles manquent…
+		Tout retour est bienvenu et attendu : http://emploi.alsacreations.com/demande-20022-Developpeur-front-end.html."><strong>?</strong></a>
 	</section>
 
-	<p id="synthese">&nbsp;</p>
-
 	<p class="visu-datas">
-		<input type="reset" id="defaut" value="Affichage par défaut" class="reset">
-		<label for="datas">Données visualisées : </label><select id="datas">
+		<input type="reset" id="defaut" value="Réglages par défaut" class="reset">
+		<label for="datas">Données : </label><select id="datas">
 			<option value="-in-croisement-ens-donnees/donnees-sonates.js" selected>les sonates de Scarlatti dans 6 albums</option>
 			<option value="-in-croisement-ens-donnees/donnees-millesimes.js" id="ex1">les meilleurs millésimes dans 6 régions</option>
 			<option value="-in-croisement-ens-donnees/donnees-departements.js" id="ex2">les départements de 4 bassins fluviaux</option>
@@ -136,6 +148,8 @@
 	</p>
 
 	<h2 id="titre">&nbsp;</h2>
+
+	<p id="synthese">&nbsp;</p>
 
 </form>
 <footer>Pour Firefox et Chrome, IE 10+ possible mais non testé : tout navigateur standard supportant "box-shadow", "table-layout", "gradient", les sélecteurs avancés, 'forEach()', 'Object.keys()',<br>

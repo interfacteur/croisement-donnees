@@ -94,6 +94,7 @@
 				$span = $("#m span"),					//état d'affichage de la fin des étendues
 				$nb2 = $(".nb2"),						//affichage des largeurs
 				$commun = $("#commun"),					//affichage des éléments partagés
+				$singleton = $("#singleton"),			//affichage des éléments non partagés
 				$intersection = $("#intersection"),		//visualiser les intersections extrêmes
 				$communs = $("tbody :checkbox");		//affichage des intersections
 
@@ -134,9 +135,9 @@
 				this.idChamp = this.$lien.attr("href").split("#")[1];
 
 				this.$champ = $("#" + this.idChamp);
-				this.$label = this.$champ.find("label");
+				this.$th = this.$champ.find("th");
 
-				this.colorer(this.$champ.find("th").css("background-color"));
+				this.colorer(this.$th.css("background-color"));
 
 				this.indexSource = ind;
 				this.indexChamp = this.$champ.index();
@@ -171,7 +172,14 @@
 				this.$lien.on("mouseover keyup", { reaction: "passer"}, Visu.reagir)
 				.on("mouseout blur", { reaction: "depasser"}, Visu.reagir)
 				.on("click", { reaction: "visiter"}, Visu.reagir);
-			}
+				this.$th.on("click", function (e) {
+					var $t = $(this);
+					$t.parent("tr").hasClass("visite")
+					&& e.target == $t.get(0)
+					&& $("#croiser").val(-1).trigger("change");
+			});	}
+
+
 	//Routeur pour la gestion d'événements
 			Visu.reagir = function (e) {
 				e.preventDefault();
@@ -247,7 +255,7 @@
 				this.etats.$champ = " passage intersection"; //activation des différents éléments concernés par l'intersection
 				this.etats.$champs = " ";
 
-				this.$label.attr("data-intersection", this.croisement + " : " + this.taille);
+				this.$th.attr("data-intersection", this.croisement + " : " + this.taille);
 
 				storage = ($table.hasClass("colonne") ? "pres2" : "pres1") + this.idChamp;
 
@@ -305,7 +313,7 @@
 
 				if (Visu.debug) console.log("depasser", this.idChamp, this.indexSource);
 
-				this.$label.attr("data-intersection", "");
+				this.$th.attr("data-intersection", "");
 
 				storage = $table.hasClass("colonne") ? "pres2" : "pres1";
 
@@ -433,7 +441,7 @@
 			}	});
 
 
-	//Affichage des éléments partagés
+	//Affichage des éléments non partagés
 			$commun.on({
 				"click": function (e) {
 					e.preventDefault();
@@ -446,13 +454,46 @@
 			}	});
 
 
-	//Affichage des largeurs
+	//Affichage des éléments partagés
+			$singleton.on({
+				"click": function (e) {
+					e.preventDefault();
+				},
+				"mouseover focus": function () {
+					$f.addClass("singletons");
+				},
+				"mouseout blur": function () {
+					$f.removeClass("singletons");
+			}	});
+
+
+	//Affichage des "largeurs"
 			$nb2.on({
 				"mouseover": function () {
 					$(this).parents("tr").find(".multi").addClass("largeur");
 				},
 				"mouseout": function () {
-					$(this).parents("tr").find(".multi").removeClass("largeur");
+					$(".largeur").removeClass("largeur");
+			}	});
+
+
+	//Affichage des identiques
+			$(".multi").on({
+				"mouseover": function () {
+					$("[data-nombre='" + $(this).data("nombre") + "']").addClass("largeur");
+				},
+				"mouseout": function () {
+					$(".largeur").removeClass("largeur");
+			}	});
+
+			$("tbody label, tbody [type='checkbox']").on({
+				"mouseover": function () {
+					$(this).parent("th").find(".nb1").addClass("allonge");
+					$(this).parents("tr").find(".multi").each(function () {
+						$(this).trigger("mouseover");
+				});	},
+				"mouseout": function () {
+					$(".largeur, .allonge").removeClass("largeur allonge");
 			}	});
 
 
@@ -544,13 +585,13 @@
 				html: $(this).attr("title")
 					.replace(/;/g, ",<br>")
 					.replace(/…/g, ".<br>")
-					.replace("Tout retour", "<br>Tout retour")
+					.replace(/(Préparer|Adaptation|Quand les|Jusqu|Tout retour)/g, "<br>$1")
 					.replace(/(http:\/\/.+)\.$/, '<a href="$1" onclick="event.stopPropagation();">contact</a>.') /* to do : pourquoi pas après ligne suivante ? */
 					.replace(/(exemple)/g, '<a href="' + $ex1.attr("href") + '" onclick="event.stopPropagation();">$1</a>'
 						+ '&nbsp;<a href="' + $ex2.attr("href") + '" onclick="event.stopPropagation();" title="Exemple à télécharger">'
 						+ $ex2.html() + '</a>&nbsp;')
 					.replace(/\[(ou celui )([^,]+)/, '- $1<a href="' + $("#ex1").attr("value") + '" onclick="event.stopPropagation();">$2</a>')
-					.replace(/, ([^\]]+)\]/, ', <a href="' + $("#ex2").attr("value") + '" onclick="event.stopPropagation();">$1</a> -')
+					.replace(/a>, ([^\]]+)\]/, 'a>, <a href="' + $("#ex2").attr("value") + '" onclick="event.stopPropagation();">$1</a> ')
 					+ fermeture,
 				on: {
 					"click": function (e) {
@@ -738,11 +779,12 @@
 
 
 
-
 //Restituer les paramètres d'affichage (amplitude, mode d'emploi) et l'état de la visualisation
 	new Promise(function (resolve) {
 
+		var $presDetach = $(".presentation").detach();  //cf. 2-interface.js : if (localStorage.getItem("presentation") !== null)
 		$f.get(0).reset(); //état par défaut du formulaire
+		$(".presentations").prepend($presDetach);
 
 	//Pas de configuration mémorisée
 		if (localStorage.getItem("debut") === null || (/^\d{13,}$/).test(localStorage.getItem("debut")) && Date.now() - parseInt(localStorage.getItem("debut")) > 2592000000) { //30 jours
@@ -768,8 +810,6 @@
 			})
 			.then(function () {
 				var $tempo = [$("tbody :checkbox"), $("tbody :radio")];
-
-				$pres.eq(parseInt(localStorage.getItem("presentation"))).prop("checked", true); //cf. 2-interface.js : if (localStorage.getItem("presentation") !== null)
 
 				tempo = localStorage.getItem("liste9");
 				tempo != "undefined"

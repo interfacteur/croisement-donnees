@@ -50,17 +50,17 @@
 		resume = [],
 		interz = {};
 
-	amplitudesQuali[ordre["ml"]] = "le moins large";
-	amplitudesQuali[ordre["pl"]] = "le plus large";
-	amplitudesQuali[ordre["me"]] = "le moins important";
-	amplitudesQuali[ordre["pe"]] = "le plus important";
-	amplitudesQuali[ordre["pp"]] = "le plus profond";
+	amplitudesQuali[ordre["ml"]] = "partage le - large";
+	amplitudesQuali[ordre["pl"]] = "partage le + large";
+	amplitudesQuali[ordre["me"]] = "partage le - étendu";
+	amplitudesQuali[ordre["pe"]] = "partage le + étendu";
+	amplitudesQuali[ordre["pp"]] = "partage le + profond";
 
-	resume[ordre["ml"]] = ["largeur minimale", "d2"];
-	resume[ordre["pl"]] = ["largeur maximale", "d2"];
-	resume[ordre["me"]] = ["extension minimale", "d2d3"];
-	resume[ordre["pe"]] = ["extension maximale", "d2d3"];
-	resume[ordre["pp"]] = ["profondeur maximale", "d3"];
+	resume[ordre["ml"]] = ["partage le - large", "d2"];
+	resume[ordre["pl"]] = ["partage le + large", "d2"];
+	resume[ordre["me"]] = ["partage le - étendu", "d2d3"];
+	resume[ordre["pe"]] = ["partage le + étendu", "d2d3"];
+	resume[ordre["pp"]] = ["partage le + profond", "d3"];
 
 	interz.large = {
 		moins: amplitudesQuali[ordre["ml"]] + ", avec ",
@@ -119,7 +119,7 @@
 		extension = " " + typeEle[1] + " partagé" + (genreEle == "f" ? "e" : "") + "s";
 
 
-		code.push("<h1>Le partage :</h1>");
+		code.push("<h1>Séries dont le partage sur l'ensemble est :</h1>");
 
 
 		cles.forEach(function (val) {
@@ -248,7 +248,7 @@
 		code.push("<p>" + interz.profonde + "1 " + typeEle[0] + " sur " + decompteElements[0][1] + " " + typeTab[1] + " :<br>&nbsp;&nbsp;&nbsp;&nbsp;");
 		code.push(decompteElements[0][3]);
 
-		code.push('<h1><button id="m">Occurrences des ' + typeEle[1] + '… <span>→</span></button></h1><article id="profondeur">');
+		code.push('<h1><button id="m">Occurrences des ' + typeEle[1] + ' les… <span>→</span></button></h1><article id="profondeur">');
 
 		code.push("<p>les plus " + adjectif[genreEle] + " sur " + decompteElements[0][1] + " " + typeTab[1] + ":<br>&nbsp;&nbsp;&nbsp;&nbsp;");
 		code.push([decompteElements[0][0]]);
