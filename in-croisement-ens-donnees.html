@@ -3,7 +3,7 @@
 
 <head>
 <meta charset="UTF-8">
-<title>Croiser des séries de données \ Mangrove ~ interfaces / Equatorium</title>
+<title>Valeurs communes entre séries numériques \ Mangrove ~ interfaces / Equatorium</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <meta name="author" content="Gaëtan Langhade, interfacteur">
@@ -15,10 +15,10 @@
 
 <body class="prinit" id="crutch">
 <header>
-	<h1>Croiser des séries de données</h1>
+	<h1>Valeurs communes entre séries numériques</h1>
 	<p>
 		<small><a href="http://interfacteur.blogspot.fr/2016/01/croiser-donnees.html">Présentation sur Blogspot</a></small>
-		<span><a href="#aidePersonnalisation" title="Introduire et visualiser de nouvelles données" id="fichier">Données personnalisables par <abbr title="drag and drop" lang="en">DnD</abbr></a></span>
+		<span><a href="#aidePersonnalisation" title="Introduire et visualiser de nouvelles données" id="fichier">Jeu de données personnalisable par <abbr title="drag and drop" lang="en">DnD</abbr></a></span>
 	</p>
 </header>
 <form action="#" class="crutch">
@@ -27,7 +27,7 @@
 		<section class="base">
 			<p class="tdbord">
 				<input type="checkbox" id="analyse">
-				<label for="analyse">entre une série et les autres</label>
+				<label for="analyse">entre une série seule et les autres</label>
 				<input type="checkbox" id="mde" checked>
 				<label for="mde">guide d'utilisation</label>
 			</p>
@@ -37,77 +37,80 @@
 		<section class="presentations">
 			<p class="presentation">
 				<input type="radio" name="presentation" id="pres1" value="0" checked>
-				<label for="pres1">par ligne</label>
+				<label for="pres1">affichage par ligne</label>
 				<input type="radio" name="presentation" id="pres2" value="1">
 				<label for="pres2">par colonne</label>
 			</p>
 
 			<ul id="aideUtilisation" class="sans init">
 				<li>
-					<p class="seuil pre-bloc">
-						<strong><strong>Personnalisation</strong> : la manière de charger ses propres données</strong> pour les visualiser <a href="#aidePersonnalisation">est détaillée plus haut</a>.<br>
-						<small>Sur Blogspot, un billet de <a href="http://interfacteur.blogspot.fr/2016/01/croiser-donnees.html">présentation de l'interface</a>.</small>
+					<p class="seuil mince">
+						<small><a href="http://interfacteur.blogspot.fr/2016/01/croiser-donnees.html">Billet de présentation sur Blogspot.</a></small>
 					</p>
-					<p class="pre-bloc mince">
-						<strong><strong>NOUVEAU :</strong></strong> en-têtes et cellules du tableau réagissent au survol de la souris
-						pour visualiser les "extensions"…
+					<p class="pre-bloc">
+						<strong>Nouveau :</strong> passer la souris sur le tableau - en-têtes et cellules - pour révéler les données communes aux séries.<br>
+						<strong>Personnalisation :</strong> la façon de visualiser ses propres données <a href="#aidePersonnalisation">est détaillée plus haut</a>.
 					</p>
-				</li>
-				<li class="bloc">
 				</li>
 				<li class="bloc">
 					<p class="incipit">
-						<strong><strong>VISUALISER</strong> le partage des '<span class="typeEle2"></span>' d'un<span class="genreTab"></span> '<span class="typeTab1"></span>' dans l'ensemble.</strong><span class="discret"> Le <span class="nb1">n</span> indique la taille de ce partage.</span> <a href="#" id="mdemploi">→ guide d'utilisation suite</a><br>
-						<em>La case à cocher <input type="checkbox" tabindex="-1"> en tête de chaque '<span class="typeTab1"></span>' en visualise les '<span class="typeEle2"></span>' partagé<span class="genreEle"></span>s, les autres '<span class="typeTab2"></span>' s'alignant sur elles.</em>
+						<strong>VISUALISATION</strong> des occurrences des '<span class="typeEle2"></span>' d'un<span class="genreTab"></span> '<span class="typeTab1"></span>'<span class="discret"> au sein de l'ensemble ; <span class="nb1">nombre</span> en indique la quantité.</span> <a href="#" id="mdemploi">→ guide d'utilisation suite</a><br>
+						<em>La case à cocher <input type="checkbox" tabindex="-1"> par '<span class="typeTab1"></span>' sélectionne et révèle ses occurrences. Les autres séries s'alignent alors dessus.</em>
 					</p>
-					<p>
-						<strong>Le tableau débute par la série à "l'extension" la plus vaste, au "partage" le plus important</strong>.<br>
-						L'autre indication <span class="nb2">n</span> désigne la <strong>"largeur</strong> du partage" au sein de la série même. Celle-ci apparaît au survol de la souris.
+					<p class="mince">
+						L'autre nombre <span class="nb2">n</span> indique la "largeur" des occurrences au sein de la série même ; elle
+						<em> apparaît au survol de la souris.</em>
 					</p>
-					<p>
-						<strong>Plusieurs '<span class="typeTab2"></span>' sélectionné<span class="genreTab"></span>s montrent l'intersection</strong> de leurs '<span class="typeEle2"></span>', ainsi que son extension.<br>
-						<em>Les paires entre '<span class="typeTab2"></span>' qui fournissent les "intersections maximales et minimales" sont recensées en tête du tableau.</em>
+					<p class="mince">
+						Les séries sont classées selon la quantité d'occurrences de leurs données dans l'ensemble.
 					</p>
-				</li>
-				<li>
-					<p>
-						<strong>Les données apparaissent dans l'ordre d'origine</strong> - sauf en sélection multiple - en général ni croissant ni numé-<br>
-		<!-- <p>🔘) at code point 128,280 (U+1F518) &#x1F518;</p> -->
-						riquement ordonné. <em class="cipit">Les deux boutons radio <input type="radio" tabindex="-1"> pour chaque '<span class="typeTab1"></span>' l'ordonnent par défaut, ou de manière croissante.</em>
+					<p class="pre-bloc">
+						Plusieurs '<span class="typeTab2"></span>' sélectionné<span class="genreTab"></span>s affichent à la fois l'intersection de leurs données et les occurrences de ces données au sein<br>
+						de l'ensemble. <em>Les paires qui ont les intersections maximales et minimales sont indiquées en tête du tableau.</em>
 					</p>
 				</li>
-				<li>
+				<li class="sous-bloc">
 					<p class="consequent pre-bloc">
-						<strong>Les éléments "entre une série et les autres"</strong> donnent à visualiser trois types de partages maximaux et minimaux.<br>
-						L'<strong>importance</strong> du partage d'une série désigne son extension sur l'ensemble des séries. Sa <strong>largeur</strong> est son extension<br>
-						au sein de la série même. Sa <strong>profondeur</strong> répond au nombre de séries sur lequel il s'étend.
-						<em class="cipit">Les liens agissent au survol et<br>
-							focus pour <strong>révéler</strong>, et au clic pour <strong>fixer</strong>. La boîte de sélection "entre une série et les autres" en est solidaire.</em>
+						Les liens relevés "entre une série seule et les autres" analysent trois types de "partages". "L'étendue" du partage désigne<br>
+						toutes les données partagées par la série dans l'ensemble. La "largeur", le nombre de valeurs concernées, càd les occur-<br>
+						rences au sein de la série même. La "profondeur", le nombre de séries sur lequel elles se retrouvent. <em class="cipit">Les liens au survol<br>
+						et au focus agissent en les révélant, et au clic en les fixant. La boîte de sélection "le partage de valeurs…" en est solidaire.</em>
+					</p>
+				</li>
+				<li class="sous-bloc">
+					<p class="pre-bloc">
+						Les données - hormis sélection par une autre série - sont dans l'ordre croissant. Elles ne sont en général pas numériquement<br>
+						<!-- <p>🔘) at code point 128,280 (U+1F518) &#x1F518;</p> -->
+						ordonnées à l'origine. <em class="cipit">En ce cas, deux boutons radio <input type="radio" tabindex="-1"> par '<span class="typeTab1"></span>' permettent le tri des '<span class="typeEle2"></span>' : croissant ou d'origine.</em>
 					</p>
 				</li>
 				<li class="bloc">
 					<p>
-						<strong><strong>LES AFFICHAGES :</strong> "guide d'utilisation" et "entre une série et les autres" sont escamotables</strong> - avec les 2 cases<br>
-						à cocher en haut sur la gauche - les "partages" restant toujours manipulables avec la boîte de sélection en tête du tableau.
+						<strong>LES AFFICHAGES :</strong> "guide d'utilisation" et "entre une série seule et les autres" sont escamotables, <em class="cipit">via les deux cases<br>
+						à cocher supérieures sur la gauche.</em> La visualisation des "partages" reste toujours <em>manipulable avec la boîte de sélection</em>.
 					</p>
 					<p>
-						<strong>Les boutons radio situés en tête du tableau</strong> manipulent en bloc l'ensemble des cases et boutons des <span class="typeTab2"></span>.<br>
-						<em>Ils sont <strong>exclusifs</strong>&nbsp;: "ordre d'origine" par exemple <strong>désélectionne</strong> toutes les séries sélectionnées</em>.
+						Les boutons radio situés en tête du tableau manipulent l'ensemble des boutons des <span class="typeTab2"></span>.<br>
+						<em>Ils sont exclusifs&nbsp;: "ordre d'origine" par exemple désélectionne toutes les séries sélectionnées</em>.
 					</p>
-					<p>
-						<strong>Conseils :</strong> éclaircir le tableau en sélectionnant tou<span class="tout"></span> les <span class="typeTab2"></span> - avec le bouton radio "sélectionner tout" - pour ne<br>
-						visualiser que "l'amplitude des partages". Par ailleurs, toute l'interface est manipulable au clavier.
+					<p class="mince">
+						<em>Toute l'interface est manipulable au clavier.</em>
+					</p>
+					<p class="pre-bloc">
+						Conseil : éclaircir le tableau en sélectionnant tou<span class="tout"></span> les <span class="typeTab2"></span> - <em>avec le bouton radio "sélectionner tout"</em> -<br>
+						et visualiser les occurrences relevées "entre une série seule et les autres".
 					</p>
 				</li>
-				<li>
+				<li class="sous-bloc">
 					<p class="consequent pre-bloc">
-						<strong>Le paramétrage et sa mémorisation :</strong> les éléments réglables ("guide d'utlisation", "entre une série est les autres"),<br>
-						les	visualisations (sélection des <span class="typeTab2"></span>, "intersections", "partages", ordre des données) et<br> la personnalisation des données, sont conservés et restitués en deçà d'un mois inactif.<br>
-						Le bouton <strong>"affichage par défaut"</strong> oublie - y compris les données personnalisées, qui ont un bouton dédié.
+						Paramétrage et mémorisation : les éléments réglables - "guide d'utilisation", "entre une série est les autres" -,<br>
+						les	visualisations - sélection des <span class="typeTab2"></span>, "intersections", extensions des occurrences, ordre des données -<br>
+						et la personnalisation des données, sont conservés et restitués en deçà d'un mois inactif.<br>
+						Le bouton "affichage par défaut" les oublie - y compris les données personnalisées, qui ont aussi un bouton dédié.
 						<a class="fermeture" href="#mdemploi" title="Fermer l'aide contextuelle">X</a>
 					</p>
 				</li>
-				<li class="bloc">
+				<li>
 					<p class="seuil mince">
 						Tout retour et toute remarque sont bienvenus : <a href="http://emploi.alsacreations.com/demande-20022-Developpeur-front-end.html">contact</a>
 					</p>
@@ -138,7 +141,7 @@
 
 	<p class="visu-datas">
 		<input type="reset" id="defaut" value="Réglages par défaut" class="reset">
-		<label for="datas">Données : </label><select id="datas">
+		<label for="datas">Jeu de données : </label><select id="datas">
 			<option value="-in-croisement-ens-donnees/donnees-sonates.js" selected>les sonates de Scarlatti dans 6 albums</option>
 			<option value="-in-croisement-ens-donnees/donnees-millesimes.js" id="ex1">les meilleurs millésimes dans 6 régions</option>
 			<option value="-in-croisement-ens-donnees/donnees-departements.js" id="ex2">les départements de 4 bassins fluviaux</option>
@@ -160,6 +163,7 @@
 	Tout retour et toute remarque : <a href="http://emploi.alsacreations.com/demande-20022-Developpeur-front-end.html">contact</a>
 </footer>
 <script src="-in-croisement-ens-donnees/jquery-1.11.0.min.js"></script>
+<script src="-in-croisement-ens-donnees/jquery-ui.min.js"></script>
 <script id="plug">
 "use strict";
 ! Modernizr.promises

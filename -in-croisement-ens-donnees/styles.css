@@ -175,12 +175,10 @@ body > header > h1	{
 	text-transform: uppercase;
 }
 h2	{
-	background: #778;
 	border-top: 2px solid #445;
-	color: #FFF;
+	color: #678;
 	font-family: "Trebuchet MS", Helvetica, sans-serif;
 	font-size: 1.15em;
-	font-weight: normal;
 	margin: 0 -1em;
 	padding: .33em;
 	text-align: center;
@@ -241,6 +239,7 @@ form	{
 }
 .base	{
 	float: left;
+	position: relative;
 	width: 34%;
 }
 .presentations	{
@@ -277,13 +276,16 @@ footer	{
 }
 /* structure : "base" : analyse */
 #meta	{
-	box-shadow: 0 0 0 .5em #FFF, -.5em 0 .15em #445;
+	box-shadow: 0 0 0 .2em #FFF, -.2em 0 .15em #445;
 	background: -webkit-repeating-linear-gradient(0deg, #F8F8F8, #F8F8F8 2px, #FFF 2px, #FFF 7px);
 	background: -moz-repeating-linear-gradient(0deg, #F8F8F8, #F8F8F8 2px, #FFF 2px, #FFF 7px);
 	background: -o-repeating-linear-gradient(0deg, #F8F8F8, #F8F8F8 2px, #FFF 2px, #FFF 7px);
 	background: repeating-linear-gradient(0deg, #F8F8F8, #F8F8F8 2px, #FFF 2px, #FFF 7px);
 	font-size: .85em;
+	margin: .2.em 0 -9.5em 0;
+	position: relative;
 	white-space: pre;
+	z-index: 1;
 }
 #meta,
 #meta label	{
@@ -291,10 +293,11 @@ footer	{
 }
 #meta.sans	{
 	box-shadow: none;
+	margin-bottom: 0;
 }
 #meta h1,
 #meta p	{
-	height: 3.1em;
+	height: 2em;
 	margin-bottom: .33em;
 	padding: 0;
 }
@@ -369,8 +372,12 @@ footer	{
 #meta article.visu	{
 	display: block;
 }
+#meta .long span	{
+	background: #FFF;
+	padding-right: 1em;
+}
 #meta .limite	{
-	height: 4.4em;
+	height: 2.8em;
 	overflow-x: auto;
 	width: 30em;
 }
@@ -438,12 +445,16 @@ footer	{
 	opacity: 1;
 }
 #aideUtilisation:not(.sans) .bloc	{
-	border-top: 1px solid #222;
+	border-top: 2px solid #222;
+}
+#aideUtilisation:not(.sans) .sous-bloc	{
+	border-top: 1px dotted #000;
 }
 #aideUtilisation:not(.sans) p.pre-bloc	{
 	margin-bottom: .5em;
 }
-#aideUtilisation:not(.sans) .bloc p:first-child	{
+#aideUtilisation:not(.sans) .bloc p:first-child,
+#aideUtilisation:not(.sans) .sous-bloc p:first-child	{
 	margin-top: .75em;
 }
 .seuil	{
@@ -485,13 +496,7 @@ footer	{
 .sans .discret	{
 	display: none;
 }
-#aideUtilisation strong	{
-	font-weight: normal;
-}
 #aideUtilisation:not(.sans) strong	{
-	letter-spacing: 1px;
-}
-#aideUtilisation:not(.sans) strong strong	{
 	font-weight: bold;
 }
 #aideUtilisation a,
@@ -639,15 +644,15 @@ footer	{
 	display: inherit;
 }
 #synthese	{
-	color: #000;
+	color: #567;
 	font-size: .85em;
-	font-weight: bold;
+	font-style: italic;
 	margin-top: .66em;
 	padding: .33em;
 	text-align: center;
 }
 #synthese a	{
-	color: #000;
+	color: #567;
 }
 
 
@@ -660,13 +665,17 @@ div input	{
 	margin: .3em .4em;
 }
 thead input	{
-	margin: .3em .75em .3em .4em;
+	margin: .3em .4em .3em 1em;
 }
-#liste91	{
-	margin-right: 2em;
+.idem	{
+	left: -4444em;
+	position: absolute;
+}
+#liste92	{
+	margin-left: 2em;
 }
 th input	{
-	margin: 0 .4em .3em .4em;
+	margin: 0 .4em .3em 0;
 }
 table:not(.axes) thead [for="liste93"],
 table:not(.axes) thead #liste93	{
@@ -695,6 +704,8 @@ table:not(.axes) thead #liste93	{
 	font-style: oblique;
 	float: right;
 	margin: 0;
+	max-height: 4.4em;
+	overflow: auto;
 	padding: .25em .66em;
 	width: 50%;
 }
@@ -761,7 +772,7 @@ td	{
 }
 
 thead	{
-	background: #889;
+	background: #678;
 	text-align: left;
 	vertical-align: middle;
 }
@@ -777,60 +788,85 @@ thead td	{
 	padding-bottom: 1em;
 }
 thead th	{
-	border-bottom: 2px solid #667;
-	box-shadow: 0 0 0 1px #667;
 	color: #FFF;
 	font-weight: normal;
 	letter-spacing: 1px;
 	padding: .5em;
+	vertical-align: top;
 }
-thead th::first-letter	{
+thead tr:nth-child(2) th::first-letter	{
 	text-transform: capitalize;
 }
-
-
-tbody	{
-	box-shadow: 1px 2px #D9D9D9;
+thead tr:nth-child(2) th:first-child	{
+	border-right: 1px solid #667;
+	box-shadow: -1px 0 #667;
 }
+thead tr:nth-child(n+2) th:last-child	{
+	box-shadow: 1px 0 #667;
+}
+thead tr:nth-child(3) th	{
+	font-size: .75em;
+	text-align: center;
+}
+thead tr:nth-child(3) .row	{
+	background: #FFF;
+	color: #000;
+	font-weight: bold;
+}
+
+
+
+
+
+
+
 tbody tr	{
-	outline: 1px solid #667;
+	outline: 1px solid #AAB;
 }
+
+
+table:not(.colonne) tbody tr:nth-child(n+2) th	{
+	border-top: 1px solid #DDE;
+}
+.colonne tbody tr:nth-child(n+2) th	{
+	border-left: 1px solid #DDE;
+}
+
+
 tbody th	{
-	padding: .33em .66em .66em .66em;
+	padding: 0 .66em .66em .33em;
 	position: relative;
 	text-align: left;
 	width: 12em;
 }
 .axe th	{
-	box-shadow: -.7em 0 #900 inset;
+	box-shadow: -2em 0 #900 inset;
 }
 .colonne .axe th	{
 	box-shadow: -1em 0 #900 inset;
 }
 tbody th::after	{
 	border: 1px solid #445;
-	border-width: 1px 0 0 1px;
-	border-radius: .5em 0 0 0;
+	border-width: 1px 1px 0 0;
+	border-radius: 0 .5em 0 0;
 	bottom: 0;
 	color: #445;
 	content: attr(data-qte);
 	font-size: .75em;
 	font-weight: normal;
+	left: 0;
 	padding: .15em;
 	position: absolute;
-	right: 0;
 }
-.axe th::after	{
-	border: 0;
-	color: #FFF;
-	text-shadow: 0 0 4px #B00;
+table .nb1,
+.nb2	{
+	width: 2em;
 }
 .nb1,
 .nb2	{
 	float: right;
 	font-size: .8em;
 	text-align: center;
-	width: 2em;
 }
 .nb1	{
 	background: #FFF;
@@ -838,8 +874,8 @@ tbody th::after	{
 	font-weight: normal;
 	padding: .2em;
 }
-.allonge	{
-	background: #B00;
+label.allonge	{
+	background: #900;
 	color: #FFF;
 }
 .nb2	{
@@ -847,8 +883,8 @@ tbody th::after	{
 	border-width: 0 1px;
 	color: #FFF;
 	cursor: vertical-text;
-	margin: .2em 2em 0 0;
-	text-shadow: 0 0 4px #B00;
+	margin: .2em 4em 0 0;
+	text-shadow: 0 0 4px #900;
 }
 .colonne .nb1	{
 	clear: right;
@@ -873,9 +909,10 @@ tbody th::after	{
 	background: #FFF;
 	border-radius: .2em;
 	display: inline-block;
-	font-size: .85em;
+	font-size: .9em;
 	font-weight: bold;
 	line-height: 1.2;
+	margin-bottom: .5em;
 	padding: .25em .25em .1em .25em;
 	position: relative;
 	text-align: right;
@@ -898,7 +935,6 @@ tbody td	{
 .multi	{
 	cursor: cell;
 }
-
 
 tbody td:not(:empty)::before	{
 	background: #FFF;
@@ -984,7 +1020,7 @@ tbody tr:nth-child(6n+1) td::before	{
 	box-shadow: .8em 0 #C96;
 }
 .axes tr:nth-child(6n+1) .visible::before	{
-	box-shadow: .8em 0 #C96, 2.1em 0 #B00;
+	box-shadow: .8em 0 #C96, 2.1em 0 #900;
 }
 .axe1 td.visible::before,
 .axe:nth-child(6n+1) td:not(.secondaire)::before	{
@@ -992,13 +1028,13 @@ tbody tr:nth-child(6n+1) td::before	{
 	border-color: #C96;
 }
 tbody tr:nth-child(6n+1) td	{
-	border-right: 4px solid #C96;
+	border-right: 5px solid #C96;
 }
 .colonne tbody tr:nth-child(6n+1) td	{
 	border-right-width: 1em;
 }
 tbody tr:nth-child(6n+1) td:not(:empty)	{
-	box-shadow: 0 -2.5em #FFF inset, 0 -3em #C96 inset;
+	box-shadow: 0 -2.5em #D6D6D6 inset, 0 -3em #C96 inset;
 }
 tr:nth-child(6n+1) .label span	{
 	color: #C96;
@@ -1013,7 +1049,7 @@ tbody tr:nth-child(6n+2) td::before	{
 	box-shadow: .8em 0 #BCB;
 }
 .axes tr:nth-child(6n+2) .visible::before	{
-	box-shadow: .8em 0 #BCB, 2.1em 0 #B00;
+	box-shadow: .8em 0 #BCB, 2.1em 0 #900;
 }
 .axe2 td.visible::before,
 .axe:nth-child(6n+2) td:not(.secondaire)::before	{
@@ -1021,20 +1057,20 @@ tbody tr:nth-child(6n+2) td::before	{
 	border-color: #BCB;
 }
 tbody tr:nth-child(6n+2) td	{
-	border-right: 4px solid #BCB;
+	border-right: 5px solid #BCB;
 }
 .colonne tbody tr:nth-child(6n+2) td	{
 	border-right-width: 1em;
 }
 tbody tr:nth-child(6n+2) td:not(:empty)	{
-	box-shadow: 0 -2em #FFF inset, 0 -2.5em #BCB inset;
+	box-shadow: 0 -2em #D6D6D6 inset, 0 -2.5em #BCB inset;
 }
 tr:nth-child(6n+2) .label span	{
 	color: #BCB;
 }
 
 
-tr:nth-child(6n+3) th	{
+tbody tr:nth-child(6n+3) th	{
 	background: #E96;
 }
 tr:nth-child(6n+3) td::before	{
@@ -1042,7 +1078,7 @@ tr:nth-child(6n+3) td::before	{
 	box-shadow: .8em 0 #E96;
 }
 .axes tr:nth-child(6n+3) .visible::before	{
-	box-shadow: .8em 0 #E96, 2.1em 0 #B00;
+	box-shadow: .8em 0 #E96, 2.1em 0 #900;
 }
 .axe3 td.visible::before,
 .axe:nth-child(6n+3) td:not(.secondaire)::before	{
@@ -1050,13 +1086,13 @@ tr:nth-child(6n+3) td::before	{
 	border-color: #E96;
 }
 tr:nth-child(6n+3) td	{
-	border-right: 4px solid #E96;
+	border-right: 5px solid #E96;
 }
 .colonne tr:nth-child(6n+3) td	{
 	border-right-width: 1em;
 }
 tr:nth-child(6n+3) td:not(:empty)	{
-	box-shadow: 0 -1.5em #FFF inset, 0 -2em #E96 inset;
+	box-shadow: 0 -1.5em #D6D6D6 inset, 0 -2em #E96 inset;
 }
 tr:nth-child(6n+3) .label span	{
 	color: #E96;
@@ -1071,7 +1107,7 @@ tr:nth-child(6n+4) td::before	{
 	box-shadow: .8em 0 #BBE;
 }
 .axes tr:nth-child(6n+4) .visible::before	{
-	box-shadow: .8em 0 #BBE, 2.1em 0 #B00;
+	box-shadow: .8em 0 #BBE, 2.1em 0 #900;
 }
 .axe4 td.visible::before,
 .axe:nth-child(6n+4) td:not(.secondaire)::before	{
@@ -1079,13 +1115,13 @@ tr:nth-child(6n+4) td::before	{
 	border-color: #BBE;
 }
 tr:nth-child(6n+4) td	{
-	border-right: 4px solid #BBE;
+	border-right: 5px solid #BBE;
 }
 .colonne tr:nth-child(6n+4) td	{
 	border-right-width: 1em;
 }
 tr:nth-child(6n+4) td:not(:empty)	{
-	box-shadow: 0 -1em #FFF inset, 0 -1.5em #BBE inset;
+	box-shadow: 0 -1em #D6D6D6 inset, 0 -1.5em #BBE inset;
 }
 tr:nth-child(6n+4) .label span	{
 	color: #BBE;
@@ -1100,7 +1136,7 @@ tr:nth-child(6n+5) td::before	{
 	box-shadow: .8em 0 #ED5;
 }
 .axes tr:nth-child(6n+5) .visible::before	{
-	box-shadow: .8em 0 #ED5, 2.1em 0 #B00;
+	box-shadow: .8em 0 #ED5, 2.1em 0 #900;
 }
 .axe5 td.visible::before,
 .axe:nth-child(6n+5) td:not(.secondaire)::before	{
@@ -1108,13 +1144,13 @@ tr:nth-child(6n+5) td::before	{
 	border-color: #ED5;
 }
 tr:nth-child(6n+5) td	{
-	border-right: 4px solid #ED5;
+	border-right: 5px solid #ED5;
 }
 .colonne tr:nth-child(6n+5) td	{
 	border-right-width: 1em;
 }
 tr:nth-child(6n+5) td:not(:empty)	{
-	box-shadow: 0 -.5em #FFF inset, 0 -1em #ED5 inset;
+	box-shadow: 0 -.5em #D6D6D6 inset, 0 -1em #ED5 inset;
 }
 tr:nth-child(6n+5) .label span	{
 	color: #ED5;
@@ -1129,7 +1165,7 @@ tr:nth-child(6n+6) td::before	{
 	box-shadow: .8em 0 #AD7;
 }
 .axes tr:nth-child(6n+6) .visible::before	{
-	box-shadow: .8em 0 #AD7, 2.1em 0 #B00;
+	box-shadow: .8em 0 #AD7, 2.1em 0 #900;
 }
 .axe6 td.visible::before,
 .axe:nth-child(6n+6) td:not(.secondaire)::before	{
@@ -1137,7 +1173,7 @@ tr:nth-child(6n+6) td::before	{
 	border-color: #AD7;
 }
 tr:nth-child(6n+6) td	{
-	border-right: 4px solid #AD7;
+	border-right: 5px solid #AD7;
 }
 .colonne tr:nth-child(6n+6) td	{
 	border-right-width: 1em;
@@ -1153,7 +1189,7 @@ tr:nth-child(6n+6) .label span	{
 
 tbody[class*='axe'] td.visible::before,
 .axe td:not(.secondaire)::before	{
-	box-shadow: 2.1em 0 #B00!important;
+	box-shadow: 2.1em 0 #900!important;
 }
 
 
@@ -1163,17 +1199,17 @@ tbody[class*='axe'] td.visible::before,
 /* visualisation des analyses au niveau des <th */
 
 .passage	{
-	box-shadow: 0 .5em .75em .75em #778 inset;
+	box-shadow: 0 .5em .75em .75em #667788 inset;
 }
 .visite	{
-	box-shadow: 0 .5em .75em .75em #99A inset;
+	box-shadow: 0 .5em .75em .75em #667788 inset;
 }
 
 .passage .label	{
-	box-shadow: -3em 0 #778, .8em 0 #778;
+	box-shadow: -3em 0 #667788, .8em 0 #667788;
 }
 .visite .label	{
-	background: #778;
+	background: #667788;
 	color: #FFF;
 }
 
@@ -1181,30 +1217,32 @@ tbody[class*='axe'] td.visible::before,
 	box-shadow: -.8em 0 #DDE, .8em 0 #DDE;
 }
 .colonne .visite .label	{
-	box-shadow: -.8em 0 #778, .8em 0 #778;
+	box-shadow: -.8em 0 #667788, .8em 0 #667788;
 }
 
 .intersection th::before	{
 	background: #FFF;
-	border: 1px solid #778;
+	border: 1px solid #667788;
+	border-width: 1px 0;
 	border-radius: 4px;
 	color: #000!important;
 	content: attr(data-intersection);
 	cursor: crosshair;
 	font-size: .85em;
-	left: .28em;
-	padding: .3em .7em .3em .3em;
+	left: 0;
+	padding: .3em .3em .3em 0;
 	position: absolute;
 	text-align: right;
 	top: 4.5em;
-	width: 13em;
+	width: 108%;
 }
 .colonne .intersection th::before	{
 	top: 3.4em;
 }
 .visite th::before	{
-	background: #778 url("data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4KCjwhRE9DVFlQRSBzdmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIKCSJodHRwOi8vd3d3LnczLm9yZy9HcmFwaGljcy9TVkcvMS4xL0RURC9zdmcxMS5kdGQiPgoKPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEyIiB2aWV3Qm94PSIwIDAgMTIgMTYiIGhlaWdodD0iMTYiPgoJPHBhdGggZmlsbD0id2hpdGUiIHN0cm9rZT0id2hpdGUiIGQ9Ik03LjQ4IDhsMy43NSAzLjc1LTEuNDggMS40OC0zLjc1LTMuNzUtMy43NSAzLjc1LTEuNDgtMS40OCAzLjc1LTMuNzVMMC43NyA0LjI1bDEuNDgtMS40OCAzLjc1IDMuNzUgMy43NS0zLjc1IDEuNDggMS40OC0zLjc1IDMuNzV6Ii8+Cjwvc3ZnPg==") no-repeat 4px center;
+	background: #667788 url("data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4KCjwhRE9DVFlQRSBzdmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIKCSJodHRwOi8vd3d3LnczLm9yZy9HcmFwaGljcy9TVkcvMS4xL0RURC9zdmcxMS5kdGQiPgoKPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEyIiB2aWV3Qm94PSIwIDAgMTIgMTYiIGhlaWdodD0iMTYiPgoJPHBhdGggZmlsbD0id2hpdGUiIHN0cm9rZT0id2hpdGUiIGQ9Ik03LjQ4IDhsMy43NSAzLjc1LTEuNDggMS40OC0zLjc1LTMuNzUtMy43NSAzLjc1LTEuNDgtMS40OCAzLjc1LTMuNzVMMC43NyA0LjI1bDEuNDgtMS40OCAzLjc1IDMuNzUgMy43NS0zLjc1IDEuNDggMS40OC0zLjc1IDMuNzV6Ii8+Cjwvc3ZnPg==") no-repeat 4px center;
 	border: 1px solid #BBC;
+	border-width: 1px 0;
 	color: #FFF!important;
 }
 .colonne .visite th::before	{
@@ -1232,47 +1270,59 @@ tbody[class*='axe'] td.visible::before,
 
 .intersectionD2:nth-child(6n+1) .multi,
 .intersectionD3:nth-child(6n+1) .diasection	{
-	background: linear-gradient(#778, #778 .8em, #C96 .8em, #C96 100%);
+	background: linear-gradient(#667788, #667788 .8em, #C96 .8em, #C96 100%);
+	border-left: 5px solid #C96 !important;
 }
 .intersectionD2:nth-child(6n+2) .multi,
 .intersectionD3:nth-child(6n+2) .diasection	{
-	background: linear-gradient(#778, #778 .8em, #BCB .8em, #BCB 100%);
+	background: linear-gradient(#667788, #667788 .8em, #BCB .8em, #BCB 100%);
+	border-left: 5px solid #BCB !important;
 }
 .intersectionD2:nth-child(6n+3) .multi,
 .intersectionD3:nth-child(6n+3) .diasection	{
-	background: linear-gradient(#778, #778 .8em, #E96 .8em, #E96 100%);
+	background: linear-gradient(#667788, #667788 .8em, #E96 .8em, #E96 100%);
+	border-left: 5px solid #E96 !important;
 }
 .intersectionD2:nth-child(6n+4) .multi,
 .intersectionD3:nth-child(6n+4) .diasection	{
-	background: linear-gradient(#778, #778 .8em, #BBE .8em, #BBE 100%);
+	background: linear-gradient(#667788, #667788 .8em, #BBE .8em, #BBE 100%);
+	border-left: 5px solid #BBE !important;
 }
 .intersectionD2:nth-child(5) .multi,
 .intersectionD3:nth-child(5) .diasection	{
-	background: linear-gradient(#778, #778 .8em, #ED5 .8em, #ED5 100%);
+	background: linear-gradient(#667788, #667788 .8em, #ED5 .8em, #ED5 100%);
+	border-left: 5px solid #ED5 !important;
 }
 .intersectionD2:nth-child(6n+6) .multi,
 .intersectionD3:nth-child(6n+6) .diasection	{
-	background: linear-gradient(#778, #778 .8em, #AD7 .8em, #AD7 100%);
+	background: linear-gradient(#667788, #667788 .8em, #AD7 .8em, #AD7 100%);
+	border-left: 5px solid #AD7 !important;
 }
 
 
 .intersexion1	{
 	background: linear-gradient(#C96, #C96 100%);
+	border-left: 5px solid #C96 !important;
 }
 .intersexion2	{
 	background: linear-gradient(#BCB, #BCB 100%);
+	border-left: 5px solid #BCB !important;
 }
 .intersexion3	{
 	background: linear-gradient(#E96, #E96 100%);
+	border-left: 5px solid #E96 !important;
 }
 .intersexion4	{
 	background: linear-gradient(#BBE, #BBE 100%);
+	border-left: 5px solid #BBE !important;
 }
 .intersexion5	{
 	background: linear-gradient(#ED5, #ED5 100%);
+	border-left: 5px solid #ED5 !important;
 }
 .intersexion6	{
 	background: linear-gradient(#AD7, #AD7 100%);
+	border-left: 5px solid #AD7 !important;
 }
 
 
@@ -1306,6 +1356,11 @@ table:not(.axes) .visible::before	{
 }
 
 	/* analyse : */
+.intersectionD2 .multi,
+.intersectionD3 .diasection,
+.intersexion	{
+	padding-right: 0;
+}
 #crutch .intersection td:not(:empty),
 #crutch .diasection,
 #crutch .intersexion	{
@@ -1334,15 +1389,21 @@ table:not(.axes) .visible::before	{
 #crutch .largeur,
 #crutch .largeurs .multi,
 #crutch .singletons tbody td:not(.multi):not(:empty)	{
-	background: #B00;
+	background: #900;
 	color: #FFF;
 	opacity: 1;
 }
+#crutch .largeurs .multi	{
+	background: #678;
+}
 tbody td:not(.multi)	{
-	background: rgba(0, 0, 0, .039); /* cf. http://stackoverflow.com/questions/6672374/convert-rgb-to-rgba-over-white (*) */
+	/* background: rgba(0, 28, 56, 0.6); /* #678 cf. http://stackoverflow.com/questions/6672374/convert-rgb-to-rgba-over-white (*) */
+	/* background: rgba(57, 57, 0, 0.172); /* #DDD cf. http://stackoverflow.com/questions/6672374/convert-rgb-to-rgba-over-white (*) */
+	background: rgba(0, 0, 0, 0.082); /* #EAEAEA cf. http://stackoverflow.com/questions/6672374/convert-rgb-to-rgba-over-white (*) */
+	color: #555;
 }
 #crutch .singletons tbody td:not(.multi):not(:empty)	{
-	background: #777;
+	background: #7A4D96;
 }
 
 /* (*) http://stackoverflow.com/questions/6672374/convert-rgb-to-rgba-over-white :
@@ -1376,4 +1437,34 @@ RGBtoRGBA(204, 153, 102) == RGBtoRGBA('#CC9966') == RGBtoRGBA('C96') ==
        a    : 0.6,
        rgba : 'rgba(170, 85, 0, 0.6)'
     }
+
 */
+
+
+
+#infoSurvol,
+#infoSelection	{
+	background: #FFF;
+	border: 3px solid #900;
+	border-radius: .33em;
+	color: #678;
+	padding: .25em .66em;
+	left: -4444em;
+	position: absolute;
+	white-space: nowrap;
+	z-index: 10;
+}
+#infoSurvol.info	{
+	position: relative;
+	left: 2.4em;
+}
+#infoSelection	{
+	background: #900;
+	color: #FFF;
+	z-index: 9;
+}
+#infoSelection.info	{
+	left: auto;
+	margin-top: -.4em;
+	right: 1em;
+}

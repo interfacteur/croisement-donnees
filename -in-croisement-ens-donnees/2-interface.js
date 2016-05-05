@@ -30,9 +30,10 @@
 			'<label for="liste',
 			'</label>',
 			'commun',
-			'" value="'
+			'" value="',
+			'" title="'
 		],
-		ordres = ["Données dans l'ordre d'origine&nbsp;:", "croissant&nbsp;:", "Sélectionner tout&nbsp;:", "rien&nbsp;:"],
+		ordres = ["ordre croissant", "d'origine", "Sélectionner tout", "rien"],
 		charge = [$("table")], //$("table") n'existe pas au chargement
 		$synthese = $("#synthese"),
 		$commentaires = $("#commentaires"),
@@ -57,19 +58,19 @@
 		listes[i].unshift(listes[i].pop());
 		longueurs.push(listes[i].length - 1);
 		total += listes[i].length - 1;
-		longueur = listes[i].length > longueur ? listes[i].length : longueur;
+		longueur = listes[i].length > longueur ? listes[i].length : longueur; //note 160502 : mais si longueur précédemment affecté à 0 ?
 	}
 	combien = listes.length;
 	for (var i=0;i<l;++i) {
 		code.push('<tr id="' + collection[i] + '"><th scope="row" data-qte="' + longueurs[i] + '">'
-			+ manu[0] + i + manu[1] + i + 0 + manu[8] + 0 + manu[2]
-			+ manu[0] + i + manu[1] + i + 1 + manu[8] + 1 + manu[3]
+			+ '<label class="label" for="' + manu[7] + i + 2 + '">' + listes[i][0] + " </label><br>"
+			+ manu[0] + i + manu[1] + i + 1 + manu[8] + 0 + manu[9] + "Trier cette série dans l'ordre croissant" + manu[2]
+			+ manu[0] + i + manu[1] + i + 0 + manu[8] + 1 + manu[9] + "Disposer cette série dans l'ordre d'origine" + manu[3]
 			+ '<label for="' + manu[7] + i + 2 + '" class="nb1" title="Surface d\'extension de ' + extensions[collection[i]][0] + extension
 			+ ' pour &#x22;' + listes[i][0] + '&#x22;">' + extensions[collection[i]][0] + "</label>"
-			+ manu[4] + i + 2 + manu[3]
+			+ manu[4] + i + 2 + manu[9] + "Visualiser les occurrences partagées de cette série" + manu[3]
 			+ '<span class="nb2" title="Largeur d\'extension de ' + extensions[collection[i]][1] + extension
-			+ ' pour &#x22;' + listes[i][0] + '&#x22;" tabindex="0">' + extensions[collection[i]][1] + '</span>'
-			+ '<br><label class="label" for="' + manu[7] + i + 2 + '">' + listes[i][0] + " </label>");
+			+ ' pour &#x22;' + listes[i][0] + '&#x22;" tabindex="0">' + extensions[collection[i]][1] + '</span>');
 		if (typeof zero == "undefined")
 			for (var i2=1;i2<longueur;++i2)
 				code.push('<td data-item="' + i2 + '" data-nombre="' + (listes[i][i2] || 100000000000) + '">' + (listes[i][i2] || "") + "</td>");
@@ -86,53 +87,63 @@
 
 		+ '<p class="cloison">'
 
-		+ '<label for="croiser" class="croiser">Entre 1 série et les autres, </label>'
-		+ '<select id="croiser"><option value="-1">série dont le partage sur l\'ensemble est :</option>'
+		+ '<label for="croiser" class="croiser">Les partages de valeurs </label>'
+		+ '<select id="croiser"><option value="-1">communes entre une série et l\'ensemble :</option>'
 		+ amplitudes
 		+ '</select>'
 
 		+ '<select id="intersection">'
 		+ '<option selected value="-1">Intersections maximales et minimales entre 2 séries</option>'
-		+ '<optgroup label="Paires à intersection maximale :">'
+		+ '<optgroup label="Paire(s) ayant l\'intersection maximale :">'
 		+ intersections[0]
-		+ '</optgroup><optgroup label="Paires à intersection minimale :" id="intersection2">'
+		+ '</optgroup><optgroup label="Paire(s) ayant l\'intersection minimale :" id="intersection2">'
 		+ intersections[1]
 		+ '</optgroup></select>'
 
 		+ '</p>'
-		+ '<p class="cloison">'
+		+ '<p class="cloison">Données :'
 
-		+ manu[5] + 90 + manu[3] + ordres[0] + manu[6]
-		+ manu[0] + 9 + manu[1] + 90 + manu[8] + 0 + manu[2]
-		+ manu[5] + 91 + manu[3] + ordres[1] + manu[6]
-		+ manu[0] + 9 + manu[1] + 91 + manu[8] + 1 +  manu[3]
+		+ manu[0] + 9 + manu[1] + 91 + manu[8] + 0 +  manu[2]
+		+ manu[5] + 91 + manu[3] + ordres[0] + manu[6]
+		+ manu[0] + 9 + manu[1] + 90 + manu[8] + 1 + manu[3]
+		+ manu[5] + 90 + manu[3] + ordres[1] + manu[6]
 
-		+ manu[5] + 92 + manu[3] + ordres[2] + manu[6]
 		+ manu[0] + 9 + manu[1] + 92 + manu[8] + 2 +  manu[3]
-		+ manu[5] + 93 + manu[3] + ordres[3] + manu[6]
+		+ manu[5] + 92 + manu[3] + ordres[2] + manu[6]
 		+ manu[0] + 9 + manu[1] + 93 + manu[8] + 3 +  manu[3]
+		+ manu[5] + 93 + manu[3] + ordres[3] + manu[6]
 
 		+ '</p>'
 
 		+ (typeof commentaires != "undefined" ? '<p class="cloison" id="commentaires">' + commentaires + '</p>' : "")
 
 		+ "</td></tr>"
-		+ '<tr><th scope="col">' + informations.typeTableaux[1] + "</th>"
-		+ '<th scope="col" colspan="' + (longueur - 1) + '">' + informations.typeElements[1] + "</th>");
+
+		+ '<tr><th scope="col" rowspan="2">' + informations.typeTableaux[1] + "</th>"
+		+ '<th scope="col" colspan="' + (longueur - 1) + '">' + informations.typeElements[1] + '<span id="infoSurvol"></span><span id="infoSelection"></span></th></tr>'
+
+		+ '<tr>'
+		+ (function () {
+			var th = "";
+			for (var i = 1; i < longueur ; ++i)
+				th += '<th scope="col">' + i + '</th>';
+			return th;
+		}())
+		+ '</tr></thead>');
 
 
-	$synthese.html(combien + ' ' + informations.typeTableaux[1] + ' avec '
-		+ total + ' occurrences de '											//nombre d'occurrences des éléments spécifiques
-		+ communs[2] + ' ' + informations.typeElements[1] + ' : '				//nombre d'éléments spécifiques
+	$synthese.html(combien + ' ' + informations.typeTableaux[1] + ' càd '
+		+ total + ' occurrences de '														//nombre d'occurrences des éléments spécifiques
+		+ communs[2] + ' ' + informations.typeElements[1] + ' : '							//nombre d'éléments spécifiques
 		+ ' <a href="#" id="singleton">'
-		+ (communs[2] - communs[0]) + ' singletons</a> + '						//nombre d'éléments non répétés
-		+ ' <a href="#" id="commun">' + communs[1] + ' occurrences</a>'			//nombre de répétitions
-		+ ' de ' + communs[0] + ' ' + informations.typeElements[1]				//nombre d'éléments répétés
+		+ (communs[2] - communs[0]) + ' singletons</a> + '									//nombre d'éléments non répétés
+		+ ' <a href="#" id="commun">' + communs[1] + ' occurrences'							//nombre de répétitions
+		+ ' de ' + communs[0] + ' ' + informations.typeElements[1] + ' communes</a>'		//nombre d'éléments répétés
 	);
 
 
 	$ta = $("<table>", {
-		data: { width : [12 + longueur * 3.3, l * 7.7 + .1], state: Date.now() },
+		data: { width : [12 + (longueur - 1) * 3.3, l * 7.7 + .1], state: Date.now() },
 		class: charge.slice(-1)[0] == true ? "colonne" : "",
 		html: code.join("")}
 	)
@@ -163,6 +174,7 @@
 		$i2 = $i.filter("[id$='2']"),
 		$intersection = $("#intersection"),
 		$commentaires = $("#commentaires"), //faculatifs
+		$infoSelection = $("#infoSelection"),
 		bordures = ["3.3em 0 #FFF inset, ","5.95em 0 #FFF inset, "],
 		bordures = ["",""],
 		choix = "pres" + charge.slice(-1)[0] == true ? 2 : 1;
@@ -178,8 +190,10 @@
 			styles += $(this).css("box-shadow") + ", ";
 			extension[$(this).parent().attr("id")] = true;
 		});
+		styles += "0 -3em rgb(214, 214, 214) inset";
+		if (cellules.length > 1)
+			styles = styles.replace(/rgb\(214, 214, 214\)/g, "#678");
 		extension = Object.keys(extension).join(" ");
-		styles = styles.slice(0,-2);
 		cellules.each(function() {
 			$(this).data("pres1",bordures[0] + styles)
 			.data("pres2",bordures[1] + styles)
@@ -249,12 +263,12 @@
 	$g.eq(0).on({
 		change: function() {
 			$intersection.val(-1);
-			lotir.call($i0,"item");
+			lotir.call($i1,"nombre");
 	}	});
 	$g.eq(1).on({
 		change: function() {
 			$intersection.val(-1);
-			lotir.call($i1,"nombre");
+			lotir.call($i0,"item");
 	}	});
 
 
@@ -270,7 +284,7 @@
 		if (contingence)
 			return $c.trigger("change");
 		$i.filter("[id$='" + n + "']:checked").length == l
-			&& $g.eq(n).prop("checked",true);
+		&& $g.eq(Math.abs(n - 1)).prop("checked",true);
 	}
 	$i0.on({
 		change: function() {
@@ -279,9 +293,25 @@
 	$i1.on({
 		change: function() {
 			viser.call(this,"nombre",1);
-	}	});
-
-
+	}	})
+	.each(function () {
+		viser.call(this,"nombre",1); //160503 : forcer l'ordre croissant, en attendant la lecture du localStorage en fin de 3-evenements.js
+	});
+//160503 : masquer les boutons radio pour les séries dont l'ordre d'origine est croissant
+	$("tbody tr").each(function () {
+		var $t = $(this),
+			idem = 1;
+		$t.find("td[data-nombre!='100000000000']").each(function (index) {
+			if (! idem)
+				return;
+			parseInt($(this).data("item")) != ++ index
+			&& (idem = 0);
+		});
+		if (! idem)
+			return;
+		$t.find(":radio").addClass("idem")
+		.attr("tabindex", -1);
+	});
 
 
 
@@ -299,7 +329,8 @@
 	});	}
 	function aligner(n) {
 		var $extension = $(),
-			opus = [];
+			opus = [],
+			axes, extsn, large;
 		$ta.addClass("axes");
 		$(".axe td:not(:empty)").addClass("secondaire");
 		$("tbody tr:not(.axe)").addClass("absent");
@@ -322,7 +353,8 @@
 					$extension = $extension.add($c);
 		});	}	});
 		if (0 == opus.length)
-			return;
+			return $infoSelection.text("Aucune donnée commune")
+			.addClass("info");
 		opus.sort(function(a,b) {
 			return a - b;
 		})
@@ -339,6 +371,12 @@
 		});	});
 		$td = $("tbody td:not(:empty)");
 		$ta.data("state", Date.now());
+
+		axes = $(".axe").length;
+		extsn = $(".visible").length;
+		large = $(".axe .multi:not(.secondaire)").length;
+		$infoSelection.text((extsn + large) + " données partagées : " + axes + " x " + (large / axes) + " (= " + large + ") valeurs en \"largeur\" présentes sur " + extsn + " " + informations.typeElements[1] + " en \"étendue\"")
+		.addClass("info");
 	}
 	$i2.on({
 		change: function(e, select) {
@@ -356,16 +394,22 @@
 			&& $intersection.val(-1);
 			for (var i = configuration == 0 ? 0 : 2;i<3;i++) {
 				if ($i.filter("[id$='" + i + "']:checked").length == l) {
-					$g.eq(i).prop("checked",true);
+	//0 -> 1
+	//1 -> 2
+	//2 -> 2
+					$g.eq(Math.floor(Math.abs((i - .9) * 2))).prop("checked",true);
 					break;
 			}	}
+			$infoSelection.text("")
+			.removeClass("info");
 			switch (configuration) {
 				case 0:
 					return;
 				case 1:
 					var $p = $(".axe"),
 						$selection = $("td:not(:empty)",$p),
-						$extension = $();
+						$extension = $(),
+						extsn, large;
 
 					$tb.addClass("axe" + ($p.index() + 1));
 
@@ -394,6 +438,11 @@
 					$ta.data("state", Date.now());
 					$("tbody tr:not(:has(td.visible))").not($p).addClass("absent");
 					$("tr:has(.visible)").addClass("present");
+
+					extsn = $(".visible").length;
+					large = $p.find(".multi").length;
+					$infoSelection.text((extsn + large) + " données partagées : " + large + " valeurs en \"largeur\" présentes sur " + extsn + " " + informations.typeElements[1] + " en \"étendue\"")
+					.addClass("info");
 					break;
 				case 2: //coordonner avec la boîte de sélection des intersections
 					typeof select == "undefined"
@@ -410,17 +459,17 @@
 		change: function() {
 			$i2.prop("checked",true);
 			$("tbody tr").each(function() {
-				var $t = $(this);
-				$t.addClass("axe");
+				$(this).addClass("axe");
 			});
 			$i2.eq(0).trigger("change");
 	}	});
 	$g.eq(3).on({
 		change: function() {
 			$i2.prop("checked",false);
-			$("tbody tr").each(function() {
-				var $t = $(this);
-				$t.removeClass("axe");
+			$("tbody tr").each(function(i) {
+				$(this).removeClass("axe");
+				($i0.eq(i).is(":checked") ? $i0.eq(i) : $i1.eq(i))
+				.trigger("change");
 			});
 			$i2.eq(0).trigger("change");
 	} 	});

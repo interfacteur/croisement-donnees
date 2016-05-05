@@ -96,7 +96,17 @@
 				$commun = $("#commun"),					//affichage des éléments partagés
 				$singleton = $("#singleton"),			//affichage des éléments non partagés
 				$intersection = $("#intersection"),		//visualiser les intersections extrêmes
-				$communs = $("tbody :checkbox");		//affichage des intersections
+				$communs = $("tbody :checkbox"),		//affichage des intersections
+				$infoSurvol = $("#infoSurvol"),			//affichages des info de sélection
+				minuteur,
+				adiquer = function (e) {
+					typeof e == "undefined"
+					&& clearTimeout(minuteur);
+					$(".largeur, .allonge").removeClass("large largeur allonge");
+					return $infoSurvol.text("")
+					.attr("style", "")
+					.removeClass("info");
+				};
 
 
 
@@ -441,7 +451,7 @@
 			}	});
 
 
-	//Affichage des éléments non partagés
+	//Affichage des éléments partagés
 			$commun.on({
 				"click": function (e) {
 					e.preventDefault();
@@ -454,7 +464,7 @@
 			}	});
 
 
-	//Affichage des éléments partagés
+	//Affichage des éléments non partagés
 			$singleton.on({
 				"click": function (e) {
 					e.preventDefault();
@@ -470,30 +480,58 @@
 	//Affichage des "largeurs"
 			$nb2.on({
 				"mouseover": function () {
-					$(this).parents("tr").find(".multi").addClass("largeur");
+					var $tr = $(this).parents("tr");
+					if ($(".axe").length > 0 && ! $tr.hasClass("axe"))
+						return;
+					adiquer();
+					$tr.find(".multi").addClass("largeur");
+					$infoSurvol.text("Données partagées : "+ $(".largeur").length + " valeurs en \"largeur\"")
+					.addClass("info");
 				},
-				"mouseout": function () {
-					$(".largeur").removeClass("largeur");
-			}	});
+				"mouseout": adiquer
+			});
 
 
 	//Affichage des identiques
-			$(".multi").on({
-				"mouseover": function () {
-					$("[data-nombre='" + $(this).data("nombre") + "']").addClass("largeur");
-				},
-				"mouseout": function () {
-					$(".largeur").removeClass("largeur");
-			}	});
+			$("tbody").on("mouseover mousemove", ".multi", function (e) {
+				var $t = $(this);
+				! e.isTrigger
+				&& adiquer();
+				$t.addClass("large");
+				$("[data-nombre='" + $t.data("nombre") + "']").addClass("largeur");
+				$infoSurvol.text($(".largeur").length + " occurrences pour ce" + (informations.genreElements == "m" ? " " : "tte ") + informations.typeElements[0])
+				.position({
+					of: e,
+					my: "left+10 top+10"
+			});	})
+			.on("mouseout", ".multi", adiquer);
 
+
+	//Affichage des occurrences partagées
 			$("tbody label, tbody [type='checkbox']").on({
 				"mouseover": function () {
-					$(this).parent("th").find(".nb1").addClass("allonge");
-					$(this).parents("tr").find(".multi").each(function () {
+					var $t = $(this),
+						$th = $t.parent("th"),
+						extsn, large;
+					if ($th.find("label").hasClass("allonge"))
+						return clearTimeout(minuteur);
+					adiquer();
+					if ($(".axe").length > 0 && ! $th.parent("tr").hasClass("axe"))
+						return;
+					$th.find("label").addClass("allonge");
+					$t.parents("tr").find(".multi").each(function () {
 						$(this).trigger("mouseover");
-				});	},
-				"mouseout": function () {
-					$(".largeur, .allonge").removeClass("largeur allonge");
+					});
+					extsn = $(".largeur").length;
+					large = $(".large").length;
+					$infoSurvol.text(extsn + " données partagées : " + large + " valeurs en \"largeur\" présentes sur " + (extsn - large) + " " + informations.typeElements[1] + " en \"étendue\"")
+					.addClass("info");
+				},
+				"mouseout": function (e) {
+					clearTimeout(minuteur);
+					minuteur = setTimeout(function () {
+						adiquer(e);
+					}, 333);
 			}	});
 
 
@@ -509,6 +547,16 @@
 					.trigger("change", [true]);
 			}	});
 
+
+	//Numérotation des colonnes
+			$("tbody").on("mouseover", "td", function (e) {
+				if (e.isTrigger || $table.hasClass("colonne"))
+					return;
+				$("thead tr:eq(2) th:eq(" + ($(this).index() - 1) + ")").addClass("row");
+			})
+			.on("mouseout", "td", function () {
+				$(".row").removeClass("row");
+			});
 
 			return visualiser;
 		})();
@@ -829,12 +877,11 @@
 				&& $("#croiser").val(tempo).trigger("change");
 
 				for (var k in localStorage) //organisation du tableau : les radio (qui peuvent être maqsués par l'action des checkbox)
-					if (k.indexOf("presentationC") == 0) {
-						$tempo[2] = parseInt(k.split("presentationC")[1]);
+					if (k.indexOf("presentationR") == 0) {
+						$tempo[2] = parseInt(k.split("presentationR")[1]);
 
 						tempo = parseInt(localStorage.getItem("presentationR" + $tempo[2])); //valeur est une chaîne mais pas toujours ?
-						tempo != 0
-						&& $tempo[1].eq($tempo[2] * 2 + 1).prop("checked", true).trigger("change");
+						$tempo[1].eq($tempo[2] * 2 + tempo).prop("checked", true).trigger("change");
 				}
 
 				for (var k in localStorage) //organisation du tableau : les checkbox
@@ -868,8 +915,8 @@
 				localStorage.removeItem(k);
 		$("tbody tr").each(function (ind) {
 			var $ti = $(this);
-			localStorage.setItem("presentationC" + ind, $ti.find(":checkbox").is(":checked"));
 			localStorage.setItem("presentationR" + ind, $ti.find(":radio:checked").val());
+			localStorage.setItem("presentationC" + ind, $ti.find(":checkbox").is(":checked"));
 	});	}
 
 

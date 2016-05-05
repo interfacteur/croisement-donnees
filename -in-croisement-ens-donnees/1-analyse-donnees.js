@@ -50,26 +50,14 @@
 		resume = [],
 		interz = {};
 
-	amplitudesQuali[ordre["ml"]] = "partage le - large";
-	amplitudesQuali[ordre["pl"]] = "partage le + large";
-	amplitudesQuali[ordre["me"]] = "partage le - étendu";
-	amplitudesQuali[ordre["pe"]] = "partage le + étendu";
-	amplitudesQuali[ordre["pp"]] = "partage le + profond";
+	amplitudesQuali[ordre["ml"]] = 'partage le - "large" en valeurs';
+	amplitudesQuali[ordre["pl"]] = 'partage le + "large" en valeurs';
+	amplitudesQuali[ordre["pp"]] = 'partage le + "profond"';
 
-	resume[ordre["ml"]] = ["partage le - large", "d2"];
-	resume[ordre["pl"]] = ["partage le + large", "d2"];
-	resume[ordre["me"]] = ["partage le - étendu", "d2d3"];
-	resume[ordre["pe"]] = ["partage le + étendu", "d2d3"];
-	resume[ordre["pp"]] = ["partage le + profond", "d3"];
+	resume[ordre["ml"]] = ["le moins de valeurs", "d2"];
+	resume[ordre["pl"]] = ["le plus de valeurs", "d2"];
+	resume[ordre["pp"]] = ["'profondeur' max", "d3"];
 
-	interz.large = {
-		moins: amplitudesQuali[ordre["ml"]] + ", avec ",
-		plus: amplitudesQuali[ordre["pl"]] + ", avec "
-	};
-	interz.etendue = {
-		 moins: amplitudesQuali[ordre["me"]] + ", sur ",
-		 plus: amplitudesQuali[ordre["pe"]] + ", sur "
-	};
 	interz.profonde = amplitudesQuali[ordre["pp"]] + ", "
 
 
@@ -119,7 +107,23 @@
 		extension = " " + typeEle[1] + " partagé" + (genreEle == "f" ? "e" : "") + "s";
 
 
-		code.push("<h1>Séries dont le partage sur l'ensemble est :</h1>");
+		amplitudesQuali[ordre["me"]] = 'partage le - "étendu" en ' + typeEle[1];
+		amplitudesQuali[ordre["pe"]] = 'partage le + "étendu" en ' + typeEle[1];
+
+		resume[ordre["me"]] = ["le moins de " + typeEle[1], "d2d3"];
+		resume[ordre["pe"]] = ["le plus de " + typeEle[1], "d2d3"];
+
+		interz.large = {
+			moins: amplitudesQuali[ordre["ml"]] + " = ",
+			plus: amplitudesQuali[ordre["pl"]] + " = "
+		};
+		interz.etendue = {
+			 moins: amplitudesQuali[ordre["me"]] + " = ",
+			 plus: amplitudesQuali[ordre["pe"]] + " = "
+		};
+
+
+		code.push("<h1>Valeurs communes partagées entre une série et l'ensemble :</h1>");
 
 
 		cles.forEach(function (val) {
@@ -215,7 +219,7 @@
 					switch (k) {
 	//Série(s) de données ayant la largeur d'extension inférieure
 						case "ml":
-							code.push("<p>" + interz.large.moins + largeurs.slice(-1)[0][0] + " " + typeEle[1] + " :<br>&nbsp;&nbsp;&nbsp;&nbsp;");
+							code.push("<p>" + interz.large.moins + largeurs.slice(-1)[0][0] + " :&nbsp;&nbsp;");
 							largeurs.reverse();
 							routine(largeurs);
 							largeurs.reverse();
@@ -223,13 +227,13 @@
 
 	//Série(s) de données ayant la largeur d'extension supérieure
 						case "pl":
-							code.push("<p>"  + interz.large.plus + largeurs[0][0] + " " + typeEle[1] + " :<br>&nbsp;&nbsp;&nbsp;&nbsp;");
+							code.push("<p>"  + interz.large.plus + largeurs[0][0] + " :&nbsp;&nbsp;");
 							routine(largeurs);
 							break;
 
 	//Série(s) de données ayant la surface d'extension inférieure
 						case "me":
-							code.push("<p>" + interz.etendue.moins + surfaces.slice(-1)[0][0] + " " + typeEle[1] + " :<br>&nbsp;&nbsp;&nbsp;&nbsp;");
+							code.push("<p>" + interz.etendue.moins + surfaces.slice(-1)[0][0] + " :&nbsp;&nbsp;");
 							surfaces.reverse();
 							routine(surfaces);
 							surfaces.reverse();
@@ -237,7 +241,7 @@
 
 	//Série(s) de données ayant la surface d'extension supérieure
 						case "pe":
-							code.push("<p>" + interz.etendue.plus + surfaces[0][0] + " " + typeEle[1] + " :<br>&nbsp;&nbsp;&nbsp;&nbsp;");
+							code.push("<p>" + interz.etendue.plus + surfaces[0][0] + " :&nbsp;&nbsp;");
 							routine(surfaces);
 		}	}	}	}
 
@@ -245,12 +249,12 @@
 
 
 	//Série(s) de données ayant la profondeur d'extension supérieure, et élements les plus représentés
-		code.push("<p>" + interz.profonde + "1 " + typeEle[0] + " sur " + decompteElements[0][1] + " " + typeTab[1] + " :<br>&nbsp;&nbsp;&nbsp;&nbsp;");
+		code.push('<p class="long">' + interz.profonde + "1 valeur sur " + decompteElements[0][1] + " " + typeTab[1] + " :<span>&nbsp;&nbsp;");
 		code.push(decompteElements[0][3]);
 
 		code.push('<h1><button id="m">Occurrences des ' + typeEle[1] + ' les… <span>→</span></button></h1><article id="profondeur">');
 
-		code.push("<p>les plus " + adjectif[genreEle] + " sur " + decompteElements[0][1] + " " + typeTab[1] + ":<br>&nbsp;&nbsp;&nbsp;&nbsp;");
+		code.push('<p class="long">les plus ' + adjectif[genreEle] + " sur " + decompteElements[0][1] + " " + typeTab[1] + ":<span>&nbsp;&nbsp;");
 		code.push([decompteElements[0][0]]);
 		i = 0;
 		l = code.length - 1;
@@ -266,20 +270,20 @@
 		});
 
 		code[l].sort(function (a, b) { return a - b; });
-		code[l] = code[l].join(" ; ") + "</p>";
+		code[l] = code[l].join(" ; ") + "</span></p>";
 
 
 
 
 	//Éléments les moins représentés
-		code.push('<p class="limite">les moins ' + adjectif[genreEle] + " sur " + decompteElements.slice(-1)[0][1] + " " + typeTab[2] + " :<br>&nbsp;&nbsp;&nbsp;&nbsp;");
+		code.push('<p class="limite">les moins ' + adjectif[genreEle] + " sur " + decompteElements.slice(-1)[0][1] + " " + typeTab[2] + " :<span>&nbsp;&nbsp;");
 		code.push([decompteElements.slice(-1)[0][0]]);
 		i = decompteElements.length - 1;
 		l = code.length - 1;
 		while (i > 0 && decompteElements[i][1] == decompteElements[--i][1])
 			code[l].push(decompteElements[i][0]);
 		code[l].sort(function (a, b) { return a - b; });
-		code[l] = code[l].join(" ; ") + "</p></article>";
+		code[l] = code[l].join(" ; ") + "</span></p></article>";
 
 
 
@@ -315,7 +319,7 @@
 					+ '</a>';
 				amplitudes[l].push([va, val[1]]);
 			});
-			code[y] = code[y].join(" ; ") + "</p>";
+			code[y] = code[y].join(" ; ") + "</span></p>";
 		})
 		code.push(masquer);
 
@@ -365,7 +369,7 @@
 	//Amplitude des partages càd formes maximales et minimales d'extension des séries de données
 		amplitudes = amplitudesQuali.map(function (val, ind) {
 			return amplitudes[ind].map(function (v) {
-				return '<option value="' + (valindex++) + '">' + val + " : " + v[0] + ' (' + v[1] + ')</option>';
+				return '<option value="' + (valindex++) + '">' + val + " = " + v[1] + ' : ' + v[0] + '</option>';
 			})
 			.join("")
 		})
